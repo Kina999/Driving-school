@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 
 @Component({
-  selector: 'app-front-page',
-  templateUrl: './front-page.component.html',
-  styleUrls: ['./front-page.component.css']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
-export class FrontPageComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
 
   constructor(private router: Router) { }
 
@@ -16,8 +16,9 @@ export class FrontPageComponent implements OnInit {
   login(){
     this.router.navigate(['login']);
   }
-
+  
   register(){
     this.router.navigate(['registration']);
   }
+  
 }
