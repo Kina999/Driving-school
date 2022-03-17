@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
+import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -8,7 +9,13 @@ import { Router, NavigationStart } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  email: string = '';
+  password: string = '';
+  name: string = '';
+  lastName: string = '';
+  phoneNumber: string = '';
+
+  constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -17,8 +24,19 @@ export class RegistrationComponent implements OnInit {
     this.router.navigate(['login']);
   }
   
-  register(){
+  registrationPage(){
     this.router.navigate(['registration']);
   }
   
+  register(){
+    alert(this.email)
+    var body = {email: this.email,
+                password: this.password,
+                name: this.name,
+                lastname: this.lastName,
+                phoneNumber: this.phoneNumber};
+    this.http.post('http://localhost:8080/candidates/registration', body)
+        .subscribe(data => {if(data){alert("Succesful registration")}else{alert("Username already exists")}});
+  }
+
 }

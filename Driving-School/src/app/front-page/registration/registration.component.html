@@ -18,7 +18,7 @@
                     <li class="nav-item"><a class="nav-link" href="#services">Servisi</a></li>
                     <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Gdje se nalazimo?</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="register()" style="cursor: pointer">Registracija</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="registrationPage()" style="cursor: pointer">Registracija</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="login()" style="cursor: pointer">Login</a></li>
                 </ul>
             </div>
@@ -30,12 +30,12 @@
 
           <!-- Login Form -->
           <form style="margin-top: 3rem;">
-            <input type="text" id="login" class="fadeIn second" name="registration" placeholder="korisnicko ime">
-            <input type="text" id="password" class="fadeIn third" name="registration" placeholder="lozinka">
-            <input type="text" id="login" class="fadeIn second" name="login" placeholder="ime">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="prezime">
-            <input type="text" id="password" class="fadeIn third" name="login" placeholder="broj telefona">
-            <input type="submit" class="fadeIn fourth" value="Registruj se">
+            <input type="text" id="login" class="fadeIn second" name="email" [(ngModel)]="email" placeholder="korisnicko ime">
+            <input type="text" id="password" class="fadeIn third" name="password" [(ngModel)]="password" placeholder="lozinka">
+            <input type="text" id="login" class="fadeIn second" name="name" [(ngModel)]="name" placeholder="ime">
+            <input type="text" id="password" class="fadeIn third" name="lastName" [(ngModel)]="lastName" placeholder="prezime">
+            <input type="text" id="password" class="fadeIn third" name="phoneNubmer" [(ngModel)]="phoneNumber" placeholder="broj telefona">
+            <input type="button" class="fadeIn fourth" value="Registruj se" (click)="register()">
           </form>
 
           <!-- Remind Passowrd -->

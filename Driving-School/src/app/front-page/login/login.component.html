@@ -19,7 +19,7 @@
                     <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Gdje se nalazimo?</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="register()" style="cursor: pointer">Registracija</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="login()" style="cursor: pointer">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="loginPage()" style="cursor: pointer">Login</a></li>
                 </ul>
             </div>
         </div>
@@ -32,7 +32,7 @@
           <form style="margin-top: 3rem;">
             <input type="text" id="login" class="fadeIn second" name="login" placeholder="korisnicko ime">
             <input type="text" id="password" class="fadeIn third" name="login" placeholder="lozinka">
-            <input type="submit" class="fadeIn fourth" value="Uloguj se">
+            <input type="button" class="fadeIn fourth" value="Uloguj se" (click)="login()">
           </form>
 
           <!-- Remind Passowrd -->
