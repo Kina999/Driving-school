@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.DrivingSchool.dto.CandidateRegistrationDTO;
+import com.DrivingSchool.dto.EditCandidateProfileDTO;
 import com.DrivingSchool.service.interfaces.CandidateService;
 
 @RestController
@@ -22,5 +23,10 @@ public class CandidateController {
 	@RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity<?> registerClient(@RequestBody CandidateRegistrationDTO candidate){
 		return new ResponseEntity<>(candidateService.RegisterCandidate(candidate), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/editProfile")
+    public ResponseEntity<?> editClientProfile(@RequestBody EditCandidateProfileDTO candidate){
+		return new ResponseEntity<>(candidateService.EditCandidateProfile(candidate), HttpStatus.OK);
 	}
 }

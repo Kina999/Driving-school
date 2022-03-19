@@ -9,6 +9,9 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@a
 })
 export class LoginComponent implements OnInit {
 
+  email: string = '';
+  password: string = '';
+
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -21,8 +24,18 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['registration']);
   }
   login(){
-    var body = {name: 'kina'};
-    this.http.get('http://localhost:8080/candidates/login')
-        .subscribe(data => alert("Dsaas"));
+    var body = {email: this.email,
+      password: this.password};
+    this.http.post('http://localhost:8080/authentication/login', body)
+    .subscribe((data: any) => {
+                        if(data.role === 'CANDIDATE'){
+                          localStorage.setItem('currentUser', JSON.stringify(data));
+                          this.router.navigate(['candidat-page']);
+                        }else if(data.role === 'ADMINISTRATOR'){
+                          localStorage.setItem('currentUser', JSON.stringify(data));
+                          this.router.navigate(['admin-page']);
+                        }
+                        else{alert("Incorrect credentials")}});
+
   }
 }

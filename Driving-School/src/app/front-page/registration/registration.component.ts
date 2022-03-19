@@ -11,6 +11,7 @@ export class RegistrationComponent implements OnInit {
 
   email: string = '';
   password: string = '';
+  reenteredPassword: string = '';
   name: string = '';
   lastName: string = '';
   phoneNumber: string = '';
@@ -29,14 +30,17 @@ export class RegistrationComponent implements OnInit {
   }
   
   register(){
-    alert(this.email)
-    var body = {email: this.email,
-                password: this.password,
-                name: this.name,
-                lastname: this.lastName,
-                phoneNumber: this.phoneNumber};
-    this.http.post('http://localhost:8080/candidates/registration', body)
-        .subscribe(data => {if(data){alert("Succesful registration")}else{alert("Username already exists")}});
+    if(this.password != this.reenteredPassword){
+      alert("Passwords not matching");
+    }else{
+      var body = {email: this.email,
+                  password: this.password,
+                  name: this.name,
+                  lastname: this.lastName,
+                  phoneNumber: this.phoneNumber};
+      this.http.post('http://localhost:8080/candidates/registration', body)
+          .subscribe(data => {if(data){alert("Sucess")}else{alert("Username already exists")}});
+    }
   }
 
 }

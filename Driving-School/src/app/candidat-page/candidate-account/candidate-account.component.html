@@ -1,0 +1,127 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<html>
+  <head>
+    <link href="candidate-account.component.css" rel="stylesheet" />
+  </head>
+  <body class="background">
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">ALUNNO</a>
+            
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
+                </ul>
+            </div>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="main-body" style="margin-top: -1rem;">
+        
+              <div class="row gutters-sm" style="margin-top: 7rem;">
+                <div class="col-md-4 mb-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex flex-column align-items-center text-center">
+                        <div class="col-md-8">
+                            <div class="card h-100">
+                              <div class="card-body">
+                                <h6 class="d-flex align-items-center mb-3">Status</h6>
+                                <small>Teorijska nastava</small>
+                                <div class="progress mb-3" style="height: 5px">
+                                  <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <small>Prakticna nastava</small>
+                                <div class="progress mb-3" style="height: 5px">
+                                  <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <small>Teorijski ispit</small>
+                                <div class="progress mb-3" style="height: 5px">
+                                  <div class="progress-bar bg-primary" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <small>Prakticni ispit</small>
+                                <div class="progress mb-3" style="height: 5px">
+                                  <div class="progress-bar bg-primary" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <small>Vozacka dozvola</small>
+                                <div class="progress mb-3" style="height: 5px">
+                                  <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <input type="text" id="login" class="fadeIn second" name="name" [(ngModel)]="name">
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Last Name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <input type="text" id="login" class="fadeIn second" name="lastName" [(ngModel)]="lastName">
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <input type="text" id="login" class="fadeIn second" name="email" [(ngModel)]="email" disabled>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Phone number</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <input type="text" id="login" class="fadeIn second" name="phonNumber" [(ngModel)]="phoneNumber">
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">New password</h6>
+                        </div>
+                        <div class="col-sm-3" style="margin-left: 5rem;">
+                          <h6 class="mb-0">Reenter new password</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                          <input type="password" id="login" class="fadeIn second" name="newPassword" [(ngModel)]="newPassword" style="width: 15rem;">
+                          <input type="password" id="login" class="fadeIn second" name="reenteredPassword" [(ngModel)]="reenteredPassword" style="width: 15rem;">
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <a class="btn btn-info " target="__blank" style="margin-left: 37rem;" (click)="editProfile()">Edit</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+    
+            </div>
+        </div>
+  </body>
+</html>
