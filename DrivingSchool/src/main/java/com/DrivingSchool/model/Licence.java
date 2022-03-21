@@ -1,6 +1,6 @@
-package com.DrivingSchool.model;
+ package com.DrivingSchool.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ public class Licence {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private LocalDateTime expirationDate;
+	private Date expirationDate;
 	private TestType licenceType;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
@@ -35,7 +35,7 @@ public class Licence {
 		super();
 	}
 	
-	public Licence(LocalDateTime expirationDate, TestType licenceType, Category category, Instructor instructor) {
+	public Licence(Date expirationDate, TestType licenceType, Category category, Instructor instructor) {
 		super();
 		this.expirationDate = expirationDate;
 		this.licenceType = licenceType;
@@ -44,10 +44,10 @@ public class Licence {
 	}
 
 
-	public LocalDateTime getExpirationDate() {
+	public Date getExpirationDate() {
 		return expirationDate;
 	}
-	public void setExpirationDate(LocalDateTime expirationDate) {
+	public void setExpirationDate(Date expirationDate) {
 		this.expirationDate = expirationDate;
 	}
 	public TestType getLicenceType() {

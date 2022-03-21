@@ -6,13 +6,13 @@
   <head>
     <link href="registration.component.css" rel="stylesheet" />
   </head>
-  <body class="background">
+  <body class="background" id="page-top">
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
         <div class="container">
             <a class="navbar-brand" href="#page-top">ALUNNO</a>
             
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 1rem;">
                     <li class="nav-item"><a class="nav-link" href="#page-top">Početna</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">O nama</a></li>
                     <li class="nav-item"><a class="nav-link" href="#services">Servisi</a></li>
@@ -38,11 +38,6 @@
             <input type="text" id="password" class="fadeIn third" name="phoneNubmer" [(ngModel)]="phoneNumber" placeholder="broj telefona">
             <input type="button" class="fadeIn fourth" value="Registruj se" (click)="register()">
           </form>
-
-          <!-- Remind Passowrd -->
-          <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
-          </div>
 
         </div>
       </div>

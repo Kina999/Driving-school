@@ -18,4 +18,9 @@ public class WorkerServiceImpl implements WorkerService {
 		return workerRepository.findWorkerByEmailAndPassword(email, password);
 	}
 
+	@Override
+	public Worker findWorkerByEmail(String workerEmail) {
+		return workerRepository.findWorkerByEmail(workerEmail);
+	}
+
 }

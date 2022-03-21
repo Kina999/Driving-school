@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,7 +11,10 @@ import { RegistrationComponent } from './front-page/registration/registration.co
 import { CandidatPageComponent } from './candidat-page/candidat-page.component';
 import { CandidateAccountComponent } from './candidat-page/candidate-account/candidate-account.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
-import { AdminAccountComponent } from './admin-page/admin-account/admin-account.component';
+import { InstructorsComponent } from './admin-page/instructors/instructors.component';
+import { InstructorPageComponent } from './instructor-page/instructor-page.component';
+import { InstructorAccountComponent } from './instructor-page/instructor-account/instructor-account.component';
+import { InstructorLicenceComponent } from './instructor-page/instructor-licence/instructor-licence.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,10 @@ import { AdminAccountComponent } from './admin-page/admin-account/admin-account.
     CandidatPageComponent,
     CandidateAccountComponent,
     AdminPageComponent,
-    AdminAccountComponent
+    InstructorsComponent,
+    InstructorPageComponent,
+    InstructorAccountComponent,
+    InstructorLicenceComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,9 @@ import { AdminAccountComponent } from './admin-page/admin-account/admin-account.
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

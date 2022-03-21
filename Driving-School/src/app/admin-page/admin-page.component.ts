@@ -17,8 +17,8 @@ export class AdminPageComponent implements OnInit {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
   }
-
-  account(){
-    this.router.navigate(['admin-account']);
+  
+  instructors(){
+    this.router.navigate(['instructors']);
   }
 }
