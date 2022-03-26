@@ -11,8 +11,10 @@
         <div class="container">
             <a class="navbar-brand" href="#page-top">ALUNNO</a>
             
-            <div class="collapse navbar-collapse" id="navbarResponsive" style="margin-left: 40rem;">
+            <div class="collapse navbar-collapse" id="navbarResponsive" style="margin-left: 35rem;">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="requests()" style="cursor: pointer">Zahtjevi</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="licence()" style="cursor: pointer">Licence</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>

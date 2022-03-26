@@ -42,6 +42,13 @@ export class InstructorAccountComponent implements OnInit {
   licence(){
     this.router.navigate(['instructor-licence']);
   }
+  candidates(){
+    this.router.navigate(['instructor-candidates']);
+  }
+
+  requests(){
+    this.router.navigate(['instructor-requests']);
+  }
   editProfile(){
     if(this.password != this.newPassword && this.newPassword != ''){
       this.password = this.newPassword

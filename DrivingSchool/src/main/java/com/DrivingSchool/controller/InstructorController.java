@@ -30,6 +30,11 @@ public class InstructorController {
 		return new ResponseEntity<>(instructorService.getAll(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/getInstructor")
+    public ResponseEntity<?> getInstructor(String instructorEmail){	
+		return new ResponseEntity<>(instructorService.getInstructorByMail(instructorEmail), HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/editProfile")
     public ResponseEntity<?> editClientProfile(@RequestBody InstructorDTO instructor){
 		return new ResponseEntity<>(instructorService.EditInstructorProfile(InstructorMapper.InstructorDTOToInstructor(instructor)), HttpStatus.OK);

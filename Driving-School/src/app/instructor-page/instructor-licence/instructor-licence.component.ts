@@ -42,6 +42,13 @@ export class InstructorLicenceComponent implements OnInit {
   convertDate(date: any){
     return this.datepipe.transform(date, 'dd-MM-yyyy')
   }
+  candidates(){
+    this.router.navigate(['instructor-candidates']);
+  }
+
+  requests(){
+    this.router.navigate(['instructor-requests']);
+  }
   addLicence(){
     if(this.licenceType === '' || this.category === ''){
       alert("Please enter all fields")

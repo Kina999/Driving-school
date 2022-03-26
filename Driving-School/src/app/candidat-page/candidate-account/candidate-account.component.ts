@@ -40,6 +40,9 @@ export class CandidateAccountComponent implements OnInit {
     this.router.navigate(['candidate-account']);
   }
 
+  instructor(){
+    this.router.navigate(['candidat-instructor']);
+  }
   editProfile(){
     if(this.password != this.newPassword && this.newPassword != ''){
       this.password = this.newPassword

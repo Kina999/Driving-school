@@ -53,6 +53,7 @@ export class InstructorsComponent implements OnInit {
             });
             this.email = '';
             this.password = '';
+            this.reenteredPassword = '';
             this.name = '';
             this.lastName = '';
             this.phoneNumber = '';

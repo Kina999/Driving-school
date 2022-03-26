@@ -1,0 +1,66 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<html>
+  <head>
+    <link href="instructor-requests.component.css" rel="stylesheet" />
+  </head>
+  <body class="background">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">ALUNNO</a>
+            
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 35rem;">
+                    <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="requests()" style="cursor: pointer">Zahtjevi</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="licence()" style="cursor: pointer">Licence</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
+                </ul>
+            </div>
+        </div>
+      </nav>
+      <div class="col-lg-9 mt-4 mt-lg-0">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm" style="margin-top: 5rem; margin-left: 14rem; margin-top: 10rem;">
+              <table class="table manage-candidates-top mb-0">
+                <thead>
+                  <tr>
+                    <th>Ime kandidata</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="candidates-list" *ngFor="let request of instructorRequests;let indexOfelement=index;">
+                    <td class="title">
+                      <div><a href="#" data-abc="true"><span class="w-48 avatar gd-info">{{request.name.charAt(0)}}</span></a></div>
+                      <div class="candidate-list-details">
+                        <div class="candidate-list-info">
+                          <div class="candidate-list-title">
+                            <h5 class="mb-0"><a href="#">{{request.name}} {{request.lastName}}</a></h5>
+                          </div>
+                          <div class="candidate-list-option">
+                            <ul class="list-unstyled">
+                              <li><i class="fa fa-user"></i>{{request.email}}</li>
+                              <li><i class="fa fa-phone"></i>{{request.phoneNumber}}</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary" style="margin-left: 45rem; width: 7rem;" (click)="acceptUser(indexOfelement)"><i class="fa fa-check"></i>Prihvati</button>
+                      <button type="button" class="btn btn-danger" style="margin-left: 1rem; width: 7rem;" (click)="refuseUser(indexOfelement)"><i class="fa fa-times"></i>Odbij</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>

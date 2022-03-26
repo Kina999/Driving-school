@@ -21,4 +21,7 @@ export class CandidatPageComponent implements OnInit {
   account(){
     this.router.navigate(['candidate-account']);
   }
+  instructor(){
+    this.router.navigate(['candidat-instructor']);
+  }
 }

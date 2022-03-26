@@ -15,6 +15,9 @@ import { InstructorsComponent } from './admin-page/instructors/instructors.compo
 import { InstructorPageComponent } from './instructor-page/instructor-page.component';
 import { InstructorAccountComponent } from './instructor-page/instructor-account/instructor-account.component';
 import { InstructorLicenceComponent } from './instructor-page/instructor-licence/instructor-licence.component';
+import { CandidatInstructorComponent } from './candidat-page/candidat-instructor/candidat-instructor.component';
+import { InstructorRequestsComponent } from './instructor-page/instructor-requests/instructor-requests.component';
+import { InstructorCandidatesComponent } from './instructor-page/instructor-candidates/instructor-candidates.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { InstructorLicenceComponent } from './instructor-page/instructor-licence
     InstructorsComponent,
     InstructorPageComponent,
     InstructorAccountComponent,
-    InstructorLicenceComponent
+    InstructorLicenceComponent,
+    CandidatInstructorComponent,
+    InstructorRequestsComponent,
+    InstructorCandidatesComponent
   ],
   imports: [
     BrowserModule,

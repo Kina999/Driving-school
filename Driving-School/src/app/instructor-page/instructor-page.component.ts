@@ -12,6 +12,7 @@ export class InstructorPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   logout(){
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
@@ -23,5 +24,13 @@ export class InstructorPageComponent implements OnInit {
 
   licence(){
     this.router.navigate(['instructor-licence']);
+  }
+
+  candidates(){
+    this.router.navigate(['instructor-candidates']);
+  }
+
+  requests(){
+    this.router.navigate(['instructor-requests']);
   }
 }
