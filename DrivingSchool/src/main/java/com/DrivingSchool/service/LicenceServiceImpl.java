@@ -22,7 +22,7 @@ public class LicenceServiceImpl implements LicenceService{
 	@Autowired
 	private InstructorService instructorService;
 	@Override
-	public boolean AddLicenceToInstructor(String email, Licence licence, String category) {
+	public boolean addLicenceToInstructor(String email, Licence licence, String category) {
 		Integer licenceType = 0;
 		if(licence.getLicenceType().equals(TestType.PRACTICAL)) {
 			licenceType = 1;
@@ -38,6 +38,10 @@ public class LicenceServiceImpl implements LicenceService{
 	@Override
 	public List<Licence> getAll(String email) {
 		return licenceRepository.findInstructorLicences(email);
+	}
+	@Override
+	public Licence findLicenceByCategoryAndType(String categoryAndType) { 
+		return licenceRepository.findLicenceByCategoryAndType(categoryService.getCategory((categoryAndType.split("-")[0]).toString().trim()).getId(), (((categoryAndType.split("-")[1]).toString().trim()).equals("THEORETICAL") ? 0 : 1));
 	}
 
 }

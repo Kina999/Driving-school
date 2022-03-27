@@ -31,12 +31,12 @@ public class CandidateController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity<?> registerClient(@RequestBody CandidateRegistrationDTO candidate){
-		return new ResponseEntity<>(candidateService.RegisterCandidate(candidate), HttpStatus.OK);
+		return new ResponseEntity<>(candidateService.registerCandidate(candidate), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/editProfile")
     public ResponseEntity<?> editClientProfile(@RequestBody EditCandidateProfileDTO candidate){
-		return new ResponseEntity<>(candidateService.EditCandidateProfile(candidate), HttpStatus.OK);
+		return new ResponseEntity<>(candidateService.editCandidateProfile(candidate), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addInstructor")

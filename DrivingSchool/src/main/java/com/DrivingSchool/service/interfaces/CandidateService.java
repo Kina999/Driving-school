@@ -11,8 +11,8 @@ public interface CandidateService {
 	public Worker getInstructor(String email);
 	public List<Candidate> getInstructorCandidates(String email);
 	public Candidate findCandidateByEmail(String candidateEmail);
-	public boolean RegisterCandidate(CandidateRegistrationDTO candidate);
-	public boolean EditCandidateProfile(EditCandidateProfileDTO candidate);
-	public Candidate CheckIfCandidateExists(String email, String password);
+	public boolean registerCandidate(CandidateRegistrationDTO candidate);
+	public boolean editCandidateProfile(EditCandidateProfileDTO candidate);
+	public Candidate checkIfCandidateExists(String email, String password);
 	public boolean addInstructorToCandidate(String instructorEmail, String candidateEmail);
 }

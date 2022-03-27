@@ -22,7 +22,7 @@ public class InstructorServiceImpl implements InstructorService{
 	private CandidateService candidateService;
 	
 	@Override
-	public boolean AddNewInstructor(Instructor instructor) {
+	public boolean addNewInstructor(Instructor instructor) {
 		if(workerService.findWorkerByEmail(instructor.getEmail()) == null && candidateService.findCandidateByEmail(instructor.getEmail()) == null) {
 			instructorRepository.save(instructor);
 			return true;
@@ -36,7 +36,7 @@ public class InstructorServiceImpl implements InstructorService{
 	}
 
 	@Override
-	public boolean EditInstructorProfile(Instructor instructor) {
+	public boolean editInstructorProfile(Instructor instructor) {
 		instructorRepository.updateInstructor(instructor.getEmail(), instructor.getPassword(), instructor.getName(), instructor.getLastName(), instructor.getPhoneNumber());
 		return true;
 	}

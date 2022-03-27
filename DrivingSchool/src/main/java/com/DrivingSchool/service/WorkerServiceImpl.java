@@ -14,7 +14,7 @@ public class WorkerServiceImpl implements WorkerService {
 	private WorkerRepository workerRepository;
 	
 	@Override
-	public Worker CheckIfWorkerExists(String email, String password) {
+	public Worker checkIfWorkerExists(String email, String password) {
 		return workerRepository.findWorkerByEmailAndPassword(email, password);
 	}
 

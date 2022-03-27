@@ -49,6 +49,11 @@ export class InstructorLicenceComponent implements OnInit {
   requests(){
     this.router.navigate(['instructor-requests']);
   }
+
+  termins(){
+    this.router.navigate(['instructor-calendar']);
+  }
+  
   addLicence(){
     if(this.licenceType === '' || this.category === ''){
       alert("Please enter all fields")

@@ -28,12 +28,12 @@ public class AuthenticationController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
     public ResponseEntity<?> registerClient(@RequestBody UserLoginDTO user){
-		if(candidateService.CheckIfCandidateExists(user.email, user.password) != null) {
-			Candidate c = candidateService.CheckIfCandidateExists(user.email, user.password);
+		if(candidateService.checkIfCandidateExists(user.email, user.password) != null) {
+			Candidate c = candidateService.checkIfCandidateExists(user.email, user.password);
 			CurrentUserDTO dto = new CurrentUserDTO(c.getEmail(), c.getPassword(), c.getName(), c.getLastName(), c.getPhoneNumber(), "CANDIDATE");
 			return new ResponseEntity<>(dto, HttpStatus.OK);
-		}else if(workerService.CheckIfWorkerExists(user.email, user.password) != null) {
-			Worker w = workerService.CheckIfWorkerExists(user.email, user.password);
+		}else if(workerService.checkIfWorkerExists(user.email, user.password) != null) {
+			Worker w = workerService.checkIfWorkerExists(user.email, user.password);
 			CurrentUserDTO dto = new CurrentUserDTO(w.getEmail(), w.getPassword(), w.getName(), w.getLastName(), w.getPhoneNumber(), w.getWorkerType().toString());
 			return new ResponseEntity<>(dto, HttpStatus.OK);
 		}else {

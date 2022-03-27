@@ -24,6 +24,10 @@ export class InstructorCandidatesComponent implements OnInit {
       });
     }
   }
+  
+  termins(){
+    this.router.navigate(['instructor-calendar']);
+  }
 
   logout(){
     localStorage.removeItem('currentUser');

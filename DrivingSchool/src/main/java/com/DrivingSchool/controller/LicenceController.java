@@ -26,6 +26,6 @@ public class LicenceController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addLicence")
     public ResponseEntity<?> addInstructorLicence(@RequestBody InstructorLicenceDTO licence){
-		return new ResponseEntity<>(licenceService.AddLicenceToInstructor(licence.email, LicenceMapper.InstructorLicenceDTOToLicence(licence), licence.category), HttpStatus.OK);
+		return new ResponseEntity<>(licenceService.addLicenceToInstructor(licence.email, LicenceMapper.InstructorLicenceDTOToLicence(licence), licence.category), HttpStatus.OK);
 	}
 }

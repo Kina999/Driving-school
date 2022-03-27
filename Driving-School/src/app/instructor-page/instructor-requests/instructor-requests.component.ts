@@ -84,4 +84,8 @@ export class InstructorRequestsComponent implements OnInit {
   requests(){
     this.router.navigate(['instructor-requests']);
   }
+
+  termins(){
+    this.router.navigate(['instructor-calendar']);
+  }
 }

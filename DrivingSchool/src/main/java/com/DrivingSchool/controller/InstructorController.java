@@ -22,7 +22,7 @@ public class InstructorController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity<?> registerClient(@RequestBody InstructorDTO instructor){	
-		return new ResponseEntity<>(instructorService.AddNewInstructor(InstructorMapper.InstructorDTOToInstructor(instructor)), HttpStatus.OK);
+		return new ResponseEntity<>(instructorService.addNewInstructor(InstructorMapper.InstructorDTOToInstructor(instructor)), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAll")
@@ -37,7 +37,7 @@ public class InstructorController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/editProfile")
     public ResponseEntity<?> editClientProfile(@RequestBody InstructorDTO instructor){
-		return new ResponseEntity<>(instructorService.EditInstructorProfile(InstructorMapper.InstructorDTOToInstructor(instructor)), HttpStatus.OK);
+		return new ResponseEntity<>(instructorService.editInstructorProfile(InstructorMapper.InstructorDTOToInstructor(instructor)), HttpStatus.OK);
 	}
 	
 }

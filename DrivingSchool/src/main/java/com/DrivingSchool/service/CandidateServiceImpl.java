@@ -22,7 +22,7 @@ public class CandidateServiceImpl implements CandidateService{
 	private WorkerService workerService;
 	
 	@Override
-	public boolean RegisterCandidate(CandidateRegistrationDTO candidate) {
+	public boolean registerCandidate(CandidateRegistrationDTO candidate) {
 		if(candidateRepository.findCandidateByEmail(candidate.email) == null && workerService.findWorkerByEmail(candidate.email) == null) {
 			Candidate newCandidate = new Candidate(candidate.email, candidate.password, candidate.name, candidate.lastname, candidate.phoneNumber, false, null, null);
 			candidateRepository.save(newCandidate);
@@ -32,12 +32,12 @@ public class CandidateServiceImpl implements CandidateService{
 	}
 
 	@Override
-	public Candidate CheckIfCandidateExists(String email, String password) {
+	public Candidate checkIfCandidateExists(String email, String password) {
 		return candidateRepository.findCanidateByEmailAndPassword(email, password);
 	}
 
 	@Override
-	public boolean EditCandidateProfile(EditCandidateProfileDTO candidate) {
+	public boolean editCandidateProfile(EditCandidateProfileDTO candidate) {
 		candidateRepository.updateClient(candidate.email, candidate.password, candidate.name, candidate.lastName, candidate.phoneNumber);
 		return true;
 	}

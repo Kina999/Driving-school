@@ -7,6 +7,6 @@ import com.DrivingSchool.model.Instructor;
 public interface InstructorService {
 	public List<Instructor> getAll();
 	public Instructor getInstructorByMail(String email);
-	public boolean AddNewInstructor(Instructor instructor);
-	public boolean EditInstructorProfile(Instructor instructor);
+	public boolean addNewInstructor(Instructor instructor);
+	public boolean editInstructorProfile(Instructor instructor);
 }

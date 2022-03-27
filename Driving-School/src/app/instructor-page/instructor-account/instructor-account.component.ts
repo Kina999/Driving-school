@@ -45,7 +45,9 @@ export class InstructorAccountComponent implements OnInit {
   candidates(){
     this.router.navigate(['instructor-candidates']);
   }
-
+  termins(){
+    this.router.navigate(['instructor-calendar']);
+  }
   requests(){
     this.router.navigate(['instructor-requests']);
   }

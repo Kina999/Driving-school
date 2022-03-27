@@ -13,6 +13,7 @@ import { InstructorLicenceComponent } from './instructor-page/instructor-licence
 import { CandidatInstructorComponent } from './candidat-page/candidat-instructor/candidat-instructor.component';
 import { InstructorRequestsComponent } from './instructor-page/instructor-requests/instructor-requests.component';
 import { InstructorCandidatesComponent } from './instructor-page/instructor-candidates/instructor-candidates.component';
+import { InstructorCalendarComponent } from './instructor-page/instructor-calendar/instructor-calendar.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: "instructor-licence", component: InstructorLicenceComponent},
   {path: "candidat-instructor", component: CandidatInstructorComponent},
   {path: "instructor-requests", component: InstructorRequestsComponent},
-  {path: "instructor-candidates", component: InstructorCandidatesComponent}
+  {path: "instructor-candidates", component: InstructorCandidatesComponent},
+  {path: "instructor-calendar", component: InstructorCalendarComponent}
 ];
 
 @NgModule({
