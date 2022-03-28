@@ -16,11 +16,27 @@ import com.DrivingSchool.service.interfaces.TerminService;
 @RestController
 @RequestMapping(value = "/termins", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TerminController {
+
 	@Autowired
 	private TerminService terminService;
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/addTermin")
     public ResponseEntity<?> addTermin(@RequestBody TerminDTO termin){
 		return new ResponseEntity<>(terminService.addTerminToInstructor(TerminMapper.TerminDTOToTermin(termin), termin.instructorEmail, termin.categoryAndType), HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTermins")
+    public ResponseEntity<?> getAllInstructorTermins(String instructorEmail){	
+		return new ResponseEntity<>(terminService.getAllInstructorTermins(instructorEmail), HttpStatus.OK);
+	}	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminDates")
+    public ResponseEntity<?> getAllInstructorTerminDates(String instructorEmail){	
+		return new ResponseEntity<>(terminService.getAllInstructorTerminDates(instructorEmail), HttpStatus.OK);
+	}	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminTimesForDate")
+    public ResponseEntity<?> getAllInstructorTerminTimes(String instructorEmail, String date){	
+		return new ResponseEntity<>(terminService.getAllInstructorTerminTimes(instructorEmail, date), HttpStatus.OK);
+	}	
 }
