@@ -1,110 +1,128 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <html>
-  <head>
-    <link href="candidat-instructor.component.css" rel="stylesheet" />
-  </head>
-  <body class="background">
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top">ALUNNO</a>
-            
-            <div class="collapse navbar-collapse" id="navbarResponsive" style="margin-left: 40rem;">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" (click)="instructor()" style="cursor: pointer">Instruktor</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
-                </ul>
-            </div>
-        </div>
-      </nav>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-      <div class="container mt-3 mb-4" *ngIf="!instructorChoosen">
-        <div>
 
-              <select style="margin-top: 8rem; margin-left: 12rem;" >
-                <option hidden>Kategorija</option>
-                <option value="A">A</option>
-                <option value="A1">A1</option>
-                <option value="B">B</option>
-                <option value="B1">B1</option>
-                <option value="C">C</option>
-                <option value="C1">C1</option>
-                <option value="D">D</option>
-                <option value="D1">D1</option>
-                <option value="BE">BE</option>
-                <option value="C1E">C1E</option>
-                <option value="CE">CE</option>
-                <option value="D1E">D1E</option>
-                <option value="DE">DE</option>
-              </select>
-              
-          <div class="input-group" style="position: absolute; margin-left: 23rem; margin-top: -2rem;">
-            <div class="form-outline">
-              <input type="search" id="form1" class="form-control" placeholder="Ime instruktora"/>
-            </div><div class="form-outline">
-              <input type="search" id="form1" class="form-control" placeholder="Prezime instruktora"/>
-            </div>
-            <button type="button" class="btn btn-primary">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>        
+<head>
+  <link href="candidat-instructor.component.css" rel="stylesheet" />
+</head>
+
+<body class="background">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
+    <div class="container">
+      <a class="navbar-brand" href="#page-top">ALUNNO</a>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive" style="margin-left: 40rem;">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+          <li class="nav-item"><a class="nav-link" (click)="instructor()" style="cursor: pointer">Instruktor</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+  <div class="container mt-3 mb-4" *ngIf="!instructorChoosen">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div>
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="category"
+        (change)="categoryChanged($event)" style="width: 40rem; margin-left: 20rem;">
+        <option hidden>Kategorija</option>
+        <option value="A" class="dropdown-item">A</option>
+        <option value="A1">A1</option>
+        <option value="B">B</option>
+        <option value="B1">B1</option>
+        <option value="C">C</option>
+        <option value="C1">C1</option>
+        <option value="D">D</option>
+        <option value="D1">D1</option>
+        <option value="BE">BE</option>
+        <option value="C1E">C1E</option>
+        <option value="CE">CE</option>
+        <option value="D1E">D1E</option>
+        <option value="DE">DE</option>
+      </select>
+      <!--<div class="input-group" style="position: absolute; margin-left: 23rem; margin-top: -2rem;">
+        <div class="form-outline">
+          <input type="search" id="form1" class="form-control" placeholder="Ime instruktora" />
         </div>
-      <div class="col-lg-9 mt-4 mt-lg-0">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm" style="margin-top: 5rem; margin-left: 9rem;">
-                <table class="table manage-candidates-top mb-0">
-                  <thead>
-                    <tr>
-                      <th>Ime instruktora</th>
-                      <th class="text-center">Ocjena</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="candidates-list" *ngFor="let instructor of instructorsList;let indexOfelement=index;">
-                      <td class="title">
-                        <div><a href="#" data-abc="true"><span class="w-48 avatar gd-info">{{instructor.name.charAt(0)}}</span></a></div>
-                        <div class="candidate-list-details">
-                          <div class="candidate-list-info">
-                            <div class="candidate-list-title">
-                              <h5 class="mb-0"><a href="#">{{instructor.name}} {{instructor.lastName}}</a></h5>
-                            </div>
-                            <div class="candidate-list-option">
-                              <ul class="list-unstyled">
-                                <li><i class="fas fa-user pr-1"></i>{{instructor.email}}</li>
-                                <li><i class="fas fa-phone pr-1"></i>{{instructor.phoneNumber}}</li>
-                              </ul>
-                            </div>
-                          </div>
+        <div class="form-outline">
+          <input type="search" id="form1" class="form-control" placeholder="Prezime instruktora" />
+        </div>
+        <button type="button" class="btn btn-primary" (click)="search()">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>-->
+    </div>
+    <div class="col-lg-9 mt-4 mt-lg-0">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm"
+            style="margin-top: 2rem; margin-left: 9rem;">
+            <table class="table manage-candidates-top mb-0">
+              <thead>
+                <tr>
+                  <th>Ime instruktora</th>
+                  <th class="text-center">Ocjena</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="candidates-list" *ngFor="let instructor of instructorsList;let indexOfelement=index;">
+                  <td class="title">
+                    <div><a href="#" data-abc="true"><span
+                          class="w-48 avatar gd-info">{{instructor.name.charAt(0)}}</span></a></div>
+                    <div class="candidate-list-details">
+                      <div class="candidate-list-info">
+                        <div class="candidate-list-title">
+                          <h5 class="mb-0"><a href="#">{{instructor.name}} {{instructor.lastName}}</a></h5>
                         </div>
-                      </td>
-                      <td class="candidate-list-favourite-time text-center">
-                        <a class="candidate-list-favourite order-2 text-danger" href="#"><i class="fas fa-heart"></i></a>
-                        <span class="candidate-list-time order-1">{{instructor.grade}}</span>
-                      </td>
-                      <td class="candidate-list-favourite-time text-center">
-                        <button class="btn btn-primary" (click)="instructorSelected(instructor)"><i class="fas fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div id="formContent" style="margin-left: 1.5rem;">
-                        <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" style="visibility: hidden;" #closeModal2/></div>
-                        <p style="padding: 5rem;" class="text-danger" *ngIf="selectedInstructor">
-                          Da li ste sigurni da zelite da vas izabrani intruktor bude {{selectedInstructor.name}} {{selectedInstructor.lastName}}? <br/>
-                          Jednom kada izaberete, vise ne mozete mijenjati svog instruktora!
-                        </p>
-                        <button type="button" class="btn btn-success" style="margin-bottom: 2rem; margin-right: 1rem;" (click)="chooseSelectedInstructor()">Potvrdi</button>
-                        <button type="button" class="btn btn-danger" style="margin-bottom: 2rem; margin-left: 1rem;"  (click)="cancelChoosingInstructor()">Odustani</button>
+                        <div class="candidate-list-option">
+                          <ul class="list-unstyled">
+                            <li><i class="fas fa-user pr-1"></i>{{instructor.email}}</li>
+                            <li><i class="fas fa-phone pr-1"></i>{{instructor.phoneNumber}}</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
+                  </td>
+                  <td class="candidate-list-favourite-time text-center">
+                    <a class="candidate-list-favourite order-2 text-danger" href="#"><i class="fas fa-heart"></i></a>
+                    <span class="candidate-list-time order-1">{{instructor.grade}}</span>
+                  </td>
+                  <td class="candidate-list-favourite-time text-center">
+                    <button class="btn btn-primary" (click)="instructorSelected(instructor)"><i class="fas fa-plus"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div id="formContent" style="margin-left: 1.5rem;">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
+                        alt="Close modal" style="visibility: hidden;" #closeModal2 /></div>
+                    <p style="padding: 5rem;" class="text-danger" *ngIf="selectedInstructor && category != ''">
+                      Da li ste sigurni da zelite da vas izabrani intruktor bude {{selectedInstructor.name}}
+                      {{selectedInstructor.lastName}}? <br />
+                      Jednom kada izaberete, vise ne mozete mijenjati svog instruktora!
+                    </p>
+                    <p style="padding: 5rem;" class="text-danger" *ngIf="selectedInstructor && category == ''">
+                      Prvo morate izabrati kategoriju!
+                    </p>
+                    <button *ngIf="category != ''" type="button" class="btn btn-success"
+                      style="margin-bottom: 2rem; margin-right: 1rem;"
+                      (click)="chooseSelectedInstructor()">Potvrdi</button>
+                    <button *ngIf="category != ''" type="button" class="btn btn-danger"
+                      style="margin-bottom: 2rem; margin-left: 1rem;"
+                      (click)="cancelChoosingInstructor()">Odustani</button>
                   </div>
                 </div>
               </div>
@@ -112,20 +130,29 @@
           </div>
         </div>
       </div>
-      <div class="container mt-4 mb-4 p-3 d-flex justify-content-center" *ngIf="instructorChoosen && requestApproved">
-        <div class="card p-4" style="margin-top: 7rem;">
-            <div class=" image d-flex flex-column justify-content-center align-items-center"> {{candidateInstructor.name}} {{candidateInstructor.lastName}}<span class="idd">@{{candidateInstructor.email}}</span>
-                <div class="d-flex flex-row justify-content-center align-items-center mt-3"> <a class="candidate-list-favourite order-2 text-danger" href="#">
-                  <i class="fas fa-heart"></i></a><span class="candidate-list-time order-1">{{candidateInstructor.grade}}</span></div>
-                <div class="text mt-3"> <span>{{candidateInstructor.name}} {{candidateInstructor.lastName}} je vas izabrani instruktor.<br><br></span> </div>
-            </div>
-        </div>
     </div>
-    <div class="container mt-4 mb-4 p-3 d-flex justify-content-center" *ngIf="instructorChoosen && !requestApproved && requestedInstructorInfo != undefined">
-      <div class="container px-4 px-lg-5 text-center" style="margin-top: 14rem;">
-        <h1 class="mb-1" style="color: gainsboro;">Zahtjev je poslat instruktoru {{requestedInstructorInfo.name}} {{requestedInstructorInfo.lastName}}</h1>
-        <h3 class="mb-5" style="color: gainsboro"><em>Bicete obavjesteni da li vas je prihvatio</em></h3>
-      </div>
   </div>
-  </body>
+  <div class="container mt-4 mb-4 p-3 d-flex justify-content-center" *ngIf="instructorChoosen && requestApproved">
+    <div class="card p-4" style="margin-top: 7rem;">
+      <div class=" image d-flex flex-column justify-content-center align-items-center"> {{candidateInstructor.name}}
+        {{candidateInstructor.lastName}}<span class="idd">@{{candidateInstructor.email}}</span>
+        <div class="d-flex flex-row justify-content-center align-items-center mt-3"> <a
+            class="candidate-list-favourite order-2 text-danger" href="#">
+            <i class="fas fa-heart"></i></a><span
+            class="candidate-list-time order-1">{{candidateInstructor.grade}}</span></div>
+        <div class="text mt-3"> <span>{{candidateInstructor.name}} {{candidateInstructor.lastName}} je vas izabrani
+            instruktor.<br><br></span> </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4 mb-4 p-3 d-flex justify-content-center"
+    *ngIf="instructorChoosen && !requestApproved && requestedInstructorInfo != undefined">
+    <div class="container px-4 px-lg-5 text-center" style="margin-top: 14rem;">
+      <h1 class="mb-1" style="color: gainsboro;">Zahtjev je poslat instruktoru {{requestedInstructorInfo.name}}
+        {{requestedInstructorInfo.lastName}}</h1>
+      <h3 class="mb-5" style="color: gainsboro"><em>Bicete obavjesteni da li vas je prihvatio</em></h3>
+    </div>
+  </div>
+</body>
+
 </html>

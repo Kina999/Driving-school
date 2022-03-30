@@ -45,4 +45,5 @@ public class InstructorServiceImpl implements InstructorService{
 	public Instructor getInstructorByMail(String email) {
 		return instructorRepository.findInstructorByEmail(email);
 	}
+
 }

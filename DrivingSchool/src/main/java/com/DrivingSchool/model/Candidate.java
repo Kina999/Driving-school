@@ -21,6 +21,7 @@ public class Candidate {
 	private String lastName;
 	private String phoneNumber;
 	private boolean blocked;
+	private String category;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "instructor_id")
@@ -107,13 +108,17 @@ public class Candidate {
 		this.instructor = instructor;
 	}
 
+	public String getCategory() {
+		return category;
+	}
 
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public Set<Class> getClasses() {
 		return classes;
 	}
-
-
 
 	public void setClasses(Set<Class> classes) {
 		this.classes = classes;

@@ -21,9 +21,9 @@ public class InstructorRequestServiceImpl implements InstructorRequestService{
 	private CandidateService candidateService;
 	
 	@Override
-	public boolean addInstructorRequest(String instructorEmail, String candidateEmail) {
+	public boolean addInstructorRequest(String instructorEmail, String candidateEmail, String category) {
 		if(instructorRequestRepository.findInstructorRequest(candidateEmail, instructorEmail) == null) {
-			InstructorRequest instructorRequest = new InstructorRequest(instructorEmail, candidateEmail, false, false);
+			InstructorRequest instructorRequest = new InstructorRequest(instructorEmail, candidateEmail, false, false, category);
 			instructorRequestRepository.save(instructorRequest);
 			return true;
 		}
@@ -45,12 +45,12 @@ public class InstructorRequestServiceImpl implements InstructorRequestService{
 	}
 
 	@Override
-	public boolean approveRequest(String instructorEmail, String candidateEmail) {
+	public String approveRequest(String instructorEmail, String candidateEmail) {
 		if(instructorRequestRepository.findInstructorRequest(candidateEmail, instructorEmail) != null) {
 			instructorRequestRepository.approveRequest(instructorEmail, candidateEmail);
-			return true;
+			return instructorRequestRepository.findInstructorRequest(candidateEmail, instructorEmail).getCategory();
 		}
-		return false;
+		return null;
 	}
 
 	@Override

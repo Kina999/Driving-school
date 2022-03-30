@@ -21,7 +21,7 @@ public class InstructorRequestController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addInstructorRequest")
     public ResponseEntity<?> addInstuctorToCandidate(@RequestBody CandidateInstructorDTO instructor){
-		return new ResponseEntity<>(instructorRequestService.addInstructorRequest(instructor.instructorEmail, instructor.candidateEmail), HttpStatus.OK);
+		return new ResponseEntity<>(instructorRequestService.addInstructorRequest(instructor.instructorEmail, instructor.candidateEmail, instructor.category), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getInstructorRequest")

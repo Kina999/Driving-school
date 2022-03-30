@@ -41,8 +41,8 @@ public class CandidateController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addInstructor")
     public ResponseEntity<?> addInstuctorToCandidate(@RequestBody CandidateInstructorDTO instructor){
-		instructorRequestService.approveRequest(instructor.instructorEmail, instructor.candidateEmail);
-		return new ResponseEntity<>(candidateService.addInstructorToCandidate(instructor.instructorEmail, instructor.candidateEmail), HttpStatus.OK);
+		String category = instructorRequestService.approveRequest(instructor.instructorEmail, instructor.candidateEmail);
+		return new ResponseEntity<>(candidateService.addInstructorToCandidate(instructor.instructorEmail, instructor.candidateEmail, category), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getInstructorCandidates")

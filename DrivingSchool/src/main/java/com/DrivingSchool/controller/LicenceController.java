@@ -24,6 +24,11 @@ public class LicenceController {
 		return new ResponseEntity<>(licenceService.getAll(email), HttpStatus.OK);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllWithCategory")
+    public ResponseEntity<?> getAllInstructorsWithCategory(String category){	
+		return new ResponseEntity<>(licenceService.getAllInstructorsWithCategory(category), HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/addLicence")
     public ResponseEntity<?> addInstructorLicence(@RequestBody InstructorLicenceDTO licence){
 		return new ResponseEntity<>(licenceService.addLicenceToInstructor(licence.email, LicenceMapper.InstructorLicenceDTOToLicence(licence), licence.category), HttpStatus.OK);

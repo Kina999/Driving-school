@@ -26,7 +26,7 @@ public class InstructorController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAll")
-    public ResponseEntity<?> registerClient(){	
+    public ResponseEntity<?> getAllInstructors(){	
 		return new ResponseEntity<>(instructorService.getAll(), HttpStatus.OK);
 	}
 	

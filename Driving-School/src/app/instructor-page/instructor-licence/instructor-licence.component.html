@@ -34,7 +34,6 @@
                   <thead>
                     <tr>
                       <th>Naziv kategorije</th>
-                      <th class="text-center">Tip licence</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -71,7 +70,7 @@
                         <!-- Login Form -->
                         <form style="margin-top: 3rem;">
                           <p style="margin-left: -8rem; margin-bottom: -0.1rem;">Expiration date:</p>
-                            <input type="date" name="expirationDate" [ngModel]="expirationDate | date:'yyyy-MM-dd'" min="{{expirationDate|date:'yyyy-MM-dd'}}" (ngModelChange)="expirationDate = $event" style="width: 15rem">
+                            <input type="date" name="expirationDate" [ngModel]="expirationDate | date:'yyyy-MM-dd'" (ngModelChange)="expirationDate = $event" style="width: 15rem">
                           <p style="margin-left: -11rem; margin-bottom: -0.1rem; margin-top: 1rem;">Category:</p>
                             <select style="width: 15rem; height: 2rem;" name="category" [(ngModel)]="category">
                               <option value="A">A</option>

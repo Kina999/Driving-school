@@ -39,4 +39,9 @@ public class TerminController {
     public ResponseEntity<?> getAllInstructorTerminTimes(String instructorEmail, String date){	
 		return new ResponseEntity<>(terminService.getAllInstructorTerminTimes(instructorEmail, date), HttpStatus.OK);
 	}	
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidatePossibleTerminDates")
+    public ResponseEntity<?> getAllCandidatePossibleTerminDates(String candidateEmail){	
+		return new ResponseEntity<>(terminService.getAllCandidatePossibleTerminDates(candidateEmail), HttpStatus.OK);
+	}
 }

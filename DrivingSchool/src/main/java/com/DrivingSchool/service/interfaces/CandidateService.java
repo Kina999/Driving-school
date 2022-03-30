@@ -14,5 +14,5 @@ public interface CandidateService {
 	public boolean registerCandidate(CandidateRegistrationDTO candidate);
 	public boolean editCandidateProfile(EditCandidateProfileDTO candidate);
 	public Candidate checkIfCandidateExists(String email, String password);
-	public boolean addInstructorToCandidate(String instructorEmail, String candidateEmail);
+	public boolean addInstructorToCandidate(String instructorEmail, String candidateEmail, String category);
 }

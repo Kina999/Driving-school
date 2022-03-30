@@ -1,11 +1,16 @@
 package com.DrivingSchool.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.DrivingSchool.enumClasses.TestType;
+import com.DrivingSchool.model.Instructor;
 import com.DrivingSchool.model.Licence;
 import com.DrivingSchool.repository.LicenceRepository;
 import com.DrivingSchool.service.interfaces.CategoryService;
@@ -44,5 +49,27 @@ public class LicenceServiceImpl implements LicenceService{
 		return licenceRepository.findLicenceByCategoryAndType(categoryService.getCategory((categoryAndType.split("-")[0]).toString().trim()).getId(), (((categoryAndType.split("-")[1]).toString().trim()).equals("THEORETICAL") ? 0 : 1));
 	}
 
+	@Override
+	public Set<Instructor> getAllInstructorsWithCategory(String category) {
+		List<Instructor> instructors = new ArrayList<Instructor>();
+		for(Licence licence : licenceRepository.findInstructorForCategory(categoryService.getCategory(category).getId())) {
+			if(licence.getExpirationDate().after(new Date())) {
+				instructors.add(licence.getInstructor());
+			}
+		}
+		Set<Instructor> ret = new HashSet<Instructor>();
+		for(Instructor i : instructors) {
+			int numOfCounts = 0;
+			for(Instructor ins : instructors) {
+				if(ins.getEmail().equals(i.getEmail())) {
+					numOfCounts++;
+				}
+			}
+			if(numOfCounts == 2) {
+				ret.add(i);
+			}
+		}
+		return ret;
+	}
 }
 	

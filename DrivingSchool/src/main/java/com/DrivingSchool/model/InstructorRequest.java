@@ -12,6 +12,7 @@ public class InstructorRequest {
 	private Integer id;
 	private String instructorEmail;
 	private String candidateEmail;
+	private String category;
 	private boolean approved;
 	private boolean refused;
 	
@@ -19,12 +20,13 @@ public class InstructorRequest {
 		super();
 	}
 	
-	public InstructorRequest(String instructorEmail, String candidateEmail, boolean approved, boolean refused) {
+	public InstructorRequest(String instructorEmail, String candidateEmail, boolean approved, boolean refused, String category) {
 		super();
 		this.instructorEmail = instructorEmail;
 		this.candidateEmail = candidateEmail;
 		this.approved = approved;
 		this.refused = refused;
+		this.category = category;
 	}
 
 	public String getInstructorEmail() {
@@ -65,6 +67,14 @@ public class InstructorRequest {
 
 	public void setRefused(boolean refused) {
 		this.refused = refused;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 }

@@ -48,11 +48,11 @@ public class CandidateServiceImpl implements CandidateService{
 	}
 
 	@Override
-	public boolean addInstructorToCandidate(String instructorEmail, String candidateEmail) {
+	public boolean addInstructorToCandidate(String instructorEmail, String candidateEmail, String category) {
 		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
 		Worker worker = workerService.findWorkerByEmail(instructorEmail);
 		if(candidate != null && worker != null) {
-			candidateRepository.setCandidateInstructor(candidateEmail, instructorEmail);
+			candidateRepository.setCandidateInstructor(candidateEmail, instructorEmail, category);
 			return true;
 		}else {
 			return false;
