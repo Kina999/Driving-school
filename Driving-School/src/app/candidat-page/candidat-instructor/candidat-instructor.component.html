@@ -25,10 +25,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
     integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
   <div class="container mt-3 mb-4" *ngIf="!instructorChoosen">
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <br />
+    <br />
+    <br />
+    <br />
     <div>
       <select class="form-select" aria-label="Default select example" [(ngModel)]="category"
         (change)="categoryChanged($event)" style="width: 40rem; margin-left: 20rem;">
@@ -142,6 +142,27 @@
             class="candidate-list-time order-1">{{candidateInstructor.grade}}</span></div>
         <div class="text mt-3"> <span>{{candidateInstructor.name}} {{candidateInstructor.lastName}} je vas izabrani
             instruktor.<br><br></span> </div>
+      </div>
+    </div>
+    <div class="container" style="margin-top: 6rem;">
+      <div class="timetable-img text-center">
+        <img src="img/content/timetable.png" alt="">
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered text-center">
+          <tbody>
+            <tr class="bg-light-gray" *ngFor="let date of terminDates; let i = index">
+              <th class="text-uppercase">{{date}}</th>
+              <td *ngFor="let t of terminTimes[i]">
+                <span
+                  class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{t.licence.category.categoryType}}
+                  - {{t.licence.licenceType}}</span>
+                <div class="margin-10px-top font-size14">{{convertDate(t.startTime)}} - {{convertDate(t.endTime)}}</div>
+                <div class="font-size13 text-light-gray">Klijent</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

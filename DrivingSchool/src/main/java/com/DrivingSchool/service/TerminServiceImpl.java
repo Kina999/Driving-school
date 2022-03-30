@@ -106,6 +106,7 @@ public class TerminServiceImpl implements TerminService{
 		for(Termin t: terminRepository.findInstructorTermins(candidateService.findCandidateByEmail(candidateEmail).getInstructor().getEmail())) {
 			if(t.getLicence().getCategory().getCategoryType().equals(candidateService.findCandidateByEmail(candidateEmail).getCategory())
 					&& t.getLicence().getLicenceType().equals(getLicenceType(candidateEmail))) {
+				System.out.println("dasdasdasdassd");
 				d.add(t.getStartTime());
 			}
 		}
@@ -117,12 +118,14 @@ public class TerminServiceImpl implements TerminService{
 			String strDate = dateFormat.format(termin);  
 			dates.add(strDate.split(" ")[0]);
 		}
-		return null;
+		return dates;
 	}
 	
 	private TestType getLicenceType(String candidateEmail) {
 		Class latestClass = classService.getLatestCandidateClass(candidateEmail);
-		if(latestClass.getNumberOfClass() < latestClass.getLicence().getCategory().getNumberOfClasses()) {
+		if(latestClass == null) {
+			return TestType.THEORETICAL;
+		}else if(latestClass.getNumberOfClass() < latestClass.getLicence().getCategory().getNumberOfClasses()) {
 			return latestClass.getLicence().getLicenceType();
 		}else {
 			if(latestClass.getLicence().getLicenceType().equals(TestType.THEORETICAL)) {

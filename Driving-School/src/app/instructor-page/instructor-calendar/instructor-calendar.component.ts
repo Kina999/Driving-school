@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -25,65 +25,65 @@ export class InstructorCalendarComponent implements OnInit {
 
   ngOnInit(): void {
     var user = localStorage.getItem('currentUser');
-    if(user != null){
+    if (user != null) {
       var email = JSON.parse(user).email;
       this.http.get('http://localhost:8080/licences/getAll?email=' + JSON.parse(user).email).subscribe(
         (data: any) => {
           this.licences = data;
-      });
+        });
       this.http.get('http://localhost:8080/termins/getAllInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
         (data: any) => {
           this.instructorTermins = data;
-      });
+        });
       this.http.get('http://localhost:8080/termins/getAllInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
-        (data: any) => {  
+        (data: any) => {
           this.terminDates = data;
-          this.terminDates.forEach((date : any, i : number) => {
+          this.terminDates.forEach((date: any, i: number) => {
             this.http.get('http://localhost:8080/termins/getAllInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
-              data => {  
+              data => {
                 this.terminTimes[i] = data;
-            });
+              });
           });
-      });
-      
+        });
+
     }
   }
-  
-  convertDate(date: any){
+
+  convertDate(date: any) {
     return this.datepipe.transform(date, 'HH:mm')
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
   }
 
-  account(){
+  account() {
     this.router.navigate(['instructor-account']);
   }
 
-  licence(){
+  licence() {
     this.router.navigate(['instructor-licence']);
   }
 
-  candidates(){
+  candidates() {
     this.router.navigate(['instructor-candidates']);
   }
 
-  requests(){
+  requests() {
     this.router.navigate(['instructor-requests']);
   }
 
-  termins(){
+  termins() {
     this.router.navigate(['instructor-calendar']);
   }
 
-  addTermin(){
-    if(this.startTime == undefined || this.endTime == undefined || this.categoryAndType === ''){
+  addTermin() {
+    if (this.startTime == undefined || this.endTime == undefined || this.categoryAndType === '') {
       alert("Molimo unesite sva polja!");
-    }else if(this.startTime.split(':')[0] > this.endTime.split(':')[0] || (this.startTime.split(':')[0] === this.endTime.split(':')[0] && this.startTime.split(':')[1] > this.endTime.split(':')[1])){
+    } else if (this.startTime.split(':')[0] > this.endTime.split(':')[0] || (this.startTime.split(':')[0] === this.endTime.split(':')[0] && this.startTime.split(':')[1] > this.endTime.split(':')[1])) {
       alert("Neispravni termini!");
-    }else{
+    } else {
       var startDate = new Date(this.terminDate);
       startDate.setHours(this.startTime.split(':')[0])
       startDate.setMinutes(this.startTime.split(':')[1])
@@ -91,38 +91,42 @@ export class InstructorCalendarComponent implements OnInit {
       endDate.setHours(this.endTime.split(':')[0])
       endDate.setMinutes(this.endTime.split(':')[1])
       var user = localStorage.getItem('currentUser');
-      if(user != null){
+      if (user != null) {
         var userEmail = JSON.parse(user).email;
-        var body = {startTime: startDate,
+        var body = {
+          startTime: startDate,
           endTime: endDate,
           categoryAndType: this.categoryAndType,
-          instructorEmail: userEmail};
+          instructorEmail: userEmail
+        };
         this.http.post('http://localhost:8080/termins/addTermin', body)
-        .subscribe(data => {if(data){
-          this.closeModal3.nativeElement.click();
-          alert("Sucess")
-          var user = localStorage.getItem('currentUser');
-          if(user != null){
-            var email = JSON.parse(user).email;
-            this.http.get('http://localhost:8080/termins/getAllInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
-              (data: any) => {
-                this.instructorTermins = data;
-            });
-            this.http.get('http://localhost:8080/termins/getAllInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
-              (data: any) => {  
-                this.terminDates = data;
-                this.terminDates.forEach((date : any, i : number) => {
-                  this.http.get('http://localhost:8080/termins/getAllInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
-                    (data: any) => { 
-                      this.terminTimes[i] = data;
+          .subscribe(data => {
+            if (data) {
+              this.closeModal3.nativeElement.click();
+              alert("Sucess")
+              var user = localStorage.getItem('currentUser');
+              if (user != null) {
+                var email = JSON.parse(user).email;
+                this.http.get('http://localhost:8080/termins/getAllInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
+                  (data: any) => {
+                    this.instructorTermins = data;
                   });
-                });
-            });
-            
-          }
-        }
-          else{alert("Termin se preklapa sa vec postojecim ili je licenca istekla!")}});
+                this.http.get('http://localhost:8080/termins/getAllInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
+                  (data: any) => {
+                    this.terminDates = data;
+                    this.terminDates.forEach((date: any, i: number) => {
+                      this.http.get('http://localhost:8080/termins/getAllInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
+                        (data: any) => {
+                          this.terminTimes[i] = data;
+                        });
+                    });
+                  });
+
+              }
+            }
+            else { alert("Termin se preklapa sa vec postojecim ili je licenca istekla!") }
+          });
       }
     }
- }
+  }
 }

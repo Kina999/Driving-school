@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, SystemJsNgModuleLoader, ViewChild } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-candidat-instructor',
@@ -16,9 +17,12 @@ export class CandidatInstructorComponent implements OnInit {
   candidateInstructor: any;
   requestedInstructorInfo: any;
   category: string = '';
+  terminDates: any = [];
+  terminTimes: any = [];
+  instructorTermins: any = [];
   @ViewChild('closeModal2') closeModal2: any;
 
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, public datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.http.get('http://localhost:8080/instructors/getAll').subscribe(
@@ -28,6 +32,16 @@ export class CandidatInstructorComponent implements OnInit {
     var user = localStorage.getItem('currentUser');
     if (user != null) {
       var userEmail = JSON.parse(user).email;
+      this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
+        (data: any) => {
+          this.terminDates = data;
+          this.terminDates.forEach((date: any, i: number) => {
+            this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
+              data => {
+                this.terminTimes[i] = data;
+              });
+          });
+        });
       this.http.get('http://localhost:8080/instructorRequests/getInstructorRequest?email=' + userEmail).subscribe(
         (data: any) => {
           if (data != null) {
@@ -60,6 +74,10 @@ export class CandidatInstructorComponent implements OnInit {
           }
         });
     }
+  }
+
+  convertDate(date: any) {
+    return this.datepipe.transform(date, 'HH:mm')
   }
 
   logout() {

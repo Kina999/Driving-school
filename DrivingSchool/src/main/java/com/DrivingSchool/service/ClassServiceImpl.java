@@ -1,5 +1,6 @@
 package com.DrivingSchool.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -19,11 +20,19 @@ public class ClassServiceImpl implements ClassService{
 	
 	@Override
 	public Class getLatestCandidateClass(String candidateEmail) {
-		List<Class> classes = classRepository.findCandidateClasses(candidateEmail);
+		List<Integer> ids = classRepository.findCandidateClassesIds(candidateEmail);
+		List<Class> classes = new ArrayList<Class>();
+		for(Integer i : ids) {
+			classes.add(classRepository.findCandidateClasses(i));
+		}
 		Collections.sort(classes, new Comparator<Class>() {
 			@Override
 			public int compare(final Class d1, final Class d2) {return d1.getClassDateTime().compareTo(d2.getClassDateTime());}});
-		return classes.get(classes.size() - 1);
+		if(classes.size() != 0) {
+			return classes.get(classes.size() - 1);
+		}else {
+			return null;
+		}
 	}
 
 }

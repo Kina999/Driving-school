@@ -44,4 +44,9 @@ public class TerminController {
     public ResponseEntity<?> getAllCandidatePossibleTerminDates(String candidateEmail){	
 		return new ResponseEntity<>(terminService.getAllCandidatePossibleTerminDates(candidateEmail), HttpStatus.OK);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidatePossibleTerminForDate")
+    public ResponseEntity<?> getAllCandidatePossibleTerminForDate(String candidateEmail, String date){	
+		return new ResponseEntity<>(terminService.getAllCandidatePossibleTerminForDate(candidateEmail, date), HttpStatus.OK);
+	}
 }
