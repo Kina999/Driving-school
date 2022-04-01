@@ -71,5 +71,9 @@ public class LicenceServiceImpl implements LicenceService{
 		}
 		return ret;
 	}
+	@Override
+	public List<Licence> findInstructorLicences(String instructorEmail) {
+		return licenceRepository.findInstructorLicences(instructorEmail);
+	}
 }
 	

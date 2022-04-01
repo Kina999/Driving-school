@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DrivingSchool.dto.TerminClientDTO;
 import com.DrivingSchool.dto.TerminDTO;
 import com.DrivingSchool.mapper.TerminMapper;
 import com.DrivingSchool.service.interfaces.TerminService;
@@ -23,6 +24,11 @@ public class TerminController {
 	@RequestMapping(method = RequestMethod.POST, value = "/addTermin")
     public ResponseEntity<?> addTermin(@RequestBody TerminDTO termin){
 		return new ResponseEntity<>(terminService.addTerminToInstructor(TerminMapper.TerminDTOToTermin(termin), termin.instructorEmail, termin.categoryAndType), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/addClientToTermin")
+    public ResponseEntity<?> addClientToTermin(@RequestBody TerminClientDTO termin){
+		return new ResponseEntity<>(terminService.addClientToTermin(termin.clientEmail, termin.terminId), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTermins")

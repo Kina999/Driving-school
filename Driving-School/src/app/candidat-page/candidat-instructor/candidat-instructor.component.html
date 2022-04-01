@@ -153,12 +153,14 @@
           <tbody>
             <tr class="bg-light-gray" *ngFor="let date of terminDates; let i = index">
               <th class="text-uppercase">{{date}}</th>
-              <td *ngFor="let t of terminTimes[i]">
+              <td *ngFor="let t of terminTimes[i]; let j = index">
                 <span
                   class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{t.licence.category.categoryType}}
                   - {{t.licence.licenceType}}</span>
                 <div class="margin-10px-top font-size14">{{convertDate(t.startTime)}} - {{convertDate(t.endTime)}}</div>
-                <div class="font-size13 text-light-gray">Klijent</div>
+                <div class="font-size13 text-light-gray">
+                  <button type="button" class="btn btn-danger" (click)="orderTermin(i, j)">Zakazi</button>
+                </div>
               </td>
             </tr>
           </tbody>

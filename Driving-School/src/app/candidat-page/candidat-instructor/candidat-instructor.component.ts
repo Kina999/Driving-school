@@ -79,7 +79,18 @@ export class CandidatInstructorComponent implements OnInit {
   convertDate(date: any) {
     return this.datepipe.transform(date, 'HH:mm')
   }
-
+  orderTermin(i: number, j: number) {
+    var user = localStorage.getItem('currentUser');
+    if (user != null) {
+      var body = {
+        clientEmail: JSON.parse(user).email,
+        terminId: this.terminTimes[i][j].id
+      };
+      alert(this.terminTimes[i][j].id)
+      this.http.post('http://localhost:8080/termins/addClientToTermin', body)
+          .subscribe(data => {if(data){alert("Sucess")}else{alert("An error occured")}});
+  }
+  }
   logout() {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);

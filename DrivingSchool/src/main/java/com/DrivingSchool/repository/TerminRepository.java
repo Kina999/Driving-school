@@ -11,7 +11,15 @@ import com.DrivingSchool.model.Termin;
 @Repository
 public interface TerminRepository extends JpaRepository<Termin, Integer>{
 	
-	@Query(value = "SELECT * FROM TERMIN WHERE INSTRUCTOR_ID=?1", nativeQuery = true)
-	public List<Termin> findInstructorTermins(String instructorEmail);
+	public Termin findTerminById(Integer terminId);
+	
+	@Query(value = "SELECT * FROM TERMIN WHERE LICENCE_ID=?1", nativeQuery = true)
+	public List<Termin> findInstructorTermins(Integer licanceId);
+	
+	@Query(value = "SELECT class_id FROM class_candidate WHERE CANDIDATE_ID=?1", nativeQuery = true)
+	public List<Integer> findCandidateClassesIds(String candidateEmail);
+	
+	@Query(value = "SELECT * FROM TERMIN WHERE ID=?1", nativeQuery = true)
+	public Termin findCandidateClasses(Integer classId);
 	
 }

@@ -28,7 +28,7 @@ public class Candidate {
 	private Instructor instructor = new Instructor();
 	
 	@ManyToMany(mappedBy = "candidates")
-	private Set<Class> classes = new HashSet<Class>();
+	private Set<Termin> classes = new HashSet<Termin>();
 	
 	public Candidate() {
 		super();
@@ -49,7 +49,7 @@ public class Candidate {
 
 
 	public Candidate(String email, String password, String name, String lastName, String phoneNumber, boolean blocked,
-			Instructor instructor, Set<Class> classes) {
+			Instructor instructor, Set<Termin> classes) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -116,11 +116,11 @@ public class Candidate {
 		this.category = category;
 	}
 
-	public Set<Class> getClasses() {
+	public Set<Termin> getClasses() {
 		return classes;
 	}
 
-	public void setClasses(Set<Class> classes) {
+	public void setClasses(Set<Termin> classes) {
 		this.classes = classes;
 	}
 	
