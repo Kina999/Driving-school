@@ -86,10 +86,27 @@ export class CandidatInstructorComponent implements OnInit {
         clientEmail: JSON.parse(user).email,
         terminId: this.terminTimes[i][j].id
       };
-      alert(this.terminTimes[i][j].id)
       this.http.post('http://localhost:8080/termins/addClientToTermin', body)
-          .subscribe(data => {if(data){alert("Sucess")}else{alert("An error occured")}});
-  }
+        .subscribe(data => {
+          if (data) {
+            alert("Sucess")
+            var user = localStorage.getItem('currentUser');
+            if (user != null) {
+              var userEmail = JSON.parse(user).email;
+              this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
+                (data: any) => {
+                  this.terminDates = data;
+                  this.terminDates.forEach((date: any, i: number) => {
+                    this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
+                      data => {
+                        this.terminTimes[i] = data;
+                      });
+                  });
+                });
+            }
+          } else { alert("An error occured") }
+        });
+    }
   }
   logout() {
     localStorage.removeItem('currentUser');
@@ -126,7 +143,6 @@ export class CandidatInstructorComponent implements OnInit {
               });
             this.instructorChoosen = true;
             this.requestApproved = false;
-            alert("Sucess");
             var user = localStorage.getItem('currentUser');
             if (user != null) {
               localStorage.removeItem('currentUser');

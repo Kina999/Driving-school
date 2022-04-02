@@ -36,127 +36,151 @@ public class TerminServiceImpl implements TerminService{
 	
 	@Override
 	public boolean addTerminToInstructor(Termin termin, String instructorEmail, String categoryAndType) {
-		LocalDate newTermin = termin.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
-			for(Termin t : terminRepository.findInstructorTermins(l.getId())) {
-				LocalDate oldTermin = t.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-				if((oldTermin.getDayOfYear() == newTermin.getDayOfYear() && oldTermin.getYear() == newTermin.getYear()) && (termin.getStartTime().getTime() <= t.getStartTime().getTime() && termin.getEndTime().getTime() >= t.getEndTime().getTime())
-						&& (termin.getStartTime().getTime() <= t.getStartTime().getTime() && termin.getEndTime().getTime() <= t.getEndTime().getTime())
-						&& (termin.getStartTime().getTime() >= t.getStartTime().getTime() && termin.getEndTime().getTime() >= t.getEndTime().getTime())){
-						return false;
+			for(Termin t : terminRepository.findInstructorTermins(l.getId())) {if(terminOverlapsWithAnother(termin, t)){return false;}}
+		}
+		if(licenceService.findLicenceByCategoryAndType(categoryAndType).getExpirationDate().before(termin.getEndTime())) {return false;}
+		termin.setLicence(licenceService.findLicenceByCategoryAndType(categoryAndType));
+		terminRepository.save(termin);
+		return true;
+	}
+	
+	@Override
+	public List<Termin> getAllInstructorTermins(String instructorEmail) {
+		List<Termin> termins = new ArrayList<Termin>();
+		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
+			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {if(terminIsValid(t)) {termins.add(t);}}
+		}
+		return termins;
+	}
+	
+	@Override
+	public Set<String> getAllInstructorTerminDates(String instructorEmail) {
+		List<Date> d = new ArrayList<Date>();
+		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
+			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {if(terminIsValid(t)) {d.add(t.getStartTime());}}
+		}
+		return sortDates(d);
+	}
+	
+	@Override
+	public List<Termin> getAllInstructorTerminTimes(String instructorEmail, String date) {
+		List<Termin> termins = new ArrayList<Termin>();
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); 
+		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
+			for(Termin termin : terminRepository.findInstructorTermins(l.getId())) {
+				if(terminIsValid(termin)) { 
+					String strDate = dateFormat.format(termin.getStartTime());  
+					if(strDate.split(" ")[0].equals(date)) {termins.add(termin);}
 				}
 			}
 		}
-		if(licenceService.findLicenceByCategoryAndType(categoryAndType).getExpirationDate().before(termin.getEndTime())) {
-			return false;
+		return sortTimes(termins);
+	}
+
+	@Override
+	public Set<String> getAllCandidatePossibleTerminDates(String candidateEmail) {
+		List<Date> d = new ArrayList<Date>();
+		Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
+		for(Licence l : licenceService.findInstructorLicences(candidateService.findCandidateByEmail(candidateEmail).getInstructor().getEmail())) {
+			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {
+				if(terminIsValid(t) && !alreadyReserved(t, candidateEmail) 
+						&& t.getLicence().getCategory().getCategoryType().equals(candidate.getCategory())
+						&& t.getLicence().getLicenceType().equals(candidate.getClassType())) {
+						if(candidate.getClassType().equals(TestType.PRACTICAL)) {
+							if(t.getStartTime().after(getLatestCandidateTheoreticalClass(candidateEmail).getEndTime())
+									&& getLatestCandidateTheoreticalClass(candidateEmail).getEndTime().before(new Date())) {d.add(t.getStartTime());}
+						}else {d.add(t.getStartTime());}
+				}
+			}
 		}
-		termin.setLicence(licenceService.findLicenceByCategoryAndType(categoryAndType));
+		return sortDates(d);
+	}
+	
+	
+	
+	@Override
+	public List<Termin> getAllCandidatePossibleTerminForDate(String candidateEmail, String date) {
+		List<Termin> termins = new ArrayList<Termin>();
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
+		for(Licence l : licenceService.findInstructorLicences(candidateService.findCandidateByEmail(candidateEmail).getInstructor().getEmail())) {
+			for(Termin t : terminRepository.findInstructorTermins(l.getId())) {
+				if(terminIsValid(t) && t.getLicence().getCategory().getCategoryType().equals(candidate.getCategory())
+						&& t.getLicence().getLicenceType().equals(candidate.getClassType()) && !alreadyReserved(t, candidateEmail)) {
+					if(candidate.getClassType().equals(TestType.PRACTICAL)) {
+						if(t.getStartTime().after(getLatestCandidateTheoreticalClass(candidateEmail).getEndTime()) 
+								&& getLatestCandidateTheoreticalClass(candidateEmail).getEndTime().before(new Date())) {  
+							String strDate = dateFormat.format(t.getStartTime());  
+							if(strDate.split(" ")[0].equals(date)) {termins.add(t);}
+						}
+					}else {
+						String strDate = dateFormat.format(t.getStartTime());  
+						if(strDate.split(" ")[0].equals(date)) {termins.add(t);}
+					}
+				}
+			}
+		}
+		return sortTimes(termins);
+	}
+	
+	@Override
+	public boolean addClientToTermin(String clientEmail, Integer terminId) {
+		Termin termin = terminRepository.findTerminById(terminId);
+		Candidate candidate = candidateService.findCandidateByEmail(clientEmail);
+		candidateService.increaseClassNumber(clientEmail);
+		termin.getCandidate().add(candidate);
 		terminRepository.save(termin);
 		return true;
 	}
 
 	@Override
-	public List<Termin> getAllInstructorTermins(String instructorEmail) {
-		List<Termin> termins = new ArrayList<Termin>();
-		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
-			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {
-				if(t.getStartTime().after(new Date())) {
-					termins.add(t);
-				}
-			}
+	public boolean deleteTermin(Integer id) {
+		if(terminRepository.findTerminById(id) != null) {
+			terminRepository.deleteTermin(id);
+			return true;
 		}
-		return termins;
-	}
-
-	@Override
-	public Set<String> getAllInstructorTerminDates(String instructorEmail) {
-		Set<String> dates = new LinkedHashSet<String>();
-		List<Date> d = new ArrayList<Date>();
-		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
-			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {
-				if(t.getStartTime().after(new Date())) {
-					d.add(t.getStartTime());
-				}
-			}
-		}
-		Collections.sort(d, new Comparator<Date>() {
-			@Override
-			public int compare(final Date d1, final Date d2) {return d1.compareTo(d2);}});
-		for(Date termin : d) {
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");  
-			String strDate = dateFormat.format(termin);  
-			dates.add(strDate.split(" ")[0]);
-		}
-		return dates;
-	}
-
-	@Override
-	public List<Termin> getAllInstructorTerminTimes(String instructorEmail, String date) {
-		List<Termin> termins = new ArrayList<Termin>();
-		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
-			for(Termin termin : terminRepository.findInstructorTermins(l.getId())) {
-				if(termin.getStartTime().after(new Date())) {
-					DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");  
-					String strDate = dateFormat.format(termin.getStartTime());  
-					if(strDate.split(" ")[0].equals(date)) {
-						termins.add(termin);
-					}
-				}
-			}
-		}
-		Collections.sort(termins, new Comparator<Termin>() {
-			@Override
-			public int compare(final Termin d1, final Termin d2) {return d1.getStartTime().compareTo(d2.getStartTime());}});
-		return termins;
-
-	}
-
-	@Override
-	public Set<String> getAllCandidatePossibleTerminDates(String candidateEmail) {
-		Set<String> dates = new LinkedHashSet<String>();
-		List<Date> d = new ArrayList<Date>();
-		for(Licence l : licenceService.findInstructorLicences(candidateService.findCandidateByEmail(candidateEmail).getInstructor().getEmail())) {
-			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {
-				if(t.getStartTime().after(new Date())) {
-					if(t.getLicence().getCategory().getCategoryType().equals(candidateService.findCandidateByEmail(candidateEmail).getCategory())
-							&& t.getLicence().getLicenceType().equals(getLicenceType(candidateEmail))) {
-						System.out.println("dasdasdasdassd");
-						d.add(t.getStartTime());
-					}
-				}
-			}
-		}
-		Collections.sort(d, new Comparator<Date>() {
-			@Override
-			public int compare(final Date d1, final Date d2) {return d1.compareTo(d2);}});
-		for(Date termin : d) {
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");  
-			String strDate = dateFormat.format(termin);  
-			dates.add(strDate.split(" ")[0]);
-		}
-		return dates;
+		return false;
 	}
 	
-	private TestType getLicenceType(String candidateEmail) {
-		Termin latestClass = getLatestCandidateClass(candidateEmail);
-		if(latestClass == null) {
-			return TestType.THEORETICAL;
-		}else if(latestClass.getNumberOfClass() < latestClass.getLicence().getCategory().getNumberOfClasses()) {
-			return latestClass.getLicence().getLicenceType();
-		}else {
-			if(latestClass.getLicence().getLicenceType().equals(TestType.THEORETICAL)) {
-				return TestType.PRACTICAL;
-			}else {
-				return null; //nema vise sve casove zavrsiooo
-			}
-		}
+	private boolean terminOverlapsWithAnother(Termin termin, Termin anotherTermin) {
+		LocalDate newTermin = termin.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate oldTermin = anotherTermin.getStartTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return (oldTermin.getDayOfYear() == newTermin.getDayOfYear() && oldTermin.getYear() == newTermin.getYear()) 
+				&& (termin.getStartTime().getTime() <= anotherTermin.getStartTime().getTime() 
+				&& termin.getEndTime().getTime() >= anotherTermin.getEndTime().getTime())
+				&& (termin.getStartTime().getTime() <= anotherTermin.getStartTime().getTime() && termin.getEndTime().getTime() <= anotherTermin.getEndTime().getTime())
+				&& (termin.getStartTime().getTime() >= anotherTermin.getStartTime().getTime() && termin.getEndTime().getTime() >= anotherTermin.getEndTime().getTime());
+	}
+	
+	private boolean terminIsValid(Termin t) {
+		return !t.isDeleted() && t.getStartTime().after(new Date());
 	}
 
-	private Termin getLatestCandidateClass(String candidateEmail) {
+	private boolean alreadyReserved(Termin termin, String candidateEmail) {
+		if(termin.getLicence().getLicenceType().equals(TestType.THEORETICAL)) {
+			for(Candidate candidate : termin.getCandidate()) {
+				if(candidate.getEmail().equals(candidateEmail)) {
+					return true;
+				}
+			}
+			return false;
+		}else {
+			if(termin.getCandidate().size() != 0) {
+				return true;
+			}
+			return false;
+		}
+	}
+	
+	private Termin getLatestCandidateTheoreticalClass(String candidateEmail) {
 		List<Integer> ids = terminRepository.findCandidateClassesIds(candidateEmail);
 		List<Termin> classes = new ArrayList<Termin>();
 		for(Integer i : ids) {
-			classes.add(terminRepository.findCandidateClasses(i));
+			Termin termin = terminRepository.findCandidateClasses(i);
+			if(termin.getLicence().getLicenceType().equals(TestType.THEORETICAL)){
+				classes.add(termin);
+			}
 		}
 		Collections.sort(classes, new Comparator<Termin>() {
 			@Override
@@ -168,35 +192,23 @@ public class TerminServiceImpl implements TerminService{
 		}
 	}
 	
-	@Override
-	public List<Termin> getAllCandidatePossibleTerminForDate(String candidateEmail, String date) {
-		List<Termin> termins = new ArrayList<Termin>();
-		for(Licence l : licenceService.findInstructorLicences(candidateService.findCandidateByEmail(candidateEmail).getInstructor().getEmail())) {
-			for(Termin t : terminRepository.findInstructorTermins(l.getId())) {
-				if(t.getLicence().getCategory().getCategoryType().equals(candidateService.findCandidateByEmail(candidateEmail).getCategory())
-						&& t.getLicence().getLicenceType().equals(getLicenceType(candidateEmail)) && t.getStartTime().after(new Date())) {
-				
-					DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");  
-					String strDate = dateFormat.format(t.getStartTime());  
-					if(strDate.split(" ")[0].equals(date)) {
-						termins.add(t);
-					}
-				}
-			}
+	private Set<String> sortDates(List<Date> d){
+		Set<String> dates = new LinkedHashSet<String>();
+		Collections.sort(d, new Comparator<Date>() {
+			@Override
+			public int compare(final Date d1, final Date d2) {return d1.compareTo(d2);}});
+		for(Date termin : d) {
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");  
+			String strDate = dateFormat.format(termin);  
+			dates.add(strDate.split(" ")[0]);
 		}
+		return dates;
+	}
+	
+	private List<Termin> sortTimes(List<Termin> termins){
 		Collections.sort(termins, new Comparator<Termin>() {
 			@Override
 			public int compare(final Termin d1, final Termin d2) {return d1.getStartTime().compareTo(d2.getStartTime());}});
 		return termins;
 	}
-
-	@Override
-	public boolean addClientToTermin(String clientEmail, Integer terminId) {
-		Termin termin = terminRepository.findTerminById(terminId);
-		Candidate candidate = candidateService.findCandidateByEmail(clientEmail);
-		termin.getCandidate().add(candidate);
-		terminRepository.save(termin);
-		return true;
-	}
-
 }

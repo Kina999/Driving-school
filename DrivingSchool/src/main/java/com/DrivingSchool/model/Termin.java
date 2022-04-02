@@ -25,7 +25,6 @@ public class Termin {
 	private Date endTime;
 	private boolean deleted;
 	private boolean canceled;
-	private int numberOfClass;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "licence_id")
 	private Licence licence = new Licence();
@@ -38,25 +37,23 @@ public class Termin {
 	public Termin() {
 		super();
 	}
-	public Termin(Date startTime, Date endTime , Set<Candidate> candidate, boolean deleted, int numberOfClass, boolean canceled) {
+	public Termin(Date startTime, Date endTime , Set<Candidate> candidate, boolean deleted, boolean canceled) {
 		super();
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.candidates = candidate;
 		this.deleted = deleted;
-		this.numberOfClass = numberOfClass;
 		this.canceled = canceled;
 	}
 	
 	public Termin(Date startTime, Date endTime, boolean deleted, Licence licence,
-					Set<Candidate> candidate, int numberOfClass) {
+					Set<Candidate> candidate) {
 		super();
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.deleted = deleted;
 		this.licence = licence;
 		this.candidates = candidate;
-		this.numberOfClass = numberOfClass;
 	}
 	public Integer getId() {
 		return id;
@@ -93,12 +90,6 @@ public class Termin {
 	}
 	public void setLicence(Licence licence) {
 		this.licence = licence;
-	}
-	public int getNumberOfClass() {
-		return numberOfClass;
-	}
-	public void setNumberOfClass(int numberOfClass) {
-		this.numberOfClass = numberOfClass;
 	}
 	public boolean isCanceled() {
 		return canceled;

@@ -1,17 +1,24 @@
 package com.DrivingSchool.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DrivingSchool.dto.CandidateTerminDTO;
 import com.DrivingSchool.dto.TerminClientDTO;
 import com.DrivingSchool.dto.TerminDTO;
 import com.DrivingSchool.mapper.TerminMapper;
+import com.DrivingSchool.model.Termin;
 import com.DrivingSchool.service.interfaces.TerminService;
 
 @RestController
@@ -32,8 +39,12 @@ public class TerminController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTermins")
-    public ResponseEntity<?> getAllInstructorTermins(String instructorEmail){	
-		return new ResponseEntity<>(terminService.getAllInstructorTermins(instructorEmail), HttpStatus.OK);
+    public ResponseEntity<?> getAllInstructorTermins(String instructorEmail){
+		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
+		for(Termin termin : terminService.getAllInstructorTermins(instructorEmail)) {
+			termins.add(TerminMapper.TerminToTerminDTO(termin));
+		}
+		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}	
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminDates")
@@ -43,7 +54,11 @@ public class TerminController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminTimesForDate")
     public ResponseEntity<?> getAllInstructorTerminTimes(String instructorEmail, String date){	
-		return new ResponseEntity<>(terminService.getAllInstructorTerminTimes(instructorEmail, date), HttpStatus.OK);
+		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
+		for(Termin termin : terminService.getAllInstructorTerminTimes(instructorEmail, date)) {
+			termins.add(TerminMapper.TerminToTerminDTO(termin));
+		}
+		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}	
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidatePossibleTerminDates")
@@ -53,6 +68,15 @@ public class TerminController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidatePossibleTerminForDate")
     public ResponseEntity<?> getAllCandidatePossibleTerminForDate(String candidateEmail, String date){	
-		return new ResponseEntity<>(terminService.getAllCandidatePossibleTerminForDate(candidateEmail, date), HttpStatus.OK);
+		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
+		for(Termin termin : terminService.getAllCandidatePossibleTerminForDate(candidateEmail, date)) {
+			termins.add(TerminMapper.TerminToTerminDTO(termin));
+		}
+		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/deleteTermin/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
+		return new ResponseEntity<>(terminService.deleteTermin(id), HttpStatus.OK);
+    }
 }

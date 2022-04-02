@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-instructors',
@@ -8,7 +8,7 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@a
   styleUrls: ['./instructors.component.css']
 })
 export class InstructorsComponent implements OnInit {
-  
+
   email: string = '';
   password: string = '';
   reenteredPassword: string = '';
@@ -25,32 +25,35 @@ export class InstructorsComponent implements OnInit {
     this.http.get('http://localhost:8080/instructors/getAll').subscribe(
       data => {
         this.instructorsList = data;
-    });
+      });
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
   }
-  
-  instructors(){
+
+  instructors() {
     this.router.navigate(['instructors']);
   }
-  register(){
-    if(this.password != this.reenteredPassword){
+  register() {
+    if (this.password != this.reenteredPassword) {
       alert("Passwords not matching");
-    }else{
-      var body = {email: this.email,
-                  password: this.password,
-                  name: this.name,
-                  lastName: this.lastName,
-                  phoneNumber: this.phoneNumber};
+    } else {
+      var body = {
+        email: this.email,
+        password: this.password,
+        name: this.name,
+        lastName: this.lastName,
+        phoneNumber: this.phoneNumber
+      };
       this.http.post('http://localhost:8080/instructors/registration', body)
-          .subscribe(data => {if(data){
+        .subscribe(data => {
+          if (data) {
             this.http.get('http://localhost:8080/instructors/getAll').subscribe(
-            data => {
-              this.instructorsList = data;
-            });
+              data => {
+                this.instructorsList = data;
+              });
             this.email = '';
             this.password = '';
             this.reenteredPassword = '';
@@ -58,7 +61,8 @@ export class InstructorsComponent implements OnInit {
             this.lastName = '';
             this.phoneNumber = '';
             this.closeModal.nativeElement.click();
-            alert("Sucess")}else{alert("Username already exists")}});
+          } else { alert("Username already exists") }
+        });
     }
   }
 }

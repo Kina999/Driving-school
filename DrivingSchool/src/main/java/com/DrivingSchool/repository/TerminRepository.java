@@ -2,7 +2,10 @@ package com.DrivingSchool.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +15,11 @@ import com.DrivingSchool.model.Termin;
 public interface TerminRepository extends JpaRepository<Termin, Integer>{
 	
 	public Termin findTerminById(Integer terminId);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE TERMIN SET DELETED = TRUE WHERE ID = ?1", nativeQuery = true)
+	public void deleteTermin(Integer terminId);	
 	
 	@Query(value = "SELECT * FROM TERMIN WHERE LICENCE_ID=?1", nativeQuery = true)
 	public List<Termin> findInstructorTermins(Integer licanceId);

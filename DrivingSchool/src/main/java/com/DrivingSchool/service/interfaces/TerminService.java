@@ -6,6 +6,7 @@ import java.util.Set;
 import com.DrivingSchool.model.Termin;
 
 public interface TerminService { 
+	public boolean deleteTermin(Integer id);
 	public List<Termin> getAllInstructorTermins(String instructorEmail);
 	public boolean addClientToTermin(String clientEmail, Integer terminId);
 	public Set<String> getAllInstructorTerminDates(String instructorEmail);

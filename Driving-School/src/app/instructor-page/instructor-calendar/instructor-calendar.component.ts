@@ -18,6 +18,7 @@ export class InstructorCalendarComponent implements OnInit {
   terminDates: any = [];
   terminTimes: any = [];
   instructorTermins: any = [];
+  selectedTermin: any;
 
   @ViewChild('closeModal3') closeModal3: any;
 
@@ -45,8 +46,36 @@ export class InstructorCalendarComponent implements OnInit {
               });
           });
         });
-
     }
+  }
+
+  removeTermin(i: number, j: number) {
+    this.http.delete('http://localhost:8080/termins/deleteTermin/' + this.terminTimes[i][j].id)
+      .subscribe(data => {
+        var user = localStorage.getItem('currentUser');
+        if (user != null) {
+          var email = JSON.parse(user).email;
+          if (data) {
+            this.http.get('http://localhost:8080/termins/getAllInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
+              (data: any) => {
+                this.instructorTermins = data;
+              });
+            this.http.get('http://localhost:8080/termins/getAllInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
+              (data: any) => {
+                this.terminDates = data;
+                this.terminDates.forEach((date: any, i: number) => {
+                  this.http.get('http://localhost:8080/termins/getAllInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
+                    data => {
+                      this.terminTimes[i] = data;
+                    });
+                });
+              });
+          } else {
+            alert("An error occured... Please try again!")
+          }
+        }
+      }
+      );
   }
 
   convertDate(date: any) {
@@ -128,5 +157,8 @@ export class InstructorCalendarComponent implements OnInit {
           });
       }
     }
+  }
+  setSelectedTermin(i: number, j: number) {
+    this.selectedTermin = this.terminTimes[i][j];
   }
 }

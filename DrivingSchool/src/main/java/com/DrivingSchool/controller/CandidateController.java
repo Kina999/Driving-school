@@ -1,5 +1,8 @@
 package com.DrivingSchool.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.DrivingSchool.dto.CandidateInstructorDTO;
 import com.DrivingSchool.dto.CandidateRegistrationDTO;
 import com.DrivingSchool.dto.EditCandidateProfileDTO;
+import com.DrivingSchool.mapper.CandidateMapper;
+import com.DrivingSchool.model.Candidate;
 import com.DrivingSchool.service.interfaces.CandidateService;
 import com.DrivingSchool.service.interfaces.InstructorRequestService;
 
@@ -47,6 +52,10 @@ public class CandidateController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getInstructorCandidates")
     public ResponseEntity<?> getInstructorCandidates(String email){	
-		return new ResponseEntity<>(candidateService.getInstructorCandidates(email), HttpStatus.OK);
+		List<CandidateRegistrationDTO> candidates = new ArrayList<CandidateRegistrationDTO>();
+		for(Candidate candidate : candidateService.getInstructorCandidates(email)) {
+			candidates.add(CandidateMapper.CandidateToCandidateRegistrationDTO(candidate));
+		}
+		return new ResponseEntity<>(candidates, HttpStatus.OK);
 	}
 }

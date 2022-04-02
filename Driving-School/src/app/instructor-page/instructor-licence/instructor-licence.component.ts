@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -14,67 +14,71 @@ export class InstructorLicenceComponent implements OnInit {
   expirationDate = new Date();
   licenceType: string = '';
   category: string = '';
-  
+
   @ViewChild('closeModal1') closeModal1: any;
 
-  constructor(public datepipe: DatePipe, private router : Router, private http: HttpClient) { }
+  constructor(public datepipe: DatePipe, private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     var user = localStorage.getItem('currentUser');
-    if(user != null){
+    if (user != null) {
       this.http.get('http://localhost:8080/licences/getAll?email=' + JSON.parse(user).email).subscribe(
         data => {
           this.licences = data;
-      });
+        });
     }
   }
-  logout(){
+  logout() {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
   }
 
-  account(){
+  account() {
     this.router.navigate(['instructor-account']);
   }
-  licence(){
+  licence() {
     this.router.navigate(['instructor-licence']);
   }
-  convertDate(date: any){
+  convertDate(date: any) {
     return this.datepipe.transform(date, 'dd-MM-yyyy')
   }
-  candidates(){
+  candidates() {
     this.router.navigate(['instructor-candidates']);
   }
 
-  requests(){
+  requests() {
     this.router.navigate(['instructor-requests']);
   }
 
-  termins(){
+  termins() {
     this.router.navigate(['instructor-calendar']);
   }
-  
-  addLicence(){
-    if(this.licenceType === '' || this.category === ''){
+
+  addLicence() {
+    if (this.licenceType === '' || this.category === '') {
       alert("Please enter all fields")
-    }else{
+    } else {
       var user = localStorage.getItem('currentUser');
-      if(user != null){
+      if (user != null) {
         var userEmail = JSON.parse(user).email;
-        var body = {expirationDate: this.expirationDate,
+        var body = {
+          expirationDate: this.expirationDate,
           licenceType: this.licenceType,
           category: this.category,
-          email: userEmail};
+          email: userEmail
+        };
         this.http.post('http://localhost:8080/licences/addLicence', body)
-        .subscribe(data => {if(data){
-          this.http.get('http://localhost:8080/licences/getAll?email=' + userEmail).subscribe(
-            data => {
-              this.licences = data;
+          .subscribe(data => {
+            if (data) {
+              this.http.get('http://localhost:8080/licences/getAll?email=' + userEmail).subscribe(
+                data => {
+                  this.licences = data;
+                });
+              this.closeModal1.nativeElement.click();
+            } else { alert("Licence type already exists!") }
           });
-          this.closeModal1.nativeElement.click();
-          alert("Sucess")}else{alert("Licence type already exists!")}});
-        }
+      }
     }
   }
-   
+
 }
