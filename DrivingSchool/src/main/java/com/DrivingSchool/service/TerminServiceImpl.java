@@ -4,13 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +47,18 @@ public class TerminServiceImpl implements TerminService{
 		}
 		return termins;
 	}
-	
+
+	@Override
+	public Set<String> getAllCandidateTerminDates(String candidateEmail) {
+		List<Date> d = new ArrayList<Date>();
+		for(Termin t: terminRepository.findAll()) {
+			if(terminIsValid(t) && reservedByCandidate(t, candidateEmail)) {
+				d.add(t.getStartTime());
+			}
+		}
+		return sortDates(d);
+	}
+
 	@Override
 	public Set<String> getAllInstructorTerminDates(String instructorEmail) {
 		List<Date> d = new ArrayList<Date>();
@@ -96,9 +101,21 @@ public class TerminServiceImpl implements TerminService{
 		}
 		return sortDates(d);
 	}
-	
-	
-	
+
+	@Override
+	public List<Termin> getAllCandidateTerminForDate(String candidateEmail, String date) {
+		List<Termin> termins = new ArrayList<Termin>();
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		for(Termin t : terminRepository.findAll()) {
+			if(terminIsValid(t) && reservedByCandidate(t, candidateEmail) && !termins.contains(t)) {
+				String strDate = dateFormat.format(t.getStartTime());
+				if(strDate.split(" ")[0].equals(date)) {termins.add(t);}
+			}
+		}
+		return sortTimes(termins);
+	}
+
+
 	@Override
 	public List<Termin> getAllCandidatePossibleTerminForDate(String candidateEmail, String date) {
 		List<Termin> termins = new ArrayList<Termin>();
@@ -135,6 +152,20 @@ public class TerminServiceImpl implements TerminService{
 	}
 
 	@Override
+	public boolean cancelTermin(int id, String candidateEmail) {
+		Termin canceledTermin = terminRepository.findTerminById(id);
+		canceledTermin.setCancelationDate(new Date());
+		Set<Candidate> candidates = new HashSet<>();
+		for(Candidate c : canceledTermin.getCandidate()){
+			if(!c.getEmail().equals(candidateEmail)) candidates.add(c);
+		}
+		Termin newTermin = new Termin(canceledTermin.getStartTime(), canceledTermin.getEndTime(), false, null, canceledTermin.getLicence(), candidates);
+		terminRepository.save(newTermin);
+		terminRepository.save(canceledTermin);
+		return true;
+	}
+
+	@Override
 	public boolean deleteTermin(Integer id) {
 		if(terminRepository.findTerminById(id) != null) {
 			terminRepository.deleteTermin(id);
@@ -154,25 +185,24 @@ public class TerminServiceImpl implements TerminService{
 	}
 	
 	private boolean terminIsValid(Termin t) {
-		return !t.isDeleted() && t.getStartTime().after(new Date());
+		return !t.isDeleted() && t.getStartTime().after(new Date()) && t.getCancelationDate() == null;
 	}
 
 	private boolean alreadyReserved(Termin termin, String candidateEmail) {
 		if(termin.getLicence().getLicenceType().equals(TestType.THEORETICAL)) {
-			for(Candidate candidate : termin.getCandidate()) {
-				if(candidate.getEmail().equals(candidateEmail)) {
-					return true;
-				}
-			}
+			for(Candidate candidate : termin.getCandidate()) {if(candidate.getEmail().equals(candidateEmail)) {return true;}}
 			return false;
 		}else {
-			if(termin.getCandidate().size() != 0) {
-				return true;
-			}
+			if(termin.getCandidate().size() != 0) {return true;}
 			return false;
 		}
 	}
-	
+
+	private boolean reservedByCandidate(Termin termin, String candidateEmail) {
+		for(Candidate candidate : termin.getCandidate()) {if(candidate.getEmail().equals(candidateEmail)) {return true;}}
+		return false;
+	}
+
 	private Termin getLatestCandidateTheoreticalClass(String candidateEmail) {
 		List<Integer> ids = terminRepository.findCandidateClassesIds(candidateEmail);
 		List<Termin> classes = new ArrayList<Termin>();
@@ -209,6 +239,16 @@ public class TerminServiceImpl implements TerminService{
 		Collections.sort(termins, new Comparator<Termin>() {
 			@Override
 			public int compare(final Termin d1, final Termin d2) {return d1.getStartTime().compareTo(d2.getStartTime());}});
+		return termins;
+	}
+
+	@Override
+	public List<Termin> getAllCandidateTermins(String candidateEmail) {
+		List<Integer> ids = terminRepository.findCandidateClassesIds(candidateEmail);
+		List<Termin> termins = new ArrayList<Termin>();
+		for(Integer i : ids) {
+			termins.add(terminRepository.findCandidateClasses(i));
+		}
 		return termins;
 	}
 }

@@ -19,6 +19,8 @@ import { CandidatInstructorComponent } from './candidat-page/candidat-instructor
 import { InstructorRequestsComponent } from './instructor-page/instructor-requests/instructor-requests.component';
 import { InstructorCandidatesComponent } from './instructor-page/instructor-candidates/instructor-candidates.component';
 import { InstructorCalendarComponent } from './instructor-page/instructor-calendar/instructor-calendar.component';
+import { CandidateTerminsComponent } from './candidat-page/candidate-termins/candidate-termins.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -36,14 +38,19 @@ import { InstructorCalendarComponent } from './instructor-page/instructor-calend
     CandidatInstructorComponent,
     InstructorRequestsComponent,
     InstructorCandidatesComponent,
-    InstructorCalendarComponent
+    InstructorCalendarComponent,
+    CandidateTerminsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBZDx6ISSPAxZfodnJrb5AhMD5omR9CcWg',
+      libraries: ['places']
+    }),
   ],
   providers: [
     DatePipe

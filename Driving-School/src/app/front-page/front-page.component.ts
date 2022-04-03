@@ -8,6 +8,9 @@ import { Router, NavigationStart } from '@angular/router';
 })
 export class FrontPageComponent implements OnInit {
 
+  latitude = 45.267136;
+  longitude = 19.833549;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {

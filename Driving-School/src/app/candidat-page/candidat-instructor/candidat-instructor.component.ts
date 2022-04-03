@@ -75,7 +75,9 @@ export class CandidatInstructorComponent implements OnInit {
         });
     }
   }
-
+  termins() {
+    this.router.navigate(['candidate-termins']);
+  }
   convertDate(date: any) {
     return this.datepipe.transform(date, 'HH:mm')
   }
@@ -89,7 +91,6 @@ export class CandidatInstructorComponent implements OnInit {
       this.http.post('http://localhost:8080/termins/addClientToTermin', body)
         .subscribe(data => {
           if (data) {
-            alert("Sucess")
             var user = localStorage.getItem('currentUser');
             if (user != null) {
               var userEmail = JSON.parse(user).email;

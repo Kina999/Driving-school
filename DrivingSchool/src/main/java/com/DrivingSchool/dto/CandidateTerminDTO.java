@@ -8,6 +8,7 @@ public class CandidateTerminDTO {
 	public Integer id;
 	public Date startTime;
 	public Date endTime;
+	public boolean cancelable;
 	public String categoryAndType;
 	public Set<CandidateRegistrationDTO> candidates;
 	
@@ -16,9 +17,10 @@ public class CandidateTerminDTO {
 	}
 
 	public CandidateTerminDTO(Integer id, Date startTime, Date endTime, String categoryAndType,
-			Set<CandidateRegistrationDTO> candidates) {
+			Set<CandidateRegistrationDTO> candidates, boolean cancelable) {
 		super();
 		this.id = id;
+		this.cancelable = cancelable;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.categoryAndType = categoryAndType;

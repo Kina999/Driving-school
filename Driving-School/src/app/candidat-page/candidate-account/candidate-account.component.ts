@@ -71,4 +71,7 @@ export class CandidateAccountComponent implements OnInit {
       }else{alert("An error occured... Please try again")}});
 
   }
+  termins(){
+    this.router.navigate(['candidate-termins']);
+  }
 }

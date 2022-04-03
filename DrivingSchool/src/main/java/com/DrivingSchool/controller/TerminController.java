@@ -50,7 +50,12 @@ public class TerminController {
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminDates")
     public ResponseEntity<?> getAllInstructorTerminDates(String instructorEmail){	
 		return new ResponseEntity<>(terminService.getAllInstructorTerminDates(instructorEmail), HttpStatus.OK);
-	}	
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidateTermins")
+	public ResponseEntity<?> getAllCandidateTermins(String candidateEmail){
+		return new ResponseEntity<>(terminService.getAllCandidateTermins(candidateEmail), HttpStatus.OK);
+	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminTimesForDate")
     public ResponseEntity<?> getAllInstructorTerminTimes(String instructorEmail, String date){	
@@ -74,9 +79,28 @@ public class TerminController {
 		}
 		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidateTerminDates")
+	public ResponseEntity<?> getAllCandidateTerminDates(String candidateEmail){
+		return new ResponseEntity<>(terminService.getAllCandidateTerminDates(candidateEmail), HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidateTerminForDate")
+	public ResponseEntity<?> getAllCandidateTerminForDate(String candidateEmail, String date){
+		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
+		for(Termin termin : terminService.getAllCandidateTerminForDate(candidateEmail, date)) {
+			termins.add(TerminMapper.TerminToTerminDTO(termin));
+		}
+		return new ResponseEntity<>(termins, HttpStatus.OK);
+	}
 	
 	@DeleteMapping("/deleteTermin/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		return new ResponseEntity<>(terminService.deleteTermin(id), HttpStatus.OK);
     }
+
+	@RequestMapping(method = RequestMethod.GET, value = "/cancelTermin")
+	public ResponseEntity<?> cancelTerminById(int id, String candidateEmail) {
+		return new ResponseEntity<>(terminService.cancelTermin(id, candidateEmail), HttpStatus.OK);
+	}
 }
