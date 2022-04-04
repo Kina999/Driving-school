@@ -46,4 +46,18 @@ public class InstructorServiceImpl implements InstructorService{
 		return instructorRepository.findInstructorByEmail(email);
 	}
 
+	@Override
+	public boolean leaveGrade(String instructorEmail, String grade) {
+		try {
+			double oldGrade = instructorRepository.findInstructorByEmail(instructorEmail).getGrade();
+			if(oldGrade == 0) {
+				oldGrade = Integer.parseInt(grade);
+			}
+			instructorRepository.leaveGrade(instructorEmail, (oldGrade + Integer.parseInt(grade)) / 2);
+		}catch(Exception ex) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -16,6 +16,10 @@ export class CandidateAccountComponent implements OnInit {
   name: string = '';
   lastName: string = '';
   phoneNumber: string = '';
+  progress: any;
+  theoreticalProgress: number = 0;
+  practicalProgress: number = 0;
+  drivingLicenceProgress: number = 0;
 
   constructor(private router: Router, private http: HttpClient) { }
 
@@ -28,6 +32,13 @@ export class CandidateAccountComponent implements OnInit {
       this.name = user.name;
       this.lastName = user.lastName;
       this.phoneNumber = user.phoneNumber;
+      this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + this.email).subscribe(
+        (data: any) => {
+          this.progress = data; 
+          this.theoreticalProgress = data.theoreticalDone / data.necessaryClasses * 100;
+          this.practicalProgress = data.practicalDone / data.necessaryClasses * 100;
+          this.drivingLicenceProgress = (data.practicalDone + data.theoreticalDone) / (2 * data.necessaryClasses) * 100;
+        });
     }
   }
 

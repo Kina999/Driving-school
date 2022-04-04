@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-instructor-candidates',
@@ -8,45 +8,53 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpResponse, HttpParams} from '@a
   styleUrls: ['./instructor-candidates.component.css']
 })
 export class InstructorCandidatesComponent implements OnInit {
+
   instructorCandidates: any = [];
+  candidateProgress: any = [];
 
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     var user = localStorage.getItem('currentUser');
-    if(user != null){
+    if (user != null) {
       var userEmail = JSON.parse(user).email;
       this.http.get('http://localhost:8080/candidates/getInstructorCandidates?email=' + userEmail).subscribe(
         (data: any) => {
-          if(data != null){
+          if (data != null) {
             this.instructorCandidates = data;
+            this.instructorCandidates.forEach((candidate: any, i: number) => {
+              this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + candidate.email).subscribe(
+                (data: any) => {
+                  this.candidateProgress[i] = data;
+                });
+            });
           }
-      });
+        });
     }
   }
-  
-  termins(){
+
+  termins() {
     this.router.navigate(['instructor-calendar']);
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
   }
 
-  account(){
+  account() {
     this.router.navigate(['instructor-account']);
   }
 
-  licence(){
+  licence() {
     this.router.navigate(['instructor-licence']);
   }
 
-  candidates(){
+  candidates() {
     this.router.navigate(['instructor-candidates']);
   }
 
-  requests(){
+  requests() {
     this.router.navigate(['instructor-requests']);
   }
 }

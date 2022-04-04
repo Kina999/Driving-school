@@ -9,8 +9,10 @@ import com.DrivingSchool.model.Worker;
 
 public interface CandidateService {
 	public Worker getInstructor(String email);
+	public boolean isCandidateDone(String candidateEmail);
 	public boolean resetClassNumber(String candidateEmail);
 	public boolean increaseClassNumber(String candidateEmail);
+	public boolean decreaseClassNumber(String candidateEmail);
 	public List<Candidate> getInstructorCandidates(String email);
 	public Candidate findCandidateByEmail(String candidateEmail);
 	public boolean registerCandidate(CandidateRegistrationDTO candidate);

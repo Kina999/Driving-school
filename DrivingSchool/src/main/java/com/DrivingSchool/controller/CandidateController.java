@@ -13,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.DrivingSchool.dto.CandidateInstructorDTO;
+import com.DrivingSchool.dto.CandidateProgressDTO;
 import com.DrivingSchool.dto.CandidateRegistrationDTO;
 import com.DrivingSchool.dto.EditCandidateProfileDTO;
+import com.DrivingSchool.enumClasses.TestType;
 import com.DrivingSchool.mapper.CandidateMapper;
 import com.DrivingSchool.model.Candidate;
+import com.DrivingSchool.model.Category;
 import com.DrivingSchool.service.interfaces.CandidateService;
+import com.DrivingSchool.service.interfaces.CategoryService;
 import com.DrivingSchool.service.interfaces.InstructorRequestService;
 
 @RestController
@@ -27,11 +31,38 @@ public class CandidateController {
 	@Autowired 
 	private CandidateService candidateService;
 	@Autowired
+	private CategoryService categoryService;
+	@Autowired
 	private InstructorRequestService instructorRequestService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getInstructor")
     public ResponseEntity<?> getInstructor(String email){	
 		return new ResponseEntity<>(candidateService.getInstructor(email), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateStatus")
+    public ResponseEntity<?> isCandidateDone(String email){	
+		return new ResponseEntity<>(candidateService.isCandidateDone(email), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateProgress")
+    public ResponseEntity<?> getCandidateProgress(String candidateEmail){	
+		
+		Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
+		CandidateProgressDTO progressDto = new CandidateProgressDTO();
+		Category category = categoryService.getCategory(candidate.getCategory());
+		
+		progressDto.necessaryClasses = category.getNumberOfClasses();
+		
+		if(candidate.getClassType().equals(TestType.PRACTICAL)) {
+			progressDto.theoreticalDone = category.getNumberOfClasses();
+			progressDto.practicalDone = candidate.getNumberOfClasses();
+		}else {
+			progressDto.theoreticalDone = candidate.getNumberOfClasses();
+			progressDto.practicalDone = 0;
+		}
+		
+		return new ResponseEntity<>(progressDto, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/registration")

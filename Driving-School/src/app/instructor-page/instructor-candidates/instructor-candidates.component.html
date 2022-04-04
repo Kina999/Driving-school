@@ -3,61 +3,96 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <html>
-  <head>
-    <link href="instructor-candidates.component.css" rel="stylesheet" />
-  </head>
-  <body class="background">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top">ALUNNO</a>
-            
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 30rem;">
-                    <li class="nav-item"><a class="nav-link" (click)="termins()" style="cursor: pointer">Termini</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="requests()" style="cursor: pointer">Zahtjevi</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="licence()" style="cursor: pointer">Licence</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
-                </ul>
-            </div>
-        </div>
-      </nav>
-      <div class="col-lg-9 mt-4 mt-lg-0">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm" style="margin-top: 5rem; margin-left: 14rem; margin-top: 10rem;">
-              <table class="table manage-candidates-top mb-0">
-                <thead>
-                  <tr>
-                    <th>Ime kandidata</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="candidates-list" *ngFor="let request of instructorCandidates;let indexOfelement=index;">
-                    <td class="title">
-                      <div><a href="#" data-abc="true"><span class="w-48 avatar gd-info">{{request.name.charAt(0)}}</span></a></div>
-                      <div class="candidate-list-details">
-                        <div class="candidate-list-info">
-                          <div class="candidate-list-title">
-                            <h5 class="mb-0"><a href="#">{{request.name}} {{request.lastname}}</a></h5>
-                          </div>
-                          <div class="candidate-list-option">
-                            <ul class="list-unstyled">
-                              <li><i class="fa fa-user"></i>{{request.email}}</li>
-                              <li><i class="fa fa-phone"></i>{{request.phoneNumber}}</li>
-                            </ul>
+
+<head>
+  <link href="instructor-candidates.component.css" rel="stylesheet" />
+</head>
+
+<body class="background">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
+    <div class="container">
+      <a class="navbar-brand" href="#page-top">ALUNNO</a>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 30rem;">
+          <li class="nav-item"><a class="nav-link" (click)="termins()" style="cursor: pointer">Termini</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="requests()" style="cursor: pointer">Zahtjevi</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="licence()" style="cursor: pointer">Licence</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="col-lg-9 mt-4 mt-lg-0">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm"
+          style="margin-top: 5rem; margin-left: 14rem; margin-top: 10rem;">
+          <table class="table manage-candidates-top mb-0">
+            <thead>
+              <tr>
+                <th>Ime kandidata</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="candidates-list" *ngFor="let request of instructorCandidates;let indexOfelement=index;">
+                <td class="title">
+                  <div><a href="#" data-abc="true"><span
+                        class="w-48 avatar gd-info">{{request.name.charAt(0)}}</span></a></div>
+                  <div class="candidate-list-details">
+                    <div class="candidate-list-info">
+                      <div class="candidate-list-title">
+                        <h5 class="mb-0"><a href="#">{{request.name}} {{request.lastname}}</a></h5>
+                      </div>
+                      <div class="candidate-list-option">
+                        <ul class="list-unstyled">
+                          <li><i class="fa fa-user"></i>{{request.email}}</li>
+                          <li><i class="fa fa-phone"></i>{{request.phoneNumber}}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body" style="margin-top: -2rem; margin-left: 50%;">
+                    <div class="d-flex flex-column align-items-center text-center">
+                      <div class="col-md-8">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <small>Teorijska nastava ({{candidateProgress[indexOfelement].theoreticalDone}} / {{candidateProgress[indexOfelement].necessaryClasses}})</small>
+                            <div style="margin-bottom: -0.8rem;">
+                              <div class="progress mb-3" style="height: 10px">
+                                <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" [style.width.%]="candidateProgress[indexOfelement].theoreticalDone / candidateProgress[indexOfelement].necessaryClasses * 100" aria-valuenow="candidateProgress[indexOfelement].theoreticalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
+                                  aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                            <div style="margin-bottom: -0.8rem;">
+                              <small>Prakticna nastava ({{candidateProgress[indexOfelement].practicalDone}} / {{candidateProgress[indexOfelement].necessaryClasses}})</small>
+                              <div class="progress mb-3" style="height: 10px">
+                                <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" [style.width.%]="candidateProgress[indexOfelement].practicalDone / candidateProgress[indexOfelement].necessaryClasses * 100" aria-valuenow="candidateProgress[indexOfelement].practicalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
+                                  aria-valuemax="100"></div>
+                              </div>
+                            </div>
+                            <small>Vozacka dozvola</small>
+                            <div class="progress mb-3" style="height: 10px">
+                              <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" [style.width.%]="(candidateProgress[indexOfelement].theoreticalDone + candidateProgress[indexOfelement].practicalDone) / (2 * candidateProgress[indexOfelement].necessaryClasses) * 100" aria-valuenow="(candidateProgress[indexOfelement].theoreticalDone + candidateProgress[indexOfelement].practicalDone) / (2 * candidateProgress[indexOfelement].necessaryClasses) * 100"
+                                aria-valuemax="100"></div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-  </body>
+    </div>
+  </div>
+</body>
+
 </html>

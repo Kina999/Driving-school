@@ -9,4 +9,5 @@ public interface InstructorService {
 	public Instructor getInstructorByMail(String email);
 	public boolean addNewInstructor(Instructor instructor);
 	public boolean editInstructorProfile(Instructor instructor);
+	public boolean leaveGrade(String instructorEmail, String grade);
 }

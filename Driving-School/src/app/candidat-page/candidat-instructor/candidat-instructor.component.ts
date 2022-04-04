@@ -20,6 +20,9 @@ export class CandidatInstructorComponent implements OnInit {
   terminDates: any = [];
   terminTimes: any = [];
   instructorTermins: any = [];
+  candidateDone: boolean = false;
+  grade: number = 0;
+
   @ViewChild('closeModal2') closeModal2: any;
 
   constructor(private router: Router, private http: HttpClient, public datepipe: DatePipe) { }
@@ -72,6 +75,10 @@ export class CandidatInstructorComponent implements OnInit {
           } else {
             this.instructorChoosen = false;
           }
+        });
+      this.http.get('http://localhost:8080/candidates/getCandidateStatus?email=' + userEmail).subscribe(
+        (data: any) => {
+          this.candidateDone = data;
         });
     }
   }
@@ -156,6 +163,29 @@ export class CandidatInstructorComponent implements OnInit {
         });
 
     }
+  }
+
+  leaveGrade() {
+    var body = {
+      instructorEmail: this.candidateInstructor.email,
+      grade: this.grade
+    };
+    this.http.post('http://localhost:8080/instructors/leaveGrade', body)
+      .subscribe(data => {
+        if (!data) {
+          alert("An error occured...")
+        } else {
+          var user = localStorage.getItem('currentUser');
+          if (user != null) {
+            this.http.get('http://localhost:8080/candidates/getInstructor?email=' + JSON.parse(user).email).subscribe(
+              data => {
+                if (data != null) {
+                  this.candidateInstructor = data;
+                }
+              });
+          }
+        }
+      });
   }
 
   categoryChanged(event: any) {

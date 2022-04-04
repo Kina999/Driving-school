@@ -35,19 +35,21 @@
                   <div class="card h-100">
                     <div class="card-body">
                       <h6 class="d-flex align-items-center mb-3">Status</h6>
-                      <small>Teorijska nastava</small>
+                      <small>Teorijska nastava ({{progress.theoreticalDone}} / {{progress.necessaryClasses}})</small>
                       <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80"
+                        <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="theoreticalProgress" aria-valuenow="theoreticalProgress"
                           aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
-                      <small>Prakticna nastava</small>
+                      <br/>
+                      <small>Prakticna nastava ({{progress.practicalDone}} / {{progress.necessaryClasses}})</small>
                       <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%" aria-valuenow="72"
+                        <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="practicalProgress" aria-valuenow="practicalProgress"
                           aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
+                      <br/>
                       <small>Vozacka dozvola</small>
                       <div class="progress mb-3" style="height: 5px">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66"
+                        <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="drivingLicenceProgress" aria-valuenow="drivingLicenceProgress"
                           aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                     </div>

@@ -11,10 +11,17 @@ import com.DrivingSchool.model.Instructor;
 
 @Repository
 public interface InstructorRepository extends JpaRepository<Instructor, String>{
+	
 	public Instructor findInstructorByEmail(String instructorEmail);
 
 	@Modifying
 	@Transactional
+	@Query(value = "update worker set grade = ?2 where email = ?1", nativeQuery = true)
+	public void leaveGrade(String instructorEmail, double grade);	
+	
+	@Modifying
+	@Transactional
 	@Query(value = "update worker set password = ?2, name = ?3, last_name = ?4, phone_number = ?5 where email = ?1", nativeQuery = true)
-	public void updateInstructor(String email, String password, String name, String lastName, String phoneNumber);	
+	public void updateInstructor(String email, String password, String name, String lastName, String phoneNumber);
+	
 }

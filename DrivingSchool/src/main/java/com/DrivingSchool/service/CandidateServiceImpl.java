@@ -9,6 +9,7 @@ import com.DrivingSchool.dto.CandidateRegistrationDTO;
 import com.DrivingSchool.dto.EditCandidateProfileDTO;
 import com.DrivingSchool.enumClasses.TestType;
 import com.DrivingSchool.model.Candidate;
+import com.DrivingSchool.model.Category;
 import com.DrivingSchool.model.Worker;
 import com.DrivingSchool.repository.CandidateRepository;
 import com.DrivingSchool.service.interfaces.CandidateService;
@@ -97,6 +98,27 @@ public class CandidateServiceImpl implements CandidateService{
 			}
 			return true;
 		}
+		return false;
+	}
+
+	@Override
+	public boolean decreaseClassNumber(String candidateEmail) {
+		if(candidateRepository.findCandidateByEmail(candidateEmail) != null) {
+			candidateRepository.incrementClassNumber(candidateEmail, candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() + 1);
+			if(candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() + 1 == categoryService.getCategory(candidateRepository.findCandidateByEmail(candidateEmail).getCategory()).getNumberOfClasses()) {
+				resetClassNumber(candidateEmail);
+				candidateRepository.setClassType(candidateEmail);
+			}
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isCandidateDone(String candidateEmail) {
+		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
+		Category category = categoryService.getCategory(candidate.getCategory());
+		if(candidate.getNumberOfClasses() == category.getNumberOfClasses() && candidate.getClassType().equals(TestType.PRACTICAL)) {return true;}
 		return false;
 	}
 

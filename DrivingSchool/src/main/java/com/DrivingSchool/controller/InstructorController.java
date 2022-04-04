@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.DrivingSchool.dto.InstructorDTO;
+import com.DrivingSchool.dto.InstructorGradeDTO;
 import com.DrivingSchool.mapper.InstructorMapper;
 import com.DrivingSchool.service.interfaces.InstructorService;
 
@@ -23,6 +24,11 @@ public class InstructorController {
 	@RequestMapping(method = RequestMethod.POST, value = "/registration")
     public ResponseEntity<?> registerClient(@RequestBody InstructorDTO instructor){	
 		return new ResponseEntity<>(instructorService.addNewInstructor(InstructorMapper.InstructorDTOToInstructor(instructor)), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/leaveGrade")
+    public ResponseEntity<?> leaveGrade(@RequestBody InstructorGradeDTO instructor){	
+		return new ResponseEntity<>(instructorService.leaveGrade(instructor.instructorEmail, instructor.grade), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getAll")

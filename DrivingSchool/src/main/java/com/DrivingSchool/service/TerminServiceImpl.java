@@ -4,7 +4,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -162,6 +169,7 @@ public class TerminServiceImpl implements TerminService{
 		Termin newTermin = new Termin(canceledTermin.getStartTime(), canceledTermin.getEndTime(), false, null, canceledTermin.getLicence(), candidates);
 		terminRepository.save(newTermin);
 		terminRepository.save(canceledTermin);
+		candidateService.decreaseClassNumber(candidateEmail);
 		return true;
 	}
 
