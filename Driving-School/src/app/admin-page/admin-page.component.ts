@@ -21,4 +21,8 @@ export class AdminPageComponent implements OnInit {
   instructors(){
     this.router.navigate(['instructors']);
   }
+
+  candidates(){
+    this.router.navigate(['admin-candidates']);
+  }
 }

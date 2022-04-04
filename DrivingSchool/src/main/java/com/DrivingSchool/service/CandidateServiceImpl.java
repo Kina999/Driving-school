@@ -38,7 +38,11 @@ public class CandidateServiceImpl implements CandidateService{
 
 	@Override
 	public Candidate checkIfCandidateExists(String email, String password) {
-		return candidateRepository.findCanidateByEmailAndPassword(email, password);
+		Candidate candidate = candidateRepository.findCanidateByEmailAndPassword(email, password);
+		if(candidate != null && !candidate.isBlocked()) {
+			return candidate;
+		}
+		return null;
 	}
 
 	@Override
@@ -119,6 +123,29 @@ public class CandidateServiceImpl implements CandidateService{
 		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
 		Category category = categoryService.getCategory(candidate.getCategory());
 		if(candidate.getNumberOfClasses() == category.getNumberOfClasses() && candidate.getClassType().equals(TestType.PRACTICAL)) {return true;}
+		return false;
+	}
+
+	@Override
+	public List<Candidate> getAllCandidates() {
+		return candidateRepository.findAll();
+	}
+
+	@Override
+	public boolean blockCandidate(String email) {
+		if(candidateRepository.findCandidateByEmail(email) != null) {
+			candidateRepository.blockUser(email);
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean unblockCandidate(String email) {
+		if(candidateRepository.findCandidateByEmail(email) != null) {
+			candidateRepository.unblockUser(email);
+			return true;
+		}
 		return false;
 	}
 

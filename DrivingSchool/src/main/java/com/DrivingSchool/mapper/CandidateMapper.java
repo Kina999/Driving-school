@@ -3,6 +3,7 @@ package com.DrivingSchool.mapper;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.DrivingSchool.dto.CandidateDTO;
 import com.DrivingSchool.dto.CandidateRegistrationDTO;
 import com.DrivingSchool.model.Candidate;
 
@@ -17,5 +18,9 @@ public class CandidateMapper {
 	
 	public static CandidateRegistrationDTO CandidateToCandidateRegistrationDTO(Candidate candidate) {
 		return new CandidateRegistrationDTO(candidate.getEmail(), candidate.getPassword(), candidate.getName(), candidate.getLastName(), candidate.getPhoneNumber());
+	}
+	
+	public static CandidateDTO CandidateToCandidateDTO(Candidate candidate) {
+		return new CandidateDTO(candidate.getEmail(), candidate.getPassword(), candidate.getName(), candidate.getLastName(), candidate.getPhoneNumber(), candidate.isBlocked());
 	}
 }

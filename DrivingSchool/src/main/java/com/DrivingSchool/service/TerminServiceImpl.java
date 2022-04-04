@@ -1,8 +1,11 @@
 package com.DrivingSchool.service;
 
+import static java.lang.Math.abs;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,6 +19,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.DrivingSchool.dto.CandidateCancelingDTO;
 import com.DrivingSchool.enumClasses.TestType;
 import com.DrivingSchool.model.Candidate;
 import com.DrivingSchool.model.Licence;
@@ -162,11 +166,12 @@ public class TerminServiceImpl implements TerminService{
 	public boolean cancelTermin(int id, String candidateEmail) {
 		Termin canceledTermin = terminRepository.findTerminById(id);
 		canceledTermin.setCancelationDate(new Date());
+		canceledTermin.setClientCanceled(candidateEmail);
 		Set<Candidate> candidates = new HashSet<>();
 		for(Candidate c : canceledTermin.getCandidate()){
 			if(!c.getEmail().equals(candidateEmail)) candidates.add(c);
 		}
-		Termin newTermin = new Termin(canceledTermin.getStartTime(), canceledTermin.getEndTime(), false, null, canceledTermin.getLicence(), candidates);
+		Termin newTermin = new Termin(canceledTermin.getStartTime(), canceledTermin.getEndTime(), false, null, null, canceledTermin.getLicence(), candidates);
 		terminRepository.save(newTermin);
 		terminRepository.save(canceledTermin);
 		candidateService.decreaseClassNumber(candidateEmail);
@@ -258,5 +263,24 @@ public class TerminServiceImpl implements TerminService{
 			termins.add(terminRepository.findCandidateClasses(i));
 		}
 		return termins;
+	}
+
+	@Override
+	public CandidateCancelingDTO getCandidateCanceling(String candidateEmail) {
+		CandidateCancelingDTO candidateCancelingData = new CandidateCancelingDTO();
+		List<Termin> canceledTermins = terminRepository.getCandidateCanceledTermins(candidateEmail);
+		candidateCancelingData.numberOfCancelations = canceledTermins.size();
+		LocalDate terminDate = sortTimes(canceledTermins).get(0).getCancelationDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate now = (new Date()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		candidateCancelingData.numberOfDays = abs(Period.between(terminDate, now).getDays());
+		if(abs(Period.between(terminDate, now).getDays()) == 0) {
+			candidateCancelingData.numberOfDays = 1;	
+		}
+		return candidateCancelingData;
+	}
+
+	@Override
+	public List<Termin> getCandidateCanceledTermins(String candidateEmail) {
+		return terminRepository.getCandidateCanceledTermins(candidateEmail);
 	}
 }

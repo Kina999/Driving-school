@@ -14,7 +14,7 @@ import static java.lang.Math.abs;
 public class TerminMapper {
 	
 	public static Termin TerminDTOToTermin(TerminDTO dto) {
-		Termin termin = new Termin(dto.startTime, dto.endTime, null, false, null);
+		Termin termin = new Termin(dto.startTime, dto.endTime, false, null, null, null, null);
 		return termin;
 	}
 	

@@ -51,6 +51,11 @@ public class TerminController {
     public ResponseEntity<?> getAllInstructorTerminDates(String instructorEmail){	
 		return new ResponseEntity<>(terminService.getAllInstructorTerminDates(instructorEmail), HttpStatus.OK);
 	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateCancelingData")
+    public ResponseEntity<?> getCandidateCanceling(String email){	
+		return new ResponseEntity<>(terminService.getCandidateCanceling(email), HttpStatus.OK);
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidateTermins")
 	public ResponseEntity<?> getAllCandidateTermins(String candidateEmail){

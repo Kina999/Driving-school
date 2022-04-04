@@ -3,6 +3,7 @@ package com.DrivingSchool.service.interfaces;
 import java.util.List;
 import java.util.Set;
 
+import com.DrivingSchool.dto.CandidateCancelingDTO;
 import com.DrivingSchool.model.Termin;
 
 public interface TerminService {
@@ -13,6 +14,8 @@ public interface TerminService {
 	public Set<String> getAllCandidateTerminDates(String candidateEmail);
 	public boolean addClientToTermin(String clientEmail, Integer terminId);
 	public Set<String> getAllInstructorTerminDates(String instructorEmail);
+	public List<Termin> getCandidateCanceledTermins(String candidateEmail);
+	public CandidateCancelingDTO getCandidateCanceling(String candidateEmail);
 	public Set<String> getAllCandidatePossibleTerminDates(String candidateEmail);
 	public List<Termin> getAllCandidateTerminForDate(String candidateEmail, String date);
 	public List<Termin> getAllInstructorTerminTimes(String instructorEmail, String date);

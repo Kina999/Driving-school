@@ -25,6 +25,7 @@ public class Termin {
 	private Date endTime;
 	private boolean deleted;
 	private Date cancelationDate;
+	private String clientCanceled;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @JoinColumn(name = "licence_id")
 	private Licence licence = new Licence();
@@ -37,33 +38,19 @@ public class Termin {
 	public Termin() {
 		super();
 	}
-	public Termin(Date startTime, Date endTime , Set<Candidate> candidate, boolean deleted, Date cancelationDate) {
+	
+	public Termin(Date startTime, Date endTime, boolean deleted, Date cancelationDate, String clientCanceled,
+			Licence licence, Set<Candidate> candidates) {
 		super();
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.candidates = candidate;
 		this.deleted = deleted;
 		this.cancelationDate = cancelationDate;
-	}
-
-	public Termin(Date startTime, Date endTime, boolean deleted, Date cancelationDate, Licence licence, Set<Candidate> candidates) {
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.deleted = deleted;
-		this.cancelationDate = cancelationDate;
+		this.clientCanceled = clientCanceled;
 		this.licence = licence;
 		this.candidates = candidates;
 	}
 
-	public Termin(Date startTime, Date endTime, boolean deleted, Licence licence,
-				  Set<Candidate> candidate) {
-		super();
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.deleted = deleted;
-		this.licence = licence;
-		this.candidates = candidate;
-	}
 	public Integer getId() {
 		return id;
 	}
@@ -105,6 +92,22 @@ public class Termin {
 	}
 	public void setCancelationDate(Date cancelationDate) {
 		this.cancelationDate = cancelationDate;
+	}
+
+	public String getClientCanceled() {
+		return clientCanceled;
+	}
+
+	public void setClientCanceled(String clientCanceled) {
+		this.clientCanceled = clientCanceled;
+	}
+
+	public Set<Candidate> getCandidates() {
+		return candidates;
+	}
+
+	public void setCandidates(Set<Candidate> candidates) {
+		this.candidates = candidates;
 	}
 
 }

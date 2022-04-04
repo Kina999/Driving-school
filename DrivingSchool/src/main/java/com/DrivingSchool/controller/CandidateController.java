@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.DrivingSchool.dto.CandidateDTO;
 import com.DrivingSchool.dto.CandidateInstructorDTO;
 import com.DrivingSchool.dto.CandidateProgressDTO;
 import com.DrivingSchool.dto.CandidateRegistrationDTO;
@@ -43,6 +44,15 @@ public class CandidateController {
 	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateStatus")
     public ResponseEntity<?> isCandidateDone(String email){	
 		return new ResponseEntity<>(candidateService.isCandidateDone(email), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidates")
+    public ResponseEntity<?> getAllCandidates(){	
+		List<CandidateDTO> candidates = new ArrayList<CandidateDTO>();
+		for(Candidate candidate : candidateService.getAllCandidates()) {
+			candidates.add(CandidateMapper.CandidateToCandidateDTO(candidate));
+		}
+		return new ResponseEntity<>(candidates, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateProgress")
@@ -88,5 +98,15 @@ public class CandidateController {
 			candidates.add(CandidateMapper.CandidateToCandidateRegistrationDTO(candidate));
 		}
 		return new ResponseEntity<>(candidates, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/blockCandidate")
+	public ResponseEntity<?> blockUser(String candidateEmail) {
+		return new ResponseEntity<>(candidateService.blockCandidate(candidateEmail), HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/unblockCandidate")
+	public ResponseEntity<?> unblockUser(String candidateEmail) {
+		return new ResponseEntity<>(candidateService.unblockCandidate(candidateEmail), HttpStatus.OK);
 	}
 }

@@ -65,5 +65,8 @@ export class InstructorsComponent implements OnInit {
         });
     }
   }
+  candidates(){
+    this.router.navigate(['admin-candidates']);
+  }
 }
 

@@ -8,7 +8,10 @@ import com.DrivingSchool.model.Candidate;
 import com.DrivingSchool.model.Worker;
 
 public interface CandidateService {
+	public List<Candidate> getAllCandidates();
 	public Worker getInstructor(String email);
+	public boolean blockCandidate(String email);
+	public boolean unblockCandidate(String email);
 	public boolean isCandidateDone(String candidateEmail);
 	public boolean resetClassNumber(String candidateEmail);
 	public boolean increaseClassNumber(String candidateEmail);

@@ -29,6 +29,16 @@ public interface CandidateRepository extends JpaRepository<Candidate, String>{
 	
 	@Modifying
 	@Transactional
+	@Query(value = "update candidate set blocked = true where email = ?1", nativeQuery = true)
+	public void blockUser(String candidateEmail);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "update candidate set blocked = false where email = ?1", nativeQuery = true)
+	public void unblockUser(String candidateEmail);
+	
+	@Modifying
+	@Transactional
 	@Query(value = "update candidate set class_type = 1 where email = ?1", nativeQuery = true)
 	public void setClassType(String candidateEmail);
 	
