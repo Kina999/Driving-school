@@ -41,7 +41,9 @@ export class CandidateAccountComponent implements OnInit {
         });
     }
   }
-
+  tests() {
+    this.router.navigate(['candidate-tests']);
+  }
   logout(){
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);

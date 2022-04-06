@@ -58,7 +58,7 @@
   </div>
 
 
-  <!--<div class="container">
+  <div class="container">
     <div class="timetable-img text-center">
       <img src="img/content/timetable.png" alt="">
     </div>
@@ -70,21 +70,21 @@
             <td *ngFor="let t of terminTimes[i]; let j = index">
               <span
                 class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{t.categoryAndType}}</span>
-              <div class="margin-10px-top font-size14">{{convertDate(t.startTime)}} - {{convertDate(t.endTime)}}</div>
-              <div class="font-size13 text-light-gray">
+              <div class="margin-10px-top font-size14">{{convertDate(t.dateAndTime)}}</div>
+              <!--<div class="font-size13 text-light-gray">
                 <button type="button" class="btn btn-danger" *ngIf="t.candidates.length == 0"
                   (click)="removeTermin(i, j)">Otkazi</button>
               </div>
               <div class="font-size13 text-light-gray">
                 <button type="button" class="btn btn-info" *ngIf="t.candidates.length != 0" data-bs-toggle="modal"
                   data-bs-target="#exampleModal1" (click)="setSelectedTermin(i, j)">Kandidati</button>
-              </div>
+              </div>-->
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>-->
+  </div>
 </body>
 
 </html>

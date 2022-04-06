@@ -1,7 +1,6 @@
 package com.DrivingSchool.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class CandidateServiceImpl implements CandidateService{
 	@Override
 	public boolean registerCandidate(CandidateRegistrationDTO candidate) {
 		if(candidateRepository.findCandidateByEmail(candidate.email) == null && workerService.findWorkerByEmail(candidate.email) == null) {
-			Candidate newCandidate = new Candidate(candidate.email, candidate.password, candidate.name, candidate.lastname, candidate.phoneNumber, false, null, null, 0, TestType.THEORETICAL);
+			Candidate newCandidate = new Candidate(candidate.email, candidate.password, candidate.name, candidate.lastname, candidate.phoneNumber, false, false, false, null, TestType.THEORETICAL, 0, null, null);
 			candidateRepository.save(newCandidate);
 			return true;
 		}
@@ -94,11 +93,14 @@ public class CandidateServiceImpl implements CandidateService{
 
 	@Override
 	public boolean increaseClassNumber(String candidateEmail) {
-		if(candidateRepository.findCandidateByEmail(candidateEmail) != null) {
-			candidateRepository.incrementClassNumber(candidateEmail, candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() + 1);
-			if(candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() + 1 == categoryService.getCategory(candidateRepository.findCandidateByEmail(candidateEmail).getCategory()).getNumberOfClasses()) {
-				resetClassNumber(candidateEmail);
-				candidateRepository.setClassType(candidateEmail);
+		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
+		if(candidate != null) {
+			candidateRepository.incrementClassNumber(candidateEmail, candidate.getNumberOfClasses() + 1);
+			if(candidate.getNumberOfClasses() + 1 == categoryService.getCategory(candidate.getCategory()).getNumberOfClasses()) {
+				if(!candidate.getClassType().equals(TestType.PRACTICAL)) {
+					resetClassNumber(candidateEmail);
+					candidateRepository.setClassType(candidateEmail);
+				}
 			}
 			return true;
 		}
@@ -122,8 +124,7 @@ public class CandidateServiceImpl implements CandidateService{
 	public boolean isCandidateDone(String candidateEmail) {
 		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
 		Category category = categoryService.getCategory(candidate.getCategory());
-		if(candidate.getNumberOfClasses() == category.getNumberOfClasses() && candidate.getClassType().equals(TestType.PRACTICAL)) {return true;}
-		return false;
+		return candidate.isPracticalDone();
 	}
 
 	@Override

@@ -31,7 +31,9 @@ export class CandidateTerminsComponent implements OnInit {
         });
     }
   }
-
+  tests() {
+    this.router.navigate(['candidate-tests']);
+  }
   cancelTermin(i: number, j: number) {
     var user = localStorage.getItem('currentUser');
     if (user != null) {

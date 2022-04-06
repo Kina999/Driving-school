@@ -127,6 +127,9 @@ export class CandidatInstructorComponent implements OnInit {
   account() {
     this.router.navigate(['candidate-account']);
   }
+  tests() {
+    this.router.navigate(['candidate-tests']);
+  }
   instructorSelected(instructor: any) {
     this.selectedInstructor = instructor;
   }

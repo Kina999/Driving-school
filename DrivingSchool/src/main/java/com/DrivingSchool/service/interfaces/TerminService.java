@@ -15,6 +15,8 @@ public interface TerminService {
 	public boolean addClientToTermin(String clientEmail, Integer terminId);
 	public Set<String> getAllInstructorTerminDates(String instructorEmail);
 	public List<Termin> getCandidateCanceledTermins(String candidateEmail);
+	public Termin getLatestCandidatePracticalClass(String candidateEmail);
+	public Termin getLatestCandidateTheoreticalClass(String candidateEmail);	
 	public CandidateCancelingDTO getCandidateCanceling(String candidateEmail);
 	public Set<String> getAllCandidatePossibleTerminDates(String candidateEmail);
 	public List<Termin> getAllCandidateTerminForDate(String candidateEmail, String date);

@@ -23,6 +23,8 @@ public class Candidate {
 	private String lastName;
 	private String phoneNumber;
 	private boolean blocked;
+	private boolean theoreticalDone;
+	private boolean practicalDone;
 	private String category;
 	private TestType classType;
 	private int numberOfClasses;
@@ -39,35 +41,25 @@ public class Candidate {
 	}
 
 	
-
-	public Candidate(String email, String password, String name, String lastName, String phoneNumber, boolean blocked, int numberOfClasses, TestType classType) {
-		super();
-		this.classType = classType;
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.blocked = blocked;
-		this.numberOfClasses = numberOfClasses;
-	}
-
-
-
 	public Candidate(String email, String password, String name, String lastName, String phoneNumber, boolean blocked,
-			Instructor instructor, Set<Termin> classes, int numberOfClasses, TestType classType) {
+			boolean theoreticalDone, boolean practicalDone, String category, TestType classType, int numberOfClasses,
+			Instructor instructor, Set<Termin> classes) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.classType = classType;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.blocked = blocked;
+		this.theoreticalDone = theoreticalDone;
+		this.practicalDone = practicalDone;
+		this.category = category;
+		this.classType = classType;
+		this.numberOfClasses = numberOfClasses;
 		this.instructor = instructor;
 		this.classes = classes;
-		this.numberOfClasses = numberOfClasses;
 	}
+
 
 	public int getNumberOfClasses() {
 		return numberOfClasses;
@@ -143,5 +135,26 @@ public class Candidate {
 	public void setClassType(TestType classType) {
 		this.classType = classType;
 	}
+
+
+	public boolean isTheoreticalDone() {
+		return theoreticalDone;
+	}
+
+
+	public void setTheoreticalDone(boolean theoreticalDone) {
+		this.theoreticalDone = theoreticalDone;
+	}
+
+
+	public boolean isPracticalDone() {
+		return practicalDone;
+	}
+
+
+	public void setPracticalDone(boolean practicalDone) {
+		this.practicalDone = practicalDone;
+	}
+	
 
 }

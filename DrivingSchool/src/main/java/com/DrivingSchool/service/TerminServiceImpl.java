@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.DrivingSchool.service.interfaces.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,9 @@ public class TerminServiceImpl implements TerminService{
 	private LicenceService licenceService;
 	@Autowired
 	private CandidateService candidateService;
-	
+	@Autowired
+	private CategoryService categoryService;
+
 	@Override
 	public boolean addTerminToInstructor(Termin termin, String instructorEmail, String categoryAndType) {
 		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
@@ -98,15 +101,15 @@ public class TerminServiceImpl implements TerminService{
 	public Set<String> getAllCandidatePossibleTerminDates(String candidateEmail) {
 		List<Date> d = new ArrayList<Date>();
 		Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
-		for(Licence l : licenceService.findInstructorLicences(candidateService.findCandidateByEmail(candidateEmail).getInstructor().getEmail())) {
+		for(Licence l : licenceService.findInstructorLicences(candidate.getInstructor().getEmail())) {
 			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {
 				if(terminIsValid(t) && !alreadyReserved(t, candidateEmail) 
 						&& t.getLicence().getCategory().getCategoryType().equals(candidate.getCategory())
 						&& t.getLicence().getLicenceType().equals(candidate.getClassType())) {
-						if(candidate.getClassType().equals(TestType.PRACTICAL)) {
+						if(candidate.getClassType().equals(TestType.PRACTICAL) && candidate.isTheoreticalDone() && candidate.getNumberOfClasses() < categoryService.getCategory(candidate.getCategory()).getNumberOfClasses()) {
 							if(t.getStartTime().after(getLatestCandidateTheoreticalClass(candidateEmail).getEndTime())
 									&& getLatestCandidateTheoreticalClass(candidateEmail).getEndTime().before(new Date())) {d.add(t.getStartTime());}
-						}else {d.add(t.getStartTime());}
+						}else if(candidate.getClassType().equals(TestType.THEORETICAL)){d.add(t.getStartTime());}
 				}
 			}
 		}
@@ -136,13 +139,13 @@ public class TerminServiceImpl implements TerminService{
 			for(Termin t : terminRepository.findInstructorTermins(l.getId())) {
 				if(terminIsValid(t) && t.getLicence().getCategory().getCategoryType().equals(candidate.getCategory())
 						&& t.getLicence().getLicenceType().equals(candidate.getClassType()) && !alreadyReserved(t, candidateEmail)) {
-					if(candidate.getClassType().equals(TestType.PRACTICAL)) {
+					if(candidate.getClassType().equals(TestType.PRACTICAL) && candidate.isTheoreticalDone()) {
 						if(t.getStartTime().after(getLatestCandidateTheoreticalClass(candidateEmail).getEndTime()) 
 								&& getLatestCandidateTheoreticalClass(candidateEmail).getEndTime().before(new Date())) {  
 							String strDate = dateFormat.format(t.getStartTime());  
 							if(strDate.split(" ")[0].equals(date)) {termins.add(t);}
 						}
-					}else {
+					}else if(candidate.getClassType().equals(TestType.THEORETICAL)){
 						String strDate = dateFormat.format(t.getStartTime());  
 						if(strDate.split(" ")[0].equals(date)) {termins.add(t);}
 					}
@@ -216,12 +219,33 @@ public class TerminServiceImpl implements TerminService{
 		return false;
 	}
 
-	private Termin getLatestCandidateTheoreticalClass(String candidateEmail) {
+	@Override
+	public Termin getLatestCandidateTheoreticalClass(String candidateEmail) {
 		List<Integer> ids = terminRepository.findCandidateClassesIds(candidateEmail);
 		List<Termin> classes = new ArrayList<Termin>();
 		for(Integer i : ids) {
 			Termin termin = terminRepository.findCandidateClasses(i);
-			if(termin.getLicence().getLicenceType().equals(TestType.THEORETICAL)){
+			if(termin.getLicence().getLicenceType().equals(TestType.THEORETICAL) && !termin.isDeleted() && termin.getCancelationDate() == null){
+				classes.add(termin);
+			}
+		}
+		Collections.sort(classes, new Comparator<Termin>() {
+			@Override
+			public int compare(final Termin d1, final Termin d2) {return d1.getStartTime().compareTo(d2.getStartTime());}});
+		if(classes.size() != 0) {
+			return classes.get(classes.size() - 1);
+		}else {
+			return null;
+		}
+	}
+	
+	@Override
+	public Termin getLatestCandidatePracticalClass(String candidateEmail) {
+		List<Integer> ids = terminRepository.findCandidateClassesIds(candidateEmail);
+		List<Termin> classes = new ArrayList<Termin>();
+		for(Integer i : ids) {
+			Termin termin = terminRepository.findCandidateClasses(i);
+			if(termin.getLicence().getLicenceType().equals(TestType.PRACTICAL) && !termin.isDeleted() && termin.getCancelationDate() == null){
 				classes.add(termin);
 			}
 		}

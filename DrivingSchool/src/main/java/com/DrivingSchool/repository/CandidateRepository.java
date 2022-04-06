@@ -24,7 +24,7 @@ public interface CandidateRepository extends JpaRepository<Candidate, String>{
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set number_of_classes = 1 where email = ?1", nativeQuery = true)
+	@Query(value = "update candidate set number_of_classes = 0 where email = ?1", nativeQuery = true)
 	public void resetClassNumber(String candidateEmail);
 	
 	@Modifying

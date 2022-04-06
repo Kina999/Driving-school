@@ -17,7 +17,9 @@ export class CandidatPageComponent implements OnInit {
     localStorage.removeItem('currentUser');
     this.router.navigate(['']);
   }
-
+  tests() {
+    this.router.navigate(['candidate-tests']);
+  }
   account(){
     this.router.navigate(['candidate-account']);
   }

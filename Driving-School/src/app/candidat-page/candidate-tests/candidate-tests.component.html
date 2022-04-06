@@ -4,7 +4,7 @@
 <!------ Include the above in your HEAD tag ---------->
 <html>
   <head>
-    <link href="candidat-page.component.css" rel="stylesheet" />
+    <link href="candidate-tests.component.css" rel="stylesheet" />
   </head>
   <body class="background">
       <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
@@ -23,5 +23,32 @@
         </div>
       </nav>
 
+      <div class="container">
+        <div class="timetable-img text-center">
+          <img src="img/content/timetable.png" alt="">
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered text-center">
+            <tbody>
+              <tr class="bg-light-gray" *ngFor="let date of terminDates; let i = index">
+                <th class="text-uppercase">{{date}}</th>
+                <td *ngFor="let t of terminTimes[i]; let j = index">
+                  <span
+                    class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{t.categoryAndType}}</span>
+                  <div class="margin-10px-top font-size14">{{convertDate(t.dateAndTime)}}</div>
+                  <!--<div class="font-size13 text-light-gray">
+                    <button type="button" class="btn btn-danger" *ngIf="t.candidates.length == 0"
+                      (click)="removeTermin(i, j)">Otkazi</button>
+                  </div>-->
+                  <div class="font-size13 text-light-gray">
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal1" (click)="scheduleTest(i, j)">Zakazi</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
   </body>
 </html>
