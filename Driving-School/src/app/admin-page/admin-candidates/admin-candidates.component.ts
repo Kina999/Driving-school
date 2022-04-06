@@ -26,7 +26,9 @@ export class AdminCandidatesComponent implements OnInit {
         });
       });
   }
-
+  tests(){
+    this.router.navigate(['admin-tests']);
+  }
   blockUser(i: number) {
     this.http.get('http://localhost:8080/candidates/blockCandidate?candidateEmail=' + this.allCandidates[i].email).subscribe(
       (data: any) => {

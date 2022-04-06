@@ -42,6 +42,9 @@ public class LicenceServiceImpl implements LicenceService{
 	}
 	@Override
 	public List<Licence> getAll(String email) {
+		if(email.equals("")) {
+			return licenceRepository.findAll();
+		}
 		return licenceRepository.findInstructorLicences(email);
 	}
 	@Override

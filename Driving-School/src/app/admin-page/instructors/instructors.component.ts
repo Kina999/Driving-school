@@ -68,5 +68,8 @@ export class InstructorsComponent implements OnInit {
   candidates(){
     this.router.navigate(['admin-candidates']);
   }
+  tests(){
+    this.router.navigate(['admin-tests']);
+  }
 }
 

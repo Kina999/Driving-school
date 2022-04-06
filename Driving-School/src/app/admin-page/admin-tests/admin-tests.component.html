@@ -1,0 +1,90 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<html>
+
+<head>
+  <link href="admin-tests.component.css" rel="stylesheet" />
+</head>
+
+<body class="background">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
+    <div class="container">
+      <a class="navbar-brand" href="#page-top">ALUNNO</a>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 40rem;">
+          <li class="nav-item"><a class="nav-link" (click)="tests()" style="cursor: pointer">Ispiti</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="instructors()" style="cursor: pointer">Instruktori</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <button type="button" class="btn btn-light" style="margin-top: 8rem; margin-left: 77rem;" data-bs-toggle="modal"
+    data-bs-target="#exampleModal"><i class="fa fa-plus" aria-hidden="true"></i> Dodaj ispit</button>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div id="formContent" style="margin-left: 1.5rem;">
+          <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+              style="visibility: hidden;" #closeModal4 /></div>
+          <!-- Login Form -->
+          <form style="margin-top: 3rem;">
+            <p style="margin-left: -8rem; margin-bottom: -0.1rem;">Datum termina:</p>
+            <input type="date" name="terminDate" [ngModel]="terminDate | date:'yyyy-MM-dd'"
+              (ngModelChange)="terminDate = $event" style="width: 15rem">
+            <div>
+              <p style="margin-left: -7.5rem; margin-bottom: -0.1rem; margin-top: 1rem;">Pocetak termina:</p>
+              <input type="time" name="startTime" style="width: 15rem" name="startTime" [(ngModel)]="startTime">
+            </div>
+            <p style="margin-left: -5rem; margin-bottom: -0.1rem; margin-top: 1rem;">Kategorija i tip termina:</p>
+            <select style="width: 15rem; height: 2rem;" name="categoryAndType" [(ngModel)]="categoryAndType">
+              <option *ngFor="let licence of licences"
+                value="{{licence.category.categoryType}} - {{licence.licenceType}}">{{licence.category.categoryType}} -
+                {{licence.licenceType}}</option>
+            </select>
+            <input type="button" class="fourth" value="Dodaj termin" style="margin-top: 3rem;" (click)="addTermin()">
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--<div class="container">
+    <div class="timetable-img text-center">
+      <img src="img/content/timetable.png" alt="">
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered text-center">
+        <tbody>
+          <tr class="bg-light-gray" *ngFor="let date of terminDates; let i = index">
+            <th class="text-uppercase">{{date}}</th>
+            <td *ngFor="let t of terminTimes[i]; let j = index">
+              <span
+                class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{t.categoryAndType}}</span>
+              <div class="margin-10px-top font-size14">{{convertDate(t.startTime)}} - {{convertDate(t.endTime)}}</div>
+              <div class="font-size13 text-light-gray">
+                <button type="button" class="btn btn-danger" *ngIf="t.candidates.length == 0"
+                  (click)="removeTermin(i, j)">Otkazi</button>
+              </div>
+              <div class="font-size13 text-light-gray">
+                <button type="button" class="btn btn-info" *ngIf="t.candidates.length != 0" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1" (click)="setSelectedTermin(i, j)">Kandidati</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>-->
+</body>
+
+</html>

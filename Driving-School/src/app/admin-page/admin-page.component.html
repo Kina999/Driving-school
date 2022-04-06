@@ -3,23 +3,27 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <html>
-  <head>
-    <link href="admin-page.component.css" rel="stylesheet" />
-  </head>
-  <body class="background">
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top">ALUNNO</a>
-            
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 40rem;">
-                    <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="instructors()" style="cursor: pointer">Instruktori</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
-                </ul>
-            </div>
-        </div>
-      </nav>
 
-  </body>
+<head>
+  <link href="admin-page.component.css" rel="stylesheet" />
+</head>
+
+<body class="background">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
+    <div class="container">
+      <a class="navbar-brand" href="#page-top">ALUNNO</a>
+
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 40rem;">
+          <li class="nav-item"><a class="nav-link" (click)="tests()" style="cursor: pointer">Ispiti</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="instructors()" style="cursor: pointer">Instruktori</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</body>
+
 </html>

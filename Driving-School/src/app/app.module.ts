@@ -22,6 +22,7 @@ import { InstructorCalendarComponent } from './instructor-page/instructor-calend
 import { CandidateTerminsComponent } from './candidat-page/candidate-termins/candidate-termins.component';
 import { AgmCoreModule } from '@agm/core';
 import { AdminCandidatesComponent } from './admin-page/admin-candidates/admin-candidates.component';
+import { AdminTestsComponent } from './admin-page/admin-tests/admin-tests.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AdminCandidatesComponent } from './admin-page/admin-candidates/admin-ca
     InstructorCandidatesComponent,
     InstructorCalendarComponent,
     CandidateTerminsComponent,
-    AdminCandidatesComponent
+    AdminCandidatesComponent,
+    AdminTestsComponent
   ],
   imports: [
     BrowserModule,
