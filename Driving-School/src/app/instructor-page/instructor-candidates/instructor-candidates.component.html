@@ -16,7 +16,7 @@
       <a class="navbar-brand" href="#page-top">ALUNNO</a>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 30rem;">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 31.5rem;">
           <li class="nav-item"><a class="nav-link" (click)="termins()" style="cursor: pointer">Termini</a></li>
           <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
           <li class="nav-item"><a class="nav-link" (click)="requests()" style="cursor: pointer">Zahtjevi</a></li>
@@ -68,6 +68,9 @@
                                   aria-valuemax="100"></div>
                               </div>
                             </div>
+                            <small>Teorijski ispit <i class="fa fa-check" aria-hidden="true" *ngIf="candidateProgress[indexOfelement].theoreticalTestDone"></i>
+                              <i class="fa fa-times" aria-hidden="true" *ngIf="!candidateProgress[indexOfelement].theoreticalTestDone"></i></small>
+                            <br/>
                             <div style="margin-bottom: -0.8rem;">
                               <small>Prakticna nastava ({{candidateProgress[indexOfelement].practicalDone}} / {{candidateProgress[indexOfelement].necessaryClasses}})</small>
                               <div class="progress mb-3" style="height: 10px">
@@ -75,11 +78,9 @@
                                   aria-valuemax="100"></div>
                               </div>
                             </div>
-                            <small>Vozacka dozvola</small>
-                            <div class="progress mb-3" style="height: 10px">
-                              <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" [style.width.%]="(candidateProgress[indexOfelement].theoreticalDone + candidateProgress[indexOfelement].practicalDone) / (2 * candidateProgress[indexOfelement].necessaryClasses) * 100" aria-valuenow="(candidateProgress[indexOfelement].theoreticalDone + candidateProgress[indexOfelement].practicalDone) / (2 * candidateProgress[indexOfelement].necessaryClasses) * 100"
-                                aria-valuemax="100"></div>
-                            </div>
+                            <small>Prakticni ispit <i class="fa fa-check" aria-hidden="true" *ngIf="candidateProgress[indexOfelement].practicalTestDone"></i>
+                              <i class="fa fa-times" aria-hidden="true" *ngIf="!candidateProgress[indexOfelement].practicalTestDone"></i></small>
+                            <br/>
                           </div>
                         </div>
                       </div>

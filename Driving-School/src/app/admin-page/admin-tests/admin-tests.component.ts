@@ -16,8 +16,10 @@ export class AdminTestsComponent implements OnInit {
   licences: any = [];
   terminDates: any = [];
   terminTimes: any = [];
+  selectedTermin: any;
 
   @ViewChild('closeModal4') closeModal4: any;
+  @ViewChild('closeModal5') closeModal5: any;
 
   constructor(private router: Router, private http: HttpClient, public datepipe: DatePipe) { }
 
@@ -35,6 +37,62 @@ export class AdminTestsComponent implements OnInit {
               this.terminTimes[i] = data;
             });
         });
+      });
+  }
+
+  passedTest() {
+    const body = { title: 'Pass test' };
+    this.http.put<any>('http://localhost:8080/drivingTest/passTest/' + this.selectedTermin.id, body)
+      .subscribe(data => {
+        this.closeModal5.nativeElement.click();
+        this.http.get('http://localhost:8080/drivingTest/testDates').subscribe(
+          (data: any) => {
+            this.terminDates = data;
+            this.terminDates.forEach((date: any, i: number) => {
+              this.http.get('http://localhost:8080/drivingTest/testsForDate?date=' + date).subscribe(
+                data => {
+                  this.terminTimes[i] = data;
+                });
+            });
+          });
+      });
+  }
+
+  failedTest() {
+    const body = { title: 'Fail test' };
+    this.http.put<any>('http://localhost:8080/drivingTest/failTest/' + this.selectedTermin.id, body)
+      .subscribe(data => {
+        this.closeModal5.nativeElement.click();
+        this.http.get('http://localhost:8080/drivingTest/testDates').subscribe(
+          (data: any) => {
+            this.terminDates = data;
+            this.terminDates.forEach((date: any, i: number) => {
+              this.http.get('http://localhost:8080/drivingTest/testsForDate?date=' + date).subscribe(
+                data => {
+                  this.terminTimes[i] = data;
+                });
+            });
+          });
+      });
+  }
+
+  setSelectedTermin(i: number, j: number) {
+    this.selectedTermin = this.terminTimes[i][j];
+  }
+
+  removeTest(i: number, j: number) {
+    this.http.delete('http://localhost:8080/drivingTest/deleteTest/' + this.terminTimes[i][j].id)
+      .subscribe(data => {
+        this.http.get('http://localhost:8080/drivingTest/testDates').subscribe(
+          (data: any) => {
+            this.terminDates = data;
+            this.terminDates.forEach((date: any, i: number) => {
+              this.http.get('http://localhost:8080/drivingTest/testsForDate?date=' + date).subscribe(
+                data => {
+                  this.terminTimes[i] = data;
+                });
+            });
+          });
       });
   }
 

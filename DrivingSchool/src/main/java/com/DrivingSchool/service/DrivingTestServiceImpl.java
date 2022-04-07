@@ -48,7 +48,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 	public Set<String> getAllDrivingTestDates() {
 		List<Date> dates = new ArrayList<Date>();
 		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
-			if(drivingTest.getTestDateTime().after(new Date())) {
+			if(!drivingTest.isDeleted()) {
 				dates.add(drivingTest.getTestDateTime());
 			}
 		}
@@ -73,7 +73,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 		List<DrivingTest> termins = new ArrayList<DrivingTest>();
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
-			if(drivingTest.getTestDateTime().after(new Date())) {
+			if(!drivingTest.isDeleted()) {
 				String strDate = dateFormat.format(drivingTest.getTestDateTime());
 				if(strDate.split(" ")[0].equals(date)) {termins.add(drivingTest);}
 			}
@@ -104,6 +104,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 						&& drivingTest.getTestDateTime().after(new Date())
 						&& terminService.getLatestCandidateTheoreticalClass(candidateEmail).getEndTime().before(new Date())
 						&& !alreadyReserved(candidateEmail)
+						&& !drivingTest.isDeleted()
 						&& !candidate.isTheoreticalDone()) {
 					dates.add(drivingTest.getTestDateTime());
 				}
@@ -117,6 +118,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 						&& drivingTest.getTestDateTime().after(new Date())
 						&& terminService.getLatestCandidatePracticalClass(candidateEmail).getEndTime().before(new Date())
 						&& !alreadyReserved(candidateEmail)
+						&& !drivingTest.isDeleted()
 						&& !candidate.isPracticalDone()) {
 					dates.add(drivingTest.getTestDateTime());
 				}
@@ -148,6 +150,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 						&& drivingTest.getLicence().getLicenceType().equals(TestType.THEORETICAL) 
 						&& drivingTest.getTestDateTime().after(new Date())
 						&& !alreadyReserved(candidateEmail)
+						&& !drivingTest.isDeleted()
 						&& !candidate.isTheoreticalDone()
 						&& strDate.split(" ")[0].equals(date)) {
 					tests.add(drivingTest);
@@ -161,6 +164,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 						&& drivingTest.getLicence().getLicenceType().equals(TestType.PRACTICAL) 
 						&& drivingTest.getTestDateTime().after(new Date())
 						&& !alreadyReserved(candidateEmail)
+						&& !drivingTest.isDeleted()
 						&& !candidate.isPracticalDone()
 						&& strDate.split(" ")[0].equals(date)) {
 					tests.add(drivingTest);
@@ -168,6 +172,29 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 			}
 		}
 		return sortTimes(tests);
+	}
+
+	@Override
+	public boolean deleteTest(int id) {
+		drivingTestRepository.deleteTest(id);
+		return true;
+	}
+
+	@Override
+	public boolean passTest(int id) {
+		DrivingTest test = drivingTestRepository.getById(id);
+		Candidate candidate = candidateService.findCandidateByEmail(test.getCandidate().getEmail());
+		drivingTestRepository.deleteTest(id);
+		if(test.getLicence().getLicenceType().equals(TestType.THEORETICAL)) {candidate.setTheoreticalDone(true);}
+		else {candidate.setPracticalDone(true);}
+		candidateService.saveCandidate(candidate);
+		return true;
+	}
+
+	@Override
+	public boolean failTest(int id) {
+		drivingTestRepository.deleteTest(id);
+		return false;
 	}
 	
 }

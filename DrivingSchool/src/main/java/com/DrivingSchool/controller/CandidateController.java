@@ -62,6 +62,8 @@ public class CandidateController {
 		CandidateProgressDTO progressDto = new CandidateProgressDTO();
 		Category category = categoryService.getCategory(candidate.getCategory());
 		
+		progressDto.theoreticalTestDone = candidate.isTheoreticalDone();
+		progressDto.practicalTestDone = candidate.isPracticalDone();
 		progressDto.necessaryClasses = category.getNumberOfClasses();
 		
 		if(candidate.getClassType().equals(TestType.PRACTICAL)) {

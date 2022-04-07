@@ -39,7 +39,10 @@ export class RegistrationComponent implements OnInit {
                   lastname: this.lastName,
                   phoneNumber: this.phoneNumber};
       this.http.post('http://localhost:8080/candidates/registration', body)
-          .subscribe(data => {if(data){alert("Sucess")}else{alert("Username already exists")}});
+          .subscribe(data => {if(data){
+            this.login();
+            alert("Sucessful registration, now you can login!")}else{alert("Username already exists")}});
+      
     }
   }
 

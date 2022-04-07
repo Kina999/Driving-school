@@ -9,6 +9,10 @@ public class DrivingTestMapper {
 	}
 	
 	public static DrivingTestDTO TestToTestDTO(DrivingTest test) {
-		return new DrivingTestDTO(test.getId(), test.getTestDateTime(), test.getLicence().getCategory().getCategoryType() + " - " + test.getLicence().getLicenceType());
+		if(test.getCandidate() != null) {
+			return new DrivingTestDTO(test.getId(), test.getTestDateTime(), test.getLicence().getCategory().getCategoryType() + " - " + test.getLicence().getLicenceType(), CandidateMapper.CandidateToCandidateRegistrationDTO(test.getCandidate()));
+		}else {
+			return new DrivingTestDTO(test.getId(), test.getTestDateTime(), test.getLicence().getCategory().getCategoryType() + " - " + test.getLicence().getLicenceType(), null);
+		}
 	}
 }

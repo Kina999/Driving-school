@@ -1,6 +1,7 @@
 package com.DrivingSchool.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,7 +9,6 @@ import com.DrivingSchool.dto.CandidateRegistrationDTO;
 import com.DrivingSchool.dto.EditCandidateProfileDTO;
 import com.DrivingSchool.enumClasses.TestType;
 import com.DrivingSchool.model.Candidate;
-import com.DrivingSchool.model.Category;
 import com.DrivingSchool.model.Worker;
 import com.DrivingSchool.repository.CandidateRepository;
 import com.DrivingSchool.service.interfaces.CandidateService;
@@ -123,7 +123,6 @@ public class CandidateServiceImpl implements CandidateService{
 	@Override
 	public boolean isCandidateDone(String candidateEmail) {
 		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
-		Category category = categoryService.getCategory(candidate.getCategory());
 		return candidate.isPracticalDone();
 	}
 
@@ -148,6 +147,11 @@ public class CandidateServiceImpl implements CandidateService{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void saveCandidate(Candidate c) {
+		candidateRepository.save(c);
 	}
 
 }

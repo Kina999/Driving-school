@@ -14,7 +14,7 @@
       <a class="navbar-brand" href="#page-top">ALUNNO</a>
 
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 40rem;">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 40.6rem;">
           <li class="nav-item"><a class="nav-link" (click)="tests()" style="cursor: pointer">Ispiti</a></li>
           <li class="nav-item"><a class="nav-link" (click)="candidates()" style="cursor: pointer">Kandidati</a></li>
           <li class="nav-item"><a class="nav-link" (click)="instructors()" style="cursor: pointer">Instruktori</a></li>
@@ -71,18 +71,52 @@
               <span
                 class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{t.categoryAndType}}</span>
               <div class="margin-10px-top font-size14">{{convertDate(t.dateAndTime)}}</div>
-              <!--<div class="font-size13 text-light-gray">
-                <button type="button" class="btn btn-danger" *ngIf="t.candidates.length == 0"
-                  (click)="removeTermin(i, j)">Otkazi</button>
+              <div class="font-size13 text-light-gray">
+                <button type="button" class="btn btn-danger" *ngIf="t.candidate == undefined"
+                  (click)="removeTest(i, j)">Otkazi</button>
               </div>
               <div class="font-size13 text-light-gray">
-                <button type="button" class="btn btn-info" *ngIf="t.candidates.length != 0" data-bs-toggle="modal"
+                <button type="button" class="btn btn-info" *ngIf="t.candidate != undefined" data-bs-toggle="modal"
                   data-bs-target="#exampleModal1" (click)="setSelectedTermin(i, j)">Kandidati</button>
-              </div>-->
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+  <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+            style="visibility: hidden;" #closeModal5 /></div>
+        <table class="table manage-candidates-top mb-0">
+          <tbody *ngIf="selectedTermin != undefined">
+            <tr class="candidates-list">
+              <td class="title">
+                <div class="candidate-list-details">
+                  <div class="candidate-list-info">
+                    <div class="candidate-list-title">
+                      <h5 class="mb-0"><a href="#">{{selectedTermin.candidate.name}}
+                          {{selectedTermin.candidate.lastname}}</a></h5>
+                    </div>
+                    <div class="candidate-list-option">
+                      <ul class="list-unstyled">
+                        <li><i class="fa fa-user"></i>{{selectedTermin.candidate.email}}</li>
+                        <li><i class="fa fa-phone"></i>{{selectedTermin.candidate.phoneNumber}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr style="text-align: center;" *ngIf="selectedTermin.passed">
+              <td><button type="button" class="btn btn-success" style="width: 50%" (click)="passedTest()">Polozio</button></td>
+              <td><button type="button" class="btn btn-danger" style="width: 75%; margin-left: -25%;" (click)="failedTest()">Pao</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>

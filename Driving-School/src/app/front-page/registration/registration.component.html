@@ -3,43 +3,51 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <html>
-  <head>
-    <link href="registration.component.css" rel="stylesheet" />
-  </head>
-  <body class="background" id="page-top">
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top">ALUNNO</a>
-            
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 1rem;">
-                    <li class="nav-item"><a class="nav-link" href="#page-top">Početna</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">O nama</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Servisi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Gdje se nalazimo?</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="registrationPage()" style="cursor: pointer">Registracija</a></li>
-                    <li class="nav-item"><a class="nav-link" (click)="login()" style="cursor: pointer">Login</a></li>
-                </ul>
-            </div>
-        </div>
-      </nav>
 
-      <div class="wrapper fadeInDown">
-        <div id="formContent">
+<head>
+  <link href="registration.component.css" rel="stylesheet" />
+</head>
 
-          <!-- Login Form -->
-          <form style="margin-top: 3rem;">
-            <input type="text" id="login" class="fadeIn second" name="email" [(ngModel)]="email" placeholder="korisnicko ime">
-            <input type="text" id="password" class="fadeIn third" name="password" [(ngModel)]="password" placeholder="lozinka">
-            <input type="text" id="password" class="fadeIn third" name="reenteredPassword" [(ngModel)]="reenteredPassword" placeholder="lozinka">
-            <input type="text" id="login" class="fadeIn second" name="name" [(ngModel)]="name" placeholder="ime">
-            <input type="text" id="password" class="fadeIn third" name="lastName" [(ngModel)]="lastName" placeholder="prezime">
-            <input type="text" id="password" class="fadeIn third" name="phoneNubmer" [(ngModel)]="phoneNumber" placeholder="broj telefona">
-            <input type="button" class="fadeIn fourth" value="Registruj se" (click)="register()">
-          </form>
+<body class="background" id="page-top">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a">
+    <div class="container">
+      <a class="navbar-brand" href="#page-top">ALUNNO</a>
 
-        </div>
+      <div class="collapse navbar-collapse" id="navbarResponsive" style="margin-left: 20rem;">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#page-top">Početna</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">Informacije</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">Servisi</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Lokacija</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="register()" style="cursor: pointer;">Registracija</a></li>
+          <li class="nav-item"><a class="nav-link" (click)="login()" style="cursor: pointer">Login</a></li>
+        </ul>
       </div>
-  </body>
+    </div>
+  </nav>
+
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+
+      <!-- Login Form -->
+      <form style="margin-top: 3rem;">
+        <input type="text" id="login" class="fadeIn second" name="email" [(ngModel)]="email"
+          placeholder="korisnicko ime">
+        <input type="password" id="password" class="fadeIn third" name="password" [(ngModel)]="password"
+          placeholder="lozinka">
+        <input type="password" id="password" class="fadeIn third" name="reenteredPassword"
+          [(ngModel)]="reenteredPassword" placeholder="lozinka">
+        <input type="text" id="login" class="fadeIn second" name="name" [(ngModel)]="name" placeholder="ime">
+        <input type="text" id="password" class="fadeIn third" name="lastName" [(ngModel)]="lastName"
+          placeholder="prezime">
+        <input type="text" id="password" class="fadeIn third" name="phoneNubmer" [(ngModel)]="phoneNumber"
+          placeholder="broj telefona">
+        <input type="button" class="fadeIn fourth" value="Registruj se" (click)="register()">
+      </form>
+
+    </div>
+  </div>
+</body>
+
 </html>

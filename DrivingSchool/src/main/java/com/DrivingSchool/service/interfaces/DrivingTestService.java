@@ -6,6 +6,9 @@ import java.util.Set;
 import com.DrivingSchool.model.DrivingTest;
 
 public interface DrivingTestService {
+	public boolean passTest(int id);
+	public boolean failTest(int id);
+	public boolean deleteTest(int id);
 	public Set<String> getAllDrivingTestDates();
 	public List<DrivingTest> getTestsForDate(String date);
 	public void scheduleTest(String candidateEmail, int id);

@@ -33,10 +33,10 @@ export class LoginComponent implements OnInit {
                           this.router.navigate(['candidat-page']);
                         }else if(data.role === 'ADMINISTRATOR'){
                           localStorage.setItem('currentUser', JSON.stringify(data));
-                          this.router.navigate(['admin-page']);
+                          this.router.navigate(['instructors']);
                         }else if(data.role === 'INSTRUCTOR'){
                           localStorage.setItem('currentUser', JSON.stringify(data));
-                          this.router.navigate(['instructor-page']);
+                          this.router.navigate(['instructor-candidates']);
                         }else{alert("Incorrect credentials")}});
 
   }

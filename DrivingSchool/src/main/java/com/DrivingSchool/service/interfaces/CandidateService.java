@@ -8,6 +8,7 @@ import com.DrivingSchool.model.Candidate;
 import com.DrivingSchool.model.Worker;
 
 public interface CandidateService {
+	public void saveCandidate(Candidate c);
 	public List<Candidate> getAllCandidates();
 	public Worker getInstructor(String email);
 	public boolean blockCandidate(String email);
