@@ -22,7 +22,9 @@
             </div>
         </div>
       </nav>
-
+      <h1 class="mb-1" style="color: white; background-color: #0203037a;" *ngIf="progress.theoreticalTestDone">Polozili ste teorijski ispit</h1>
+      <h1 class="mb-1" style="color: white; background-color: #0203037a;" *ngIf="progress.practicalTestDone">Polozili ste prakticni ispit</h1>
+      
       <div class="container">
         <div class="timetable-img text-center">
           <img src="img/content/timetable.png" alt="">
@@ -44,6 +46,26 @@
                     <button type="button" class="btn btn-info" data-bs-toggle="modal"
                       data-bs-target="#exampleModal1" (click)="scheduleTest(i, j)">Zakazi</button>
                   </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="container" *ngIf="reservedTest != null">
+        <div class="timetable-img text-center">
+          <img src="img/content/timetable.png" alt="">
+        </div>
+        <h1 class="mb-1" style="color: white; background-color: #0203037a;">Zakazani vozacki ispiti</h1>
+        <div class="table-responsive">
+          <table class="table table-bordered text-center">
+            <tbody>
+              <tr class="bg-light-gray">
+                <td>
+                  <span
+                    class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{reservedTest.categoryAndType}}</span>
+                  <div class="margin-10px-top font-size14">{{convertDate(reservedTest.dateAndTime)}}</div>
                 </td>
               </tr>
             </tbody>

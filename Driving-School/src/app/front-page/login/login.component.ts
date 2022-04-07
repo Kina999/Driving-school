@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
       password: this.password};
     this.http.post('http://localhost:8080/authentication/login', body)
     .subscribe((data: any) => {
+                        if(data == null){alert("Incorrect credentials")}
                         if(data.role === 'CANDIDATE'){
                           localStorage.setItem('currentUser', JSON.stringify(data));
                           this.router.navigate(['candidat-page']);

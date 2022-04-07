@@ -45,6 +45,19 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 	}
 
 	@Override
+	public DrivingTest getCandidateReservedDrivingTest(String candidateEmail) {
+		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
+			if (drivingTest.getCandidate() != null) {
+				if (!drivingTest.isDeleted() && drivingTest.getCandidate().getEmail().equals(candidateEmail)
+					&& drivingTest.getTestDateTime().after(new Date())) {
+					return drivingTest;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public Set<String> getAllDrivingTestDates() {
 		List<Date> dates = new ArrayList<Date>();
 		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
@@ -103,7 +116,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 						&& drivingTest.getLicence().getLicenceType().equals(TestType.THEORETICAL) 
 						&& drivingTest.getTestDateTime().after(new Date())
 						&& terminService.getLatestCandidateTheoreticalClass(candidateEmail).getEndTime().before(new Date())
-						&& !alreadyReserved(candidateEmail)
+						&& !alreadyReservedTheoretical(candidateEmail)
 						&& !drivingTest.isDeleted()
 						&& !candidate.isTheoreticalDone()) {
 					dates.add(drivingTest.getTestDateTime());
@@ -117,7 +130,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 						&& drivingTest.getLicence().getLicenceType().equals(TestType.PRACTICAL) 
 						&& drivingTest.getTestDateTime().after(new Date())
 						&& terminService.getLatestCandidatePracticalClass(candidateEmail).getEndTime().before(new Date())
-						&& !alreadyReserved(candidateEmail)
+						&& !alreadyReservedPractical(candidateEmail)
 						&& !drivingTest.isDeleted()
 						&& !candidate.isPracticalDone()) {
 					dates.add(drivingTest.getTestDateTime());
@@ -127,17 +140,28 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 		return sortDates(dates);
 	}
 
-	private boolean alreadyReserved(String candidateEmail) {
+	private boolean alreadyReservedTheoretical(String candidateEmail) {
 		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
-			if(drivingTest.getCandidate() != null) {
-				if(drivingTest.getCandidate().getEmail().equals(candidateEmail) && drivingTest.getTestDateTime().after(new Date())) {
+			if(drivingTest.getCandidate() != null && drivingTest.getLicence().getLicenceType().equals(TestType.THEORETICAL)) {
+				if(drivingTest.getCandidate().getEmail().equals(candidateEmail) && !drivingTest.isDeleted()) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
+
+	private boolean alreadyReservedPractical(String candidateEmail) {
+		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
+			if(drivingTest.getCandidate() != null && drivingTest.getLicence().getLicenceType().equals(TestType.PRACTICAL)) {
+				if(drivingTest.getCandidate().getEmail().equals(candidateEmail) && !drivingTest.isDeleted()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public List<DrivingTest> getCandidateTestsForDate(String candidateEmail, String date) {
 		List<DrivingTest> tests = new ArrayList<DrivingTest>();
@@ -149,7 +173,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 				if(drivingTest.getLicence().getCategory().getCategoryType().equals(candidate.getCategory())
 						&& drivingTest.getLicence().getLicenceType().equals(TestType.THEORETICAL) 
 						&& drivingTest.getTestDateTime().after(new Date())
-						&& !alreadyReserved(candidateEmail)
+						&& !alreadyReservedTheoretical(candidateEmail)
 						&& !drivingTest.isDeleted()
 						&& !candidate.isTheoreticalDone()
 						&& strDate.split(" ")[0].equals(date)) {
@@ -163,7 +187,7 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 				if(drivingTest.getLicence().getCategory().getCategoryType().equals(candidate.getCategory())
 						&& drivingTest.getLicence().getLicenceType().equals(TestType.PRACTICAL) 
 						&& drivingTest.getTestDateTime().after(new Date())
-						&& !alreadyReserved(candidateEmail)
+						&& !alreadyReservedPractical(candidateEmail)
 						&& !drivingTest.isDeleted()
 						&& !candidate.isPracticalDone()
 						&& strDate.split(" ")[0].equals(date)) {

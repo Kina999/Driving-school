@@ -11,6 +11,8 @@ export class CandidateTestsComponent implements OnInit {
 
   terminDates: any = [];
   terminTimes: any = [];
+  reservedTest: any;
+  progress: any;
 
   constructor(private router: Router, private http: HttpClient, public datepipe: DatePipe) { }
 
@@ -18,6 +20,14 @@ export class CandidateTestsComponent implements OnInit {
     var user = localStorage.getItem('currentUser');
     if (user != null) {
       var userEmail = JSON.parse(user).email;
+      this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + userEmail).subscribe(
+        (data: any) => {
+          this.progress = data;
+        });
+      this.http.get('http://localhost:8080/drivingTest/reservedTestForCandidate?candidateEmail=' + userEmail).subscribe(
+        (data: any) => {
+          this.reservedTest = data;
+        });
       this.http.get('http://localhost:8080/drivingTest/testsDatesForCandidate?candidateEmail=' + userEmail).subscribe(
         (data: any) => {
           this.terminDates = data;
@@ -59,6 +69,14 @@ export class CandidateTestsComponent implements OnInit {
       };
       this.http.post('http://localhost:8080/drivingTest/scheduleTest', body)
         .subscribe(data => {
+          this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + userEmail).subscribe(
+            (data: any) => {
+              this.progress = data;
+            });
+          this.http.get('http://localhost:8080/drivingTest/reservedTestForCandidate?candidateEmail=' + userEmail).subscribe(
+            (data: any) => {
+              this.reservedTest = data;
+            });
           this.http.get('http://localhost:8080/drivingTest/testsDatesForCandidate?candidateEmail=' + userEmail).subscribe(
             (data: any) => {
               this.terminDates = data;

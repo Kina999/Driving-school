@@ -56,31 +56,43 @@
                       </div>
                     </div>
                   </div>
-                  <div class="card-body" style="margin-top: -2rem; margin-left: 50%;">
+                </td>
+                <td>
+                  <div class="card-body" style="margin-top: -2rem;">
                     <div class="d-flex flex-column align-items-center text-center">
                       <div class="col-md-8">
-                        <div class="card h-100">
+                        <div class="card h-100" style="margin-right: -45%;">
                           <div class="card-body">
-                            <small>Teorijska nastava ({{candidateProgress[indexOfelement].theoreticalDone}} / {{candidateProgress[indexOfelement].necessaryClasses}})</small>
+                            <small>Teorijska nastava ({{candidateProgress[indexOfelement].theoreticalDone}} /
+                              {{candidateProgress[indexOfelement].necessaryClasses}})</small>
                             <div style="margin-bottom: -0.8rem;">
                               <div class="progress mb-3" style="height: 10px">
-                                <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" [style.width.%]="candidateProgress[indexOfelement].theoreticalDone / candidateProgress[indexOfelement].necessaryClasses * 100" aria-valuenow="candidateProgress[indexOfelement].theoreticalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
+                                <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0"
+                                  [style.width.%]="candidateProgress[indexOfelement].theoreticalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
+                                  aria-valuenow="candidateProgress[indexOfelement].theoreticalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
                                   aria-valuemax="100"></div>
                               </div>
                             </div>
-                            <small>Teorijski ispit <i class="fa fa-check" aria-hidden="true" *ngIf="candidateProgress[indexOfelement].theoreticalTestDone"></i>
-                              <i class="fa fa-times" aria-hidden="true" *ngIf="!candidateProgress[indexOfelement].theoreticalTestDone"></i></small>
-                            <br/>
+                            <small>Teorijski ispit <i class="fa fa-check" aria-hidden="true"
+                                *ngIf="candidateProgress[indexOfelement].theoreticalTestDone"></i>
+                              <i class="fa fa-times" aria-hidden="true"
+                                *ngIf="!candidateProgress[indexOfelement].theoreticalTestDone"></i></small>
+                            <br />
                             <div style="margin-bottom: -0.8rem;">
-                              <small>Prakticna nastava ({{candidateProgress[indexOfelement].practicalDone}} / {{candidateProgress[indexOfelement].necessaryClasses}})</small>
+                              <small>Prakticna nastava ({{candidateProgress[indexOfelement].practicalDone}} /
+                                {{candidateProgress[indexOfelement].necessaryClasses}})</small>
                               <div class="progress mb-3" style="height: 10px">
-                                <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" [style.width.%]="candidateProgress[indexOfelement].practicalDone / candidateProgress[indexOfelement].necessaryClasses * 100" aria-valuenow="candidateProgress[indexOfelement].practicalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
+                                <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0"
+                                  [style.width.%]="candidateProgress[indexOfelement].practicalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
+                                  aria-valuenow="candidateProgress[indexOfelement].practicalDone / candidateProgress[indexOfelement].necessaryClasses * 100"
                                   aria-valuemax="100"></div>
                               </div>
                             </div>
-                            <small>Prakticni ispit <i class="fa fa-check" aria-hidden="true" *ngIf="candidateProgress[indexOfelement].practicalTestDone"></i>
-                              <i class="fa fa-times" aria-hidden="true" *ngIf="!candidateProgress[indexOfelement].practicalTestDone"></i></small>
-                            <br/>
+                            <small>Prakticni ispit <i class="fa fa-check" aria-hidden="true"
+                                *ngIf="candidateProgress[indexOfelement].practicalTestDone"></i>
+                              <i class="fa fa-times" aria-hidden="true"
+                                *ngIf="!candidateProgress[indexOfelement].practicalTestDone"></i></small>
+                            <br />
                           </div>
                         </div>
                       </div>

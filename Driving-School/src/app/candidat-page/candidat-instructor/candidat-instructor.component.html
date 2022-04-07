@@ -34,7 +34,7 @@
     <div>
       <select class="form-select" aria-label="Default select example" [(ngModel)]="category"
         (change)="categoryChanged($event)" style="width: 40rem; margin-left: 20rem;">
-        <option hidden>Kategorija</option>
+        <option selected hidden>Kategorija</option>
         <option value="A" class="dropdown-item">A</option>
         <option value="A1">A1</option>
         <option value="B">B</option>
@@ -111,18 +111,18 @@
                   <div id="formContent" style="margin-left: 1.5rem;">
                     <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg"
                         alt="Close modal" style="visibility: hidden;" #closeModal2 /></div>
-                    <p style="padding: 5rem;" class="text-danger" *ngIf="selectedInstructor && category != ''">
+                    <p style="padding: 5rem;" class="text-danger" *ngIf="selectedInstructor && category != 'Kategorija'">
                       Da li ste sigurni da zelite da vas izabrani intruktor bude {{selectedInstructor.name}}
                       {{selectedInstructor.lastName}}? <br />
                       Jednom kada izaberete, vise ne mozete mijenjati svog instruktora!
                     </p>
-                    <p style="padding: 5rem;" class="text-danger" *ngIf="selectedInstructor && category == ''">
+                    <p style="padding: 5rem;" class="text-danger" *ngIf="selectedInstructor && category == 'Kategorija'">
                       Prvo morate izabrati kategoriju!
                     </p>
-                    <button *ngIf="category != ''" type="button" class="btn btn-success"
+                    <button *ngIf="category != 'Kategorija'" type="button" class="btn btn-success"
                       style="margin-bottom: 2rem; margin-right: 1rem;"
                       (click)="chooseSelectedInstructor()">Potvrdi</button>
-                    <button *ngIf="category != ''" type="button" class="btn btn-danger"
+                    <button *ngIf="category != 'Kategorija'" type="button" class="btn btn-danger"
                       style="margin-bottom: 2rem; margin-left: 1rem;"
                       (click)="cancelChoosingInstructor()">Odustani</button>
                   </div>

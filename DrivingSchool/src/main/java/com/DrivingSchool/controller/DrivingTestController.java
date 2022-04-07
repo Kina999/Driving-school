@@ -47,6 +47,11 @@ public class DrivingTestController {
 		return new ResponseEntity<>(tests, HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/reservedTestForCandidate")
+	public ResponseEntity<?> getReservedTestsForCandidate(String candidateEmail){
+		return new ResponseEntity<>(DrivingTestMapper.TestToTestDTO(drivingTestService.getCandidateReservedDrivingTest(candidateEmail)), HttpStatus.OK);
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/testsForCandidate")
     public ResponseEntity<?> getTestsForCandidate(String candidateEmail, String date){
 		List<DrivingTestDTO> tests = new ArrayList<>();

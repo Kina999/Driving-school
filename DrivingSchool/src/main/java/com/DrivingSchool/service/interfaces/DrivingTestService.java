@@ -14,6 +14,7 @@ public interface DrivingTestService {
 	public void scheduleTest(String candidateEmail, int id);
 	public Set<String> getCandidateDrivingTestDates(String candidateEmail);
 	public boolean addTest(DrivingTest drivingTest, String categoryAndType);
+	public DrivingTest getCandidateReservedDrivingTest(String candidateEmail);
 	public List<DrivingTest> getCandidateTestsForDate(String candidateEmail, String date);
 	
 }

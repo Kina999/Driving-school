@@ -16,7 +16,7 @@ export class CandidatInstructorComponent implements OnInit {
   selectedInstructor: any;
   candidateInstructor: any;
   requestedInstructorInfo: any;
-  category: string = '';
+  category: string = 'Kategorija';
   terminDates: any = [];
   terminTimes: any = [];
   instructorTermins: any = [];
