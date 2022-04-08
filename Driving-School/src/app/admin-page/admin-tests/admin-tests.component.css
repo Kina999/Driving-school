@@ -267,11 +267,13 @@ html {
   }
   
   .background {
-    background: url(../../../assets/driving.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background-image:url(../../../assets/driving.jpg);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
     background-size: cover;
+    min-height: 900px;
+    padding-bottom: 3.5%;
   }
   body{
     background-color: #f8f9fa!important

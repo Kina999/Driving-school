@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
                         if(data == null){alert("Incorrect credentials")}
                         if(data.role === 'CANDIDATE'){
                           localStorage.setItem('currentUser', JSON.stringify(data));
-                          this.router.navigate(['candidat-page']);
+                          this.router.navigate(['candidate-tests']);
                         }else if(data.role === 'ADMINISTRATOR'){
                           localStorage.setItem('currentUser', JSON.stringify(data));
                           this.router.navigate(['instructors']);
