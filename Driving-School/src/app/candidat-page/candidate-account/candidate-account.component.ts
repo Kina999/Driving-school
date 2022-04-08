@@ -32,7 +32,7 @@ export class CandidateAccountComponent implements OnInit {
       this.name = user.name;
       this.lastName = user.lastName;
       this.phoneNumber = user.phoneNumber;
-      this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + this.email).subscribe(
+      this.http.get('http://localhost:8080/candidates/candidateProgress?candidateEmail=' + this.email).subscribe(
         (data: any) => {
           this.progress = data; 
           this.theoreticalProgress = data.theoreticalDone / data.necessaryClasses * 100;

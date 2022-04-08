@@ -23,7 +23,6 @@ public class Instructor extends Worker{
 	public double getGrade() {
 		return grade;
 	}
-
 	public void setGrade(double grade) {
 		this.grade = grade;
 	}

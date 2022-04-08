@@ -38,9 +38,7 @@ public class CandidateServiceImpl implements CandidateService{
 	@Override
 	public Candidate checkIfCandidateExists(String email, String password) {
 		Candidate candidate = candidateRepository.findCanidateByEmailAndPassword(email, password);
-		if(candidate != null && !candidate.isBlocked()) {
-			return candidate;
-		}
+		if(candidate != null && !candidate.isBlocked()) return candidate;
 		return null;
 	}
 
@@ -62,19 +60,14 @@ public class CandidateServiceImpl implements CandidateService{
 		if(candidate != null && worker != null) {
 			candidateRepository.setCandidateInstructor(candidateEmail, instructorEmail, category);
 			return true;
-		}else {
-			return false;
-		}
+		}else return false;
 	}
 
 	@Override
 	public Worker getInstructor(String email) {
 		Candidate candidate = candidateRepository.findCandidateByEmail(email);		
-		if(candidate != null) {
-			return candidateRepository.findCandidateByEmail(email).getInstructor();
-		}else {
-			return null;
-		}
+		if(candidate != null) return candidateRepository.findCandidateByEmail(email).getInstructor();
+		else return null;
 	}
 
 	@Override
@@ -96,22 +89,7 @@ public class CandidateServiceImpl implements CandidateService{
 		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
 		if(candidate != null) {
 			candidateRepository.incrementClassNumber(candidateEmail, candidate.getNumberOfClasses() + 1);
-			if(candidate.getNumberOfClasses() + 1 == categoryService.getCategory(candidate.getCategory()).getNumberOfClasses()) {
-				if(!candidate.getClassType().equals(TestType.PRACTICAL)) {
-					resetClassNumber(candidateEmail);
-					candidateRepository.setClassType(candidateEmail);
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean decreaseClassNumber(String candidateEmail) {
-		if(candidateRepository.findCandidateByEmail(candidateEmail) != null) {
-			candidateRepository.incrementClassNumber(candidateEmail, candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() + 1);
-			if(candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() + 1 == categoryService.getCategory(candidateRepository.findCandidateByEmail(candidateEmail).getCategory()).getNumberOfClasses()) {
+			if(candidate.getNumberOfClasses() + 1 == categoryService.getCategory(candidate.getCategory()).getNumberOfClasses() && !candidate.getClassType().equals(TestType.PRACTICAL)) {
 				resetClassNumber(candidateEmail);
 				candidateRepository.setClassType(candidateEmail);
 			}
@@ -121,9 +99,17 @@ public class CandidateServiceImpl implements CandidateService{
 	}
 
 	@Override
+	public boolean decreaseClassNumber(String candidateEmail) {
+		if(candidateRepository.findCandidateByEmail(candidateEmail) != null) {
+			candidateRepository.incrementClassNumber(candidateEmail, candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() - 1);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public boolean isCandidateDone(String candidateEmail) {
-		Candidate candidate = candidateRepository.findCandidateByEmail(candidateEmail);
-		return candidate.isPracticalDone();
+		return candidateRepository.findCandidateByEmail(candidateEmail).isPracticalDone();
 	}
 
 	@Override

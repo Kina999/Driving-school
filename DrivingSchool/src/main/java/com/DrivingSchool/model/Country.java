@@ -17,6 +17,7 @@ public class Country {
 	public Country() {
 		super();
 	}
+
 	public Country(String name, String continent) {
 		super();
 		this.name = name;

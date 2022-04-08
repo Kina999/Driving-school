@@ -22,7 +22,7 @@ public interface TerminRepository extends JpaRepository<Termin, Integer>{
 	public void deleteTermin(Integer terminId);	
 	
 	@Query(value = "SELECT * FROM TERMIN WHERE LICENCE_ID=?1", nativeQuery = true)
-	public List<Termin> findInstructorTermins(Integer licanceId);
+	public List<Termin> findInstructorTermins(Integer licenceId);
 	
 	@Query(value = "SELECT * FROM TERMIN WHERE CLIENT_CANCELED=?1", nativeQuery = true)
 	public List<Termin> getCandidateCanceledTermins(String candidateEmail);

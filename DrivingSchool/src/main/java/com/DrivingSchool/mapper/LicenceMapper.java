@@ -8,11 +8,8 @@ public class LicenceMapper {
 	public static Licence InstructorLicenceDTOToLicence(InstructorLicenceDTO dto) {
 		Licence licence = new Licence();
 		licence.setExpirationDate(dto.expirationDate);
-		if(dto.licenceType.equals("PRAKTICNA")) {
-			licence.setLicenceType(TestType.PRACTICAL);
-		}else {
-			licence.setLicenceType(TestType.THEORETICAL);
-		}
+		if(dto.licenceType.equals("PRAKTICNA")) licence.setLicenceType(TestType.PRACTICAL);
+		else licence.setLicenceType(TestType.THEORETICAL);
 		return licence;
 	}
 }

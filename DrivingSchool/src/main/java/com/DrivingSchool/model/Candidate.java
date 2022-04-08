@@ -103,58 +103,33 @@ public class Candidate {
 	public void setBlocked(boolean blocked) {
 		this.blocked = blocked;
 	}
-
 	public Instructor getInstructor() {
 		return instructor;
 	}
-
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
 	}
-
 	public String getCategory() {
 		return category;
 	}
-
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
 	public Set<Termin> getClasses() {
 		return classes;
 	}
-
 	public void setClasses(Set<Termin> classes) {
 		this.classes = classes;
 	}
-
 	public TestType getClassType() {
 		return classType;
 	}
-	
 	public void setClassType(TestType classType) {
 		this.classType = classType;
 	}
-
-
-	public boolean isTheoreticalDone() {
-		return theoreticalDone;
-	}
-
-
-	public void setTheoreticalDone(boolean theoreticalDone) {
-		this.theoreticalDone = theoreticalDone;
-	}
-
-
-	public boolean isPracticalDone() {
-		return practicalDone;
-	}
-
-
-	public void setPracticalDone(boolean practicalDone) {
-		this.practicalDone = practicalDone;
-	}
-	
+	public boolean isTheoreticalDone() {return theoreticalDone;}
+	public void setTheoreticalDone(boolean theoreticalDone) {this.theoreticalDone = theoreticalDone;}
+	public boolean isPracticalDone() {return practicalDone;}
+	public void setPracticalDone(boolean practicalDone) {this.practicalDone = practicalDone;}
 
 }

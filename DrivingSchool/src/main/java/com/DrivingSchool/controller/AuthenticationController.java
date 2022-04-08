@@ -28,16 +28,14 @@ public class AuthenticationController {
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/login")
     public ResponseEntity<?> registerClient(@RequestBody UserLoginDTO user){
+		CurrentUserDTO currentUser = null;
 		if(candidateService.checkIfCandidateExists(user.email, user.password) != null) {
 			Candidate c = candidateService.checkIfCandidateExists(user.email, user.password);
-			CurrentUserDTO dto = new CurrentUserDTO(c.getEmail(), c.getPassword(), c.getName(), c.getLastName(), c.getPhoneNumber(), "CANDIDATE");
-			return new ResponseEntity<>(dto, HttpStatus.OK);
+			currentUser = new CurrentUserDTO(c.getEmail(), c.getPassword(), c.getName(), c.getLastName(), c.getPhoneNumber(), "CANDIDATE");
 		}else if(workerService.checkIfWorkerExists(user.email, user.password) != null) {
 			Worker w = workerService.checkIfWorkerExists(user.email, user.password);
-			CurrentUserDTO dto = new CurrentUserDTO(w.getEmail(), w.getPassword(), w.getName(), w.getLastName(), w.getPhoneNumber(), w.getWorkerType().toString());
-			return new ResponseEntity<>(dto, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(null, HttpStatus.OK);
+			currentUser = new CurrentUserDTO(w.getEmail(), w.getPassword(), w.getName(), w.getLastName(), w.getPhoneNumber(), w.getWorkerType().toString());
 		}
+		return new ResponseEntity<>(currentUser, HttpStatus.OK);
 	}
 }

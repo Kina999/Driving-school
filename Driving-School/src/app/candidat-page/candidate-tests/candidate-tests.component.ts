@@ -20,7 +20,7 @@ export class CandidateTestsComponent implements OnInit {
     var user = localStorage.getItem('currentUser');
     if (user != null) {
       var userEmail = JSON.parse(user).email;
-      this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + userEmail).subscribe(
+      this.http.get('http://localhost:8080/candidates/candidateProgress?candidateEmail=' + userEmail).subscribe(
         (data: any) => {
           this.progress = data;
         });
@@ -69,7 +69,7 @@ export class CandidateTestsComponent implements OnInit {
       };
       this.http.post('http://localhost:8080/drivingTest/scheduleTest', body)
         .subscribe(data => {
-          this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + userEmail).subscribe(
+          this.http.get('http://localhost:8080/candidates/candidateProgress?candidateEmail=' + userEmail).subscribe(
             (data: any) => {
               this.progress = data;
             });

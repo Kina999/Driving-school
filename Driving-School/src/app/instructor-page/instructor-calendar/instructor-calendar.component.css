@@ -272,6 +272,7 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    padding-bottom: 10%;
   }
   body{
     background-color: #f8f9fa!important

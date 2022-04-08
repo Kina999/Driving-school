@@ -8,11 +8,10 @@ import com.DrivingSchool.dto.CandidateRegistrationDTO;
 import com.DrivingSchool.model.Candidate;
 
 public class CandidateMapper {
+
 	public static Set<CandidateRegistrationDTO> CandidateSetToCandidateSetDTO(Set<Candidate> candidates) {
 		Set<CandidateRegistrationDTO> candidatesDTO = new HashSet<CandidateRegistrationDTO>();
-		for(Candidate candidate : candidates) {
-			candidatesDTO.add(CandidateToCandidateRegistrationDTO(candidate));
-		}
+		for(Candidate candidate : candidates) candidatesDTO.add(CandidateToCandidateRegistrationDTO(candidate));
 		return candidatesDTO;
 	}
 	

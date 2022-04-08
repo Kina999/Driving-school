@@ -24,7 +24,7 @@ export class AdminTestsComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, public datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/licences/getAll?email=').subscribe(
+    this.http.get('http://localhost:8080/licences/all?email=').subscribe(
       (data: any) => {
         this.licences = data;
       });

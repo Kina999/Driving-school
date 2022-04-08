@@ -28,28 +28,28 @@ export class CandidatInstructorComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient, public datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/instructors/getAll').subscribe(
+    this.http.get('http://localhost:8080/instructors/all').subscribe(
       data => {
         this.instructorsList = data;
       });
     var user = localStorage.getItem('currentUser');
     if (user != null) {
       var userEmail = JSON.parse(user).email;
-      this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
+      this.http.get('http://localhost:8080/termins/allCandidatePossibleTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
         (data: any) => {
           this.terminDates = data;
           this.terminDates.forEach((date: any, i: number) => {
-            this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
+            this.http.get('http://localhost:8080/termins/allCandidatePossibleTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
               data => {
                 this.terminTimes[i] = data;
               });
           });
         });
-      this.http.get('http://localhost:8080/instructorRequests/getInstructorRequest?email=' + userEmail).subscribe(
+      this.http.get('http://localhost:8080/instructorRequests/instructorRequest?email=' + userEmail).subscribe(
         (data: any) => {
           if (data != null) {
             if (data.approved && !data.refused) {
-              this.http.get('http://localhost:8080/candidates/getInstructor?email=' + userEmail).subscribe(
+              this.http.get('http://localhost:8080/candidates/instructor?email=' + userEmail).subscribe(
                 data => {
                   if (data != null) {
                     this.candidateInstructor = data;
@@ -63,7 +63,7 @@ export class CandidatInstructorComponent implements OnInit {
               this.instructorChoosen = true;
               this.requestApproved = true;
             } else if (!data.approved && !data.refused) {
-              this.http.get('http://localhost:8080/instructors/getInstructor?instructorEmail=' + data.instructorEmail).subscribe(
+              this.http.get('http://localhost:8080/instructors/instructor?instructorEmail=' + data.instructorEmail).subscribe(
                 (data: any) => {
                   this.requestedInstructorInfo = data;
                 });
@@ -76,7 +76,7 @@ export class CandidatInstructorComponent implements OnInit {
             this.instructorChoosen = false;
           }
         });
-      this.http.get('http://localhost:8080/candidates/getCandidateStatus?email=' + userEmail).subscribe(
+      this.http.get('http://localhost:8080/candidates/candidateStatus?email=' + userEmail).subscribe(
         (data: any) => {
           this.candidateDone = data;
         });
@@ -101,11 +101,11 @@ export class CandidatInstructorComponent implements OnInit {
             var user = localStorage.getItem('currentUser');
             if (user != null) {
               var userEmail = JSON.parse(user).email;
-              this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
+              this.http.get('http://localhost:8080/termins/allCandidatePossibleTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
                 (data: any) => {
                   this.terminDates = data;
                   this.terminDates.forEach((date: any, i: number) => {
-                    this.http.get('http://localhost:8080/termins/getAllCandidatePossibleTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
+                    this.http.get('http://localhost:8080/termins/allCandidatePossibleTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
                       data => {
                         this.terminTimes[i] = data;
                       });
@@ -148,7 +148,7 @@ export class CandidatInstructorComponent implements OnInit {
       this.http.post('http://localhost:8080/instructorRequests/addInstructorRequest', body)
         .subscribe(data => {
           if (data) {
-            this.http.get('http://localhost:8080/instructors/getInstructor?instructorEmail=' + this.selectedInstructor.email).subscribe(
+            this.http.get('http://localhost:8080/instructors/instructor?instructorEmail=' + this.selectedInstructor.email).subscribe(
               (data: any) => {
                 this.requestedInstructorInfo = data;
               });
@@ -180,7 +180,7 @@ export class CandidatInstructorComponent implements OnInit {
         } else {
           var user = localStorage.getItem('currentUser');
           if (user != null) {
-            this.http.get('http://localhost:8080/candidates/getInstructor?email=' + JSON.parse(user).email).subscribe(
+            this.http.get('http://localhost:8080/candidates/instructor?email=' + JSON.parse(user).email).subscribe(
               data => {
                 if (data != null) {
                   this.candidateInstructor = data;
@@ -192,7 +192,7 @@ export class CandidatInstructorComponent implements OnInit {
   }
 
   categoryChanged(event: any) {
-    this.http.get('http://localhost:8080/licences/getAllWithCategory?category=' + this.category).subscribe(
+    this.http.get('http://localhost:8080/licences/allWithCategory?category=' + this.category).subscribe(
       data => {
         this.instructorsList = data;
       });

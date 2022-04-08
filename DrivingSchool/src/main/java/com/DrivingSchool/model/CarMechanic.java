@@ -33,10 +33,8 @@ public class CarMechanic extends Worker{
 	public Set<Vehicle> getVehicle() {
 		return vehicle;
 	}
-
 	public void setVehicle(Set<Vehicle> vehicle) {
 		this.vehicle = vehicle;
 	}
-
 	
 }

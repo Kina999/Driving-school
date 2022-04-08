@@ -36,44 +36,44 @@ public class CandidateController {
 	@Autowired
 	private InstructorRequestService instructorRequestService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getInstructor")
+	@RequestMapping(method = RequestMethod.GET, value = "/instructor")
     public ResponseEntity<?> getInstructor(String email){	
 		return new ResponseEntity<>(candidateService.getInstructor(email), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateStatus")
+	@RequestMapping(method = RequestMethod.GET, value = "/candidateStatus")
     public ResponseEntity<?> isCandidateDone(String email){	
 		return new ResponseEntity<>(candidateService.isCandidateDone(email), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidates")
+	@RequestMapping(method = RequestMethod.GET, value = "/allCandidates")
     public ResponseEntity<?> getAllCandidates(){	
 		List<CandidateDTO> candidates = new ArrayList<CandidateDTO>();
-		for(Candidate candidate : candidateService.getAllCandidates()) {
+		for(Candidate candidate : candidateService.getAllCandidates())
 			candidates.add(CandidateMapper.CandidateToCandidateDTO(candidate));
-		}
 		return new ResponseEntity<>(candidates, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateProgress")
+	@RequestMapping(method = RequestMethod.GET, value = "/candidateProgress")
     public ResponseEntity<?> getCandidateProgress(String candidateEmail){	
 		
 		Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
 		CandidateProgressDTO progressDto = new CandidateProgressDTO();
-		Category category = categoryService.getCategory(candidate.getCategory());
-		
-		progressDto.theoreticalTestDone = candidate.isTheoreticalDone();
-		progressDto.practicalTestDone = candidate.isPracticalDone();
-		progressDto.necessaryClasses = category.getNumberOfClasses();
-		
-		if(candidate.getClassType().equals(TestType.PRACTICAL)) {
-			progressDto.theoreticalDone = category.getNumberOfClasses();
-			progressDto.practicalDone = candidate.getNumberOfClasses();
-		}else {
-			progressDto.theoreticalDone = candidate.getNumberOfClasses();
-			progressDto.practicalDone = 0;
+
+		if(candidate.getCategory() != null) {
+			Category category = categoryService.getCategory(candidate.getCategory());
+			progressDto.theoreticalTestDone = candidate.isTheoreticalDone();
+			progressDto.practicalTestDone = candidate.isPracticalDone();
+			progressDto.necessaryClasses = category.getNumberOfClasses();
+
+			if (candidate.getClassType().equals(TestType.PRACTICAL)) {
+				progressDto.theoreticalDone = category.getNumberOfClasses();
+				progressDto.practicalDone = candidate.getNumberOfClasses();
+			} else {
+				progressDto.theoreticalDone = candidate.getNumberOfClasses();
+				progressDto.practicalDone = 0;
+			}
 		}
-		
 		return new ResponseEntity<>(progressDto, HttpStatus.OK);
 	}
 	
@@ -88,17 +88,15 @@ public class CandidateController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addInstructor")
-    public ResponseEntity<?> addInstuctorToCandidate(@RequestBody CandidateInstructorDTO instructor){
-		String category = instructorRequestService.approveRequest(instructor.instructorEmail, instructor.candidateEmail);
-		return new ResponseEntity<>(candidateService.addInstructorToCandidate(instructor.instructorEmail, instructor.candidateEmail, category), HttpStatus.OK);
+    public ResponseEntity<?> addInstructorToCandidate(@RequestBody CandidateInstructorDTO instructor){
+		return new ResponseEntity<>(candidateService.addInstructorToCandidate(instructor.instructorEmail, instructor.candidateEmail, instructorRequestService.approveRequest(instructor.instructorEmail, instructor.candidateEmail)), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getInstructorCandidates")
+	@RequestMapping(method = RequestMethod.GET, value = "/instructorCandidates")
     public ResponseEntity<?> getInstructorCandidates(String email){	
 		List<CandidateRegistrationDTO> candidates = new ArrayList<CandidateRegistrationDTO>();
-		for(Candidate candidate : candidateService.getInstructorCandidates(email)) {
+		for(Candidate candidate : candidateService.getInstructorCandidates(email))
 			candidates.add(CandidateMapper.CandidateToCandidateRegistrationDTO(candidate));
-		}
 		return new ResponseEntity<>(candidates, HttpStatus.OK);
 	}
 	

@@ -29,7 +29,7 @@ public class DrivingTestController {
 	private DrivingTestService drivingTestService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addTest")
-    public ResponseEntity<?> addTermin(@RequestBody DrivingTestDTO drivingTest){
+    public ResponseEntity<?> addTest(@RequestBody DrivingTestDTO drivingTest){
 		return new ResponseEntity<>(drivingTestService.addTest(DrivingTestMapper.TestDTOToTest(drivingTest), drivingTest.categoryAndType), HttpStatus.OK);
 	}
 	
@@ -41,9 +41,7 @@ public class DrivingTestController {
 	@RequestMapping(method = RequestMethod.GET, value = "/testsForDate")
     public ResponseEntity<?> getTestsForDate(String date){
 		List<DrivingTestDTO> tests = new ArrayList<>();
-		for(DrivingTest dt : drivingTestService.getTestsForDate(date)) {
-			tests.add(DrivingTestMapper.TestToTestDTO(dt));
-		}
+		for(DrivingTest dt : drivingTestService.getTestsForDate(date)) tests.add(DrivingTestMapper.TestToTestDTO(dt));
 		return new ResponseEntity<>(tests, HttpStatus.OK);
 	}
 
@@ -55,9 +53,8 @@ public class DrivingTestController {
 	@RequestMapping(method = RequestMethod.GET, value = "/testsForCandidate")
     public ResponseEntity<?> getTestsForCandidate(String candidateEmail, String date){
 		List<DrivingTestDTO> tests = new ArrayList<>();
-		for(DrivingTest dt : drivingTestService.getCandidateTestsForDate(candidateEmail, date)) {
+		for(DrivingTest dt : drivingTestService.getCandidateTestsForDate(candidateEmail, date))
 			tests.add(DrivingTestMapper.TestToTestDTO(dt));
-		}
 		return new ResponseEntity<>(tests, HttpStatus.OK);
 	}
 	
@@ -67,7 +64,7 @@ public class DrivingTestController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/scheduleTest")
-	public ResponseEntity<?> getTestDatesForCandidate(@RequestBody TerminClientDTO dto){
+	public ResponseEntity<?> scheduleTest(@RequestBody TerminClientDTO dto){
 		drivingTestService.scheduleTest(dto.clientEmail, dto.terminId);
 		return ResponseEntity.ok().build();
 	}

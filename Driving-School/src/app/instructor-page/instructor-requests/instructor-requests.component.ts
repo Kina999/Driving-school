@@ -17,7 +17,7 @@ export class InstructorRequestsComponent implements OnInit {
     var user = localStorage.getItem('currentUser');
     if(user != null){
       var userEmail = JSON.parse(user).email;
-      this.http.get('http://localhost:8080/instructorRequests/getInstructorRequests?instructorEmail=' + userEmail).subscribe(
+      this.http.get('http://localhost:8080/instructorRequests/instructorRequests?instructorEmail=' + userEmail).subscribe(
         (data: any) => {
           if(data != null){
             this.instructorRequests = data;
@@ -35,7 +35,7 @@ export class InstructorRequestsComponent implements OnInit {
       this.http.post('http://localhost:8080/candidates/addInstructor', body)
         .subscribe(data => {
           if(data){
-            this.http.get('http://localhost:8080/instructorRequests/getInstructorRequests?instructorEmail=' + instructorMail).subscribe(
+            this.http.get('http://localhost:8080/instructorRequests/instructorRequests?instructorEmail=' + instructorMail).subscribe(
               (data: any) => {
                 if(data != null){
                   this.instructorRequests = data;
@@ -54,7 +54,7 @@ export class InstructorRequestsComponent implements OnInit {
       this.http.post('http://localhost:8080/instructorRequests/refuseRequest', body)
         .subscribe(data => {
           if(data){
-            this.http.get('http://localhost:8080/instructorRequests/getInstructorRequests?instructorEmail=' + instructorMail).subscribe(
+            this.http.get('http://localhost:8080/instructorRequests/instructorRequests?instructorEmail=' + instructorMail).subscribe(
               (data: any) => {
                 if(data != null){
                   this.instructorRequests = data;

@@ -1,6 +1,7 @@
 package com.DrivingSchool.dto;
 
 public class CandidateDTO {
+
 	public String email;
 	public String password;
 	public String name;

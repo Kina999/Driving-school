@@ -41,41 +41,14 @@ public class DrivingTest {
 	public Date getTestDateTime() {
 		return testDateTime;
 	}
-
-	public void setTestDateTime(Date testDateTime) {
-		this.testDateTime = testDateTime;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	public Licence getLicence() {
-		return licence;
-	}
-
-	public void setLicence(Licence licence) {
-		this.licence = licence;
-	}
-
-	public Candidate getCandidate() {
-		return candidate;
-	}
-
-	public void setCandidate(Candidate candidate) {
-		this.candidate = candidate;
-	}
+	public void setTestDateTime(Date testDateTime) {this.testDateTime = testDateTime;}
+	public Integer getId() {return id;}
+	public void setId(Integer id) {this.id = id;}
+	public boolean isDeleted() {return deleted;}
+	public void setDeleted(boolean deleted) {this.deleted = deleted;}
+	public Licence getLicence() {return licence;}
+	public void setLicence(Licence licence) {this.licence = licence;}
+	public Candidate getCandidate() {return candidate;}
+	public void setCandidate(Candidate candidate) {this.candidate = candidate;}
 	
 }

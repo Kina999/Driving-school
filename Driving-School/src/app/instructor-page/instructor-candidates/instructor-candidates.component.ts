@@ -18,12 +18,12 @@ export class InstructorCandidatesComponent implements OnInit {
     var user = localStorage.getItem('currentUser');
     if (user != null) {
       var userEmail = JSON.parse(user).email;
-      this.http.get('http://localhost:8080/candidates/getInstructorCandidates?email=' + userEmail).subscribe(
+      this.http.get('http://localhost:8080/candidates/instructorCandidates?email=' + userEmail).subscribe(
         (data: any) => {
           if (data != null) {
             this.instructorCandidates = data;
             this.instructorCandidates.forEach((candidate: any, i: number) => {
-              this.http.get('http://localhost:8080/candidates/getCandidateProgress?candidateEmail=' + candidate.email).subscribe(
+              this.http.get('http://localhost:8080/candidates/candidateProgress?candidateEmail=' + candidate.email).subscribe(
                 (data: any) => {
                   this.candidateProgress[i] = data;
                 });

@@ -26,14 +26,12 @@ public class City {
 		super();
 	}
 	
-	
 	public City(String name, long zipCode, Country country) {
 		super();
 		this.name = name;
 		this.zipCode = zipCode;
 		this.country = country;
 	}
-
 
 	public String getName() {
 		return name;

@@ -22,7 +22,7 @@ export class InstructorsComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/instructors/getAll').subscribe(
+    this.http.get('http://localhost:8080/instructors/all').subscribe(
       data => {
         this.instructorsList = data;
       });
@@ -50,7 +50,7 @@ export class InstructorsComponent implements OnInit {
       this.http.post('http://localhost:8080/instructors/registration', body)
         .subscribe(data => {
           if (data) {
-            this.http.get('http://localhost:8080/instructors/getAll').subscribe(
+            this.http.get('http://localhost:8080/instructors/all').subscribe(
               data => {
                 this.instructorsList = data;
               });

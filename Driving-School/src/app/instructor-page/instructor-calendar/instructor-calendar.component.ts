@@ -28,19 +28,19 @@ export class InstructorCalendarComponent implements OnInit {
     var user = localStorage.getItem('currentUser');
     if (user != null) {
       var email = JSON.parse(user).email;
-      this.http.get('http://localhost:8080/licences/getAll?email=' + JSON.parse(user).email).subscribe(
+      this.http.get('http://localhost:8080/licences/all?email=' + JSON.parse(user).email).subscribe(
         (data: any) => {
           this.licences = data;
         });
-      this.http.get('http://localhost:8080/termins/getAllInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
+      this.http.get('http://localhost:8080/termins/allInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
         (data: any) => {
           this.instructorTermins = data;
         });
-      this.http.get('http://localhost:8080/termins/getAllInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
+      this.http.get('http://localhost:8080/termins/allInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
         (data: any) => {
           this.terminDates = data;
           this.terminDates.forEach((date: any, i: number) => {
-            this.http.get('http://localhost:8080/termins/getAllInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
+            this.http.get('http://localhost:8080/termins/allInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
               data => {
                 this.terminTimes[i] = data;
               });
@@ -56,15 +56,15 @@ export class InstructorCalendarComponent implements OnInit {
         if (user != null) {
           var email = JSON.parse(user).email;
           if (data) {
-            this.http.get('http://localhost:8080/termins/getAllInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
+            this.http.get('http://localhost:8080/termins/allInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
               (data: any) => {
                 this.instructorTermins = data;
               });
-            this.http.get('http://localhost:8080/termins/getAllInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
+            this.http.get('http://localhost:8080/termins/allInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
               (data: any) => {
                 this.terminDates = data;
                 this.terminDates.forEach((date: any, i: number) => {
-                  this.http.get('http://localhost:8080/termins/getAllInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
+                  this.http.get('http://localhost:8080/termins/allInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
                     data => {
                       this.terminTimes[i] = data;
                     });
@@ -136,15 +136,15 @@ export class InstructorCalendarComponent implements OnInit {
               var user = localStorage.getItem('currentUser');
               if (user != null) {
                 var email = JSON.parse(user).email;
-                this.http.get('http://localhost:8080/termins/getAllInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
+                this.http.get('http://localhost:8080/termins/allInstructorTermins?instructorEmail=' + JSON.parse(user).email).subscribe(
                   (data: any) => {
                     this.instructorTermins = data;
                   });
-                this.http.get('http://localhost:8080/termins/getAllInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
+                this.http.get('http://localhost:8080/termins/allInstructorTerminDates?instructorEmail=' + JSON.parse(user).email).subscribe(
                   (data: any) => {
                     this.terminDates = data;
                     this.terminDates.forEach((date: any, i: number) => {
-                      this.http.get('http://localhost:8080/termins/getAllInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
+                      this.http.get('http://localhost:8080/termins/allInstructorTerminTimesForDate?instructorEmail=' + email + "&date=" + date).subscribe(
                         (data: any) => {
                           this.terminTimes[i] = data;
                         });

@@ -61,33 +61,24 @@ public class Vehicle {
 	public LocalDateTime getLastRegistrationDate() {
 		return lastRegistrationDate;
 	}
-	public void setLastRegistrationDate(LocalDateTime lastRegistrationDate) {
-		this.lastRegistrationDate = lastRegistrationDate;
-	}
-
+	public void setLastRegistrationDate(LocalDateTime lastRegistrationDate) {this.lastRegistrationDate = lastRegistrationDate;}
 	public DrivingSchool getDrivingSchool() {
 		return drivingSchool;
 	}
-
 	public void setDrivingSchool(DrivingSchool drivingSchool) {
 		this.drivingSchool = drivingSchool;
 	}
-
 	public Category getCategory() {
 		return category;
 	}
-
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
 	public Set<CarMechanic> getCarMechanics() {
 		return carMechanics;
 	}
-
 	public void setCarMechanics(Set<CarMechanic> carMechanics) {
 		this.carMechanics = carMechanics;
 	}
-	
-	
+
 }

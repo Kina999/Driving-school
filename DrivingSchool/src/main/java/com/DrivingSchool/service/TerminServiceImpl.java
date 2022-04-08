@@ -293,13 +293,18 @@ public class TerminServiceImpl implements TerminService{
 	public CandidateCancelingDTO getCandidateCanceling(String candidateEmail) {
 		CandidateCancelingDTO candidateCancelingData = new CandidateCancelingDTO();
 		List<Termin> canceledTermins = terminRepository.getCandidateCanceledTermins(candidateEmail);
-		candidateCancelingData.numberOfCancelations = canceledTermins.size();
-		LocalDate terminDate = sortTimes(canceledTermins).get(0).getCancelationDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate now = (new Date()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		candidateCancelingData.numberOfDays = abs(Period.between(terminDate, now).getDays());
-		if(abs(Period.between(terminDate, now).getDays()) == 0) {
-			candidateCancelingData.numberOfDays = 1;	
+		if(canceledTermins.size() != 0) {
+			candidateCancelingData.numberOfCancelations = canceledTermins.size();
+			LocalDate terminDate = sortTimes(canceledTermins).get(0).getCancelationDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			LocalDate now = (new Date()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			candidateCancelingData.numberOfDays = abs(Period.between(terminDate, now).getDays());
+			if (abs(Period.between(terminDate, now).getDays()) == 0) {
+				candidateCancelingData.numberOfDays = 1;
+			}
+			return candidateCancelingData;
 		}
+		candidateCancelingData.numberOfDays = 0;
+		candidateCancelingData.numberOfCancelations = 0;
 		return candidateCancelingData;
 	}
 

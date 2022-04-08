@@ -20,17 +20,17 @@ public class InstructorRequestController {
 	private InstructorRequestService instructorRequestService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/addInstructorRequest")
-    public ResponseEntity<?> addInstuctorToCandidate(@RequestBody CandidateInstructorDTO instructor){
+    public ResponseEntity<?> addInstructorToCandidate(@RequestBody CandidateInstructorDTO instructor){
 		return new ResponseEntity<>(instructorRequestService.addInstructorRequest(instructor.instructorEmail, instructor.candidateEmail, instructor.category), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getInstructorRequest")
+	@RequestMapping(method = RequestMethod.GET, value = "/instructorRequest")
     public ResponseEntity<?> getInstructorRequest(String email){	
 		return new ResponseEntity<>(instructorRequestService.getInstructorRequest(email), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getInstructorRequests")
-    public ResponseEntity<?> getInstructorAllRequests(String instructorEmail){	
+	@RequestMapping(method = RequestMethod.GET, value = "/instructorRequests")
+    public ResponseEntity<?> getAllInstructorRequests(String instructorEmail){
 		return new ResponseEntity<>(instructorRequestService.getInstructorRequests(instructorEmail), HttpStatus.OK);
 	}
 	

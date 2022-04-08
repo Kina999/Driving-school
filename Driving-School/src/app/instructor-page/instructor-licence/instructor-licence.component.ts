@@ -22,7 +22,7 @@ export class InstructorLicenceComponent implements OnInit {
   ngOnInit(): void {
     var user = localStorage.getItem('currentUser');
     if (user != null) {
-      this.http.get('http://localhost:8080/licences/getAll?email=' + JSON.parse(user).email).subscribe(
+      this.http.get('http://localhost:8080/licences/all?email=' + JSON.parse(user).email).subscribe(
         data => {
           this.licences = data;
         });
@@ -70,7 +70,7 @@ export class InstructorLicenceComponent implements OnInit {
         this.http.post('http://localhost:8080/licences/addLicence', body)
           .subscribe(data => {
             if (data) {
-              this.http.get('http://localhost:8080/licences/getAll?email=' + userEmail).subscribe(
+              this.http.get('http://localhost:8080/licences/all?email=' + userEmail).subscribe(
                 data => {
                   this.licences = data;
                 });

@@ -32,47 +32,36 @@ public class InstructorRequest {
 	public String getInstructorEmail() {
 		return instructorEmail;
 	}
-
 	public void setInstructorEmail(String instructorEmail) {
 		this.instructorEmail = instructorEmail;
 	}
-
 	public String getCandidateEmail() {
 		return candidateEmail;
 	}
-
 	public void setCandidateEmail(String candidateEmail) {
 		this.candidateEmail = candidateEmail;
 	}
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public boolean isApproved() {
 		return approved;
 	}
-
 	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
-
 	public boolean isRefused() {
 		return refused;
 	}
-
 	public void setRefused(boolean refused) {
 		this.refused = refused;
 	}
-
 	public String getCategory() {
 		return category;
 	}
-
 	public void setCategory(String category) {
 		this.category = category;
 	}

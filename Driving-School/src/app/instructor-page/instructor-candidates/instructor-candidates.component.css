@@ -272,6 +272,8 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    min-height: 1050px;
+    padding-bottom: 10%;
   }
   body{
     background-color: #f8f9fa!important

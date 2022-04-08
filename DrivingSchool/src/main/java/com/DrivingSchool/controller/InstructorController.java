@@ -22,7 +22,7 @@ public class InstructorController {
 	private InstructorService instructorService;
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/registration")
-    public ResponseEntity<?> registerClient(@RequestBody InstructorDTO instructor){	
+    public ResponseEntity<?> registerInstructor(@RequestBody InstructorDTO instructor){
 		return new ResponseEntity<>(instructorService.addNewInstructor(InstructorMapper.InstructorDTOToInstructor(instructor)), HttpStatus.OK);
 	}
 	
@@ -31,12 +31,12 @@ public class InstructorController {
 		return new ResponseEntity<>(instructorService.leaveGrade(instructor.instructorEmail, instructor.grade), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getAll")
+	@RequestMapping(method = RequestMethod.GET, value = "/all")
     public ResponseEntity<?> getAllInstructors(){	
 		return new ResponseEntity<>(instructorService.getAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getInstructor")
+	@RequestMapping(method = RequestMethod.GET, value = "/instructor")
     public ResponseEntity<?> getInstructor(String instructorEmail){	
 		return new ResponseEntity<>(instructorService.getInstructorByMail(instructorEmail), HttpStatus.OK);
 	}

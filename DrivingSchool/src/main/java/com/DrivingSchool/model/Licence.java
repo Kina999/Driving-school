@@ -30,7 +30,6 @@ public class Licence {
     @JoinColumn(name = "instructor_id")
 	private Instructor instructor = new Instructor();
 	
-	
 	public Licence() {
 		super();
 	}
@@ -42,7 +41,6 @@ public class Licence {
 		this.category = category;
 		this.instructor = instructor;
 	}
-
 
 	public Date getExpirationDate() {
 		return expirationDate;
@@ -68,11 +66,9 @@ public class Licence {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
 	public Instructor getInstructor() {
 		return instructor;
 	}
-
 	public void setInstructor(Instructor instructor) {
 		this.instructor = instructor;
 	}

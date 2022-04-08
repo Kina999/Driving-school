@@ -59,11 +59,11 @@
                   <p>{{cancelingData[indexOfelement].numberOfCancelations}} otkazana termina u {{cancelingData[indexOfelement].numberOfDays}} dana</p>
                 </td>
                 <td></td>
-                <td>
-                    <button type="button" class="btn btn-danger" (click)="blockUser(indexOfelement)" *ngIf="!request.blocked"><i class="fas fa-ban"></i></button>
+                <td  *ngIf="!request.blocked">
+                    <button type="button" class="btn btn-danger" (click)="blockUser(indexOfelement)"><i class="fas fa-ban"></i></button>
                 </td>
-                <td>
-                  <button type="button" class="btn btn-success" (click)="unblockUser(indexOfelement)" *ngIf="request.blocked"><i class="fas fa-check"></i></button>
+                <td *ngIf="request.blocked">
+                  <button type="button" class="btn btn-success" (click)="unblockUser(indexOfelement)"><i class="fas fa-check"></i></button>
                 </td>
               </tr>
             </tbody>

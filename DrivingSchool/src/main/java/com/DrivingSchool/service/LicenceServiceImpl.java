@@ -29,9 +29,7 @@ public class LicenceServiceImpl implements LicenceService{
 	@Override
 	public boolean addLicenceToInstructor(String email, Licence licence, String category) {
 		Integer licenceType = 0;
-		if(licence.getLicenceType().equals(TestType.PRACTICAL)) {
-			licenceType = 1;
-		}
+		if(licence.getLicenceType().equals(TestType.PRACTICAL)) licenceType = 1;
 		if(licenceRepository.findInstructorLicence(email, categoryService.getCategory(category).getId(), licenceType) == null) {
 			licence.setInstructor(instructorService.getInstructorByMail(email));
 			licence.setCategory(categoryService.getCategory(category));
@@ -42,9 +40,7 @@ public class LicenceServiceImpl implements LicenceService{
 	}
 	@Override
 	public List<Licence> getAll(String email) {
-		if(email.equals("")) {
-			return licenceRepository.findAll();
-		}
+		if(email.equals("")) return licenceRepository.findAll();
 		return licenceRepository.findInstructorLicences(email);
 	}
 	@Override
@@ -56,21 +52,15 @@ public class LicenceServiceImpl implements LicenceService{
 	public Set<Instructor> getAllInstructorsWithCategory(String category) {
 		List<Instructor> instructors = new ArrayList<Instructor>();
 		for(Licence licence : licenceRepository.findInstructorForCategory(categoryService.getCategory(category).getId())) {
-			if(licence.getExpirationDate().after(new Date())) {
-				instructors.add(licence.getInstructor());
-			}
+			if(licence.getExpirationDate().after(new Date())) instructors.add(licence.getInstructor());
 		}
 		Set<Instructor> ret = new HashSet<Instructor>();
 		for(Instructor i : instructors) {
 			int numOfCounts = 0;
 			for(Instructor ins : instructors) {
-				if(ins.getEmail().equals(i.getEmail())) {
-					numOfCounts++;
-				}
+				if(ins.getEmail().equals(i.getEmail())) numOfCounts++;
 			}
-			if(numOfCounts == 2) {
-				ret.add(i);
-			}
+			if(numOfCounts == 2) ret.add(i);
 		}
 		return ret;
 	}

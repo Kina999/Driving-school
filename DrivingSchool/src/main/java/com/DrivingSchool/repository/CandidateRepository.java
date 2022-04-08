@@ -24,37 +24,37 @@ public interface CandidateRepository extends JpaRepository<Candidate, String>{
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set number_of_classes = 0 where email = ?1", nativeQuery = true)
+	@Query(value = "UPDATE CANDIDATE SET NUMBER_OF_CLASSES = 0 WHERE EMAIL = ?1", nativeQuery = true)
 	public void resetClassNumber(String candidateEmail);
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set blocked = true where email = ?1", nativeQuery = true)
+	@Query(value = "UPDATE CANDIDATE SET BLOCKED = true WHERE EMAIL = ?1", nativeQuery = true)
 	public void blockUser(String candidateEmail);
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set blocked = false where email = ?1", nativeQuery = true)
+	@Query(value = "UPDATE CANDIDATE SET BLOCKED = false WHERE EMAIL = ?1", nativeQuery = true)
 	public void unblockUser(String candidateEmail);
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set class_type = 1 where email = ?1", nativeQuery = true)
+	@Query(value = "UPDATE CANDIDATE SET CLASS_TYPE = 1 WHERE EMAIL = ?1", nativeQuery = true)
 	public void setClassType(String candidateEmail);
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set number_of_classes = ?2 where email = ?1", nativeQuery = true)
+	@Query(value = "UPDATE CANDIDATE SET NUMBER_OF_CLASSES = ?2 WHERE EMAIL = ?1", nativeQuery = true)
 	public void incrementClassNumber(String candidateEmail, int classNumber);
 	
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set password = ?2, name = ?3, last_name = ?4, phone_number = ?5 where email = ?1", nativeQuery = true)
+	@Query(value = "UPDATE CANDIDATE SET PASSWORD = ?2, NAME = ?3, LAST_NAME = ?4, PHONE_NUMBER = ?5 WHERE EMAIL = ?1", nativeQuery = true)
 	public void updateClient(String email, String password, String name, String lastName, String phoneNumber);	
 	
 	@Modifying
 	@Transactional
-	@Query(value = "update candidate set instructor_id = ?2, category = ?3 where email = ?1", nativeQuery = true)
+	@Query(value = "UPDATE CANDIDATE SET INSTRUCTOR_ID = ?2, CATEGORY = ?3 WHERE EMAIL = ?1", nativeQuery = true)
 	public void setCandidateInstructor(String candidateEmail, String instructorEmail, String category);	
 }

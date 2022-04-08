@@ -38,64 +38,60 @@ public class TerminController {
 		return new ResponseEntity<>(terminService.addClientToTermin(termin.clientEmail, termin.terminId), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTermins")
+	@RequestMapping(method = RequestMethod.GET, value = "/allInstructorTermins")
     public ResponseEntity<?> getAllInstructorTermins(String instructorEmail){
 		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
-		for(Termin termin : terminService.getAllInstructorTermins(instructorEmail)) {
+		for(Termin termin : terminService.getAllInstructorTermins(instructorEmail))
 			termins.add(TerminMapper.TerminToTerminDTO(termin));
-		}
 		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}	
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminDates")
+	@RequestMapping(method = RequestMethod.GET, value = "/allInstructorTerminDates")
     public ResponseEntity<?> getAllInstructorTerminDates(String instructorEmail){	
 		return new ResponseEntity<>(terminService.getAllInstructorTerminDates(instructorEmail), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getCandidateCancelingData")
+	@RequestMapping(method = RequestMethod.GET, value = "/candidateCancelingData")
     public ResponseEntity<?> getCandidateCanceling(String email){	
 		return new ResponseEntity<>(terminService.getCandidateCanceling(email), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidateTermins")
+	@RequestMapping(method = RequestMethod.GET, value = "/allCandidateTermins")
 	public ResponseEntity<?> getAllCandidateTermins(String candidateEmail){
 		return new ResponseEntity<>(terminService.getAllCandidateTermins(candidateEmail), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllInstructorTerminTimesForDate")
+	@RequestMapping(method = RequestMethod.GET, value = "/allInstructorTerminTimesForDate")
     public ResponseEntity<?> getAllInstructorTerminTimes(String instructorEmail, String date){	
 		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
-		for(Termin termin : terminService.getAllInstructorTerminTimes(instructorEmail, date)) {
+		for(Termin termin : terminService.getAllInstructorTerminTimes(instructorEmail, date))
 			termins.add(TerminMapper.TerminToTerminDTO(termin));
-		}
 		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}	
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidatePossibleTerminDates")
+	@RequestMapping(method = RequestMethod.GET, value = "/allCandidatePossibleTerminDates")
     public ResponseEntity<?> getAllCandidatePossibleTerminDates(String candidateEmail){	
 		return new ResponseEntity<>(terminService.getAllCandidatePossibleTerminDates(candidateEmail), HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidatePossibleTerminForDate")
-    public ResponseEntity<?> getAllCandidatePossibleTerminForDate(String candidateEmail, String date){	
+	@RequestMapping(method = RequestMethod.GET, value = "/allCandidatePossibleTerminForDate")
+    public ResponseEntity<?> getAllCandidatePossibleTerminsForDate(String candidateEmail, String date){
 		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
-		for(Termin termin : terminService.getAllCandidatePossibleTerminForDate(candidateEmail, date)) {
+		for(Termin termin : terminService.getAllCandidatePossibleTerminForDate(candidateEmail, date))
 			termins.add(TerminMapper.TerminToTerminDTO(termin));
-		}
 		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidateTerminDates")
+	@RequestMapping(method = RequestMethod.GET, value = "/allCandidateTerminDates")
 	public ResponseEntity<?> getAllCandidateTerminDates(String candidateEmail){
 		return new ResponseEntity<>(terminService.getAllCandidateTerminDates(candidateEmail), HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/getAllCandidateTerminForDate")
+	@RequestMapping(method = RequestMethod.GET, value = "/allCandidateTerminForDate")
 	public ResponseEntity<?> getAllCandidateTerminForDate(String candidateEmail, String date){
 		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
-		for(Termin termin : terminService.getAllCandidateTerminForDate(candidateEmail, date)) {
+		for(Termin termin : terminService.getAllCandidateTerminForDate(candidateEmail, date))
 			termins.add(TerminMapper.TerminToTerminDTO(termin));
-		}
 		return new ResponseEntity<>(termins, HttpStatus.OK);
 	}
 	

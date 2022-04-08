@@ -19,11 +19,11 @@ export class CandidateTerminsComponent implements OnInit {
     var user = localStorage.getItem('currentUser');
     if (user != null) {
       var userEmail = JSON.parse(user).email;
-      this.http.get('http://localhost:8080/termins/getAllCandidateTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
+      this.http.get('http://localhost:8080/termins/allCandidateTerminDates?candidateEmail=' + JSON.parse(user).email).subscribe(
         (data: any) => {
           this.terminDates = data;
           this.terminDates.forEach((date: any, i: number) => {
-            this.http.get('http://localhost:8080/termins/getAllCandidateTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
+            this.http.get('http://localhost:8080/termins/allCandidateTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
               (data: any) => {
                 this.terminTimes[i] = data;
               });
@@ -41,11 +41,11 @@ export class CandidateTerminsComponent implements OnInit {
       this.http.get('http://localhost:8080/termins/cancelTermin?id=' + this.terminTimes[i][j].id + "&candidateEmail=" + userEmail)
         .subscribe((data: any) => {
           if (data) {
-            this.http.get('http://localhost:8080/termins/getAllCandidateTerminDates?candidateEmail=' + userEmail).subscribe(
+            this.http.get('http://localhost:8080/termins/allCandidateTerminDates?candidateEmail=' + userEmail).subscribe(
               (data: any) => {
                 this.terminDates = data;
                 this.terminDates.forEach((date: any, i: number) => {
-                  this.http.get('http://localhost:8080/termins/getAllCandidateTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
+                  this.http.get('http://localhost:8080/termins/allCandidateTerminForDate?candidateEmail=' + userEmail + "&date=" + date).subscribe(
                     (data: any) => {
                       this.terminTimes[i] = data;
                     });

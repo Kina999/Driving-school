@@ -143,9 +143,8 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 	private boolean alreadyReservedTheoretical(String candidateEmail) {
 		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
 			if(drivingTest.getCandidate() != null && drivingTest.getLicence().getLicenceType().equals(TestType.THEORETICAL)) {
-				if(drivingTest.getCandidate().getEmail().equals(candidateEmail) && !drivingTest.isDeleted()) {
+				if(drivingTest.getCandidate().getEmail().equals(candidateEmail) && !drivingTest.isDeleted())
 					return true;
-				}
 			}
 		}
 		return false;
@@ -154,9 +153,8 @@ public class DrivingTestServiceImpl implements DrivingTestService{
 	private boolean alreadyReservedPractical(String candidateEmail) {
 		for(DrivingTest drivingTest : drivingTestRepository.findAll()) {
 			if(drivingTest.getCandidate() != null && drivingTest.getLicence().getLicenceType().equals(TestType.PRACTICAL)) {
-				if(drivingTest.getCandidate().getEmail().equals(candidateEmail) && !drivingTest.isDeleted()) {
+				if(drivingTest.getCandidate().getEmail().equals(candidateEmail) && !drivingTest.isDeleted())
 					return true;
-				}
 			}
 		}
 		return false;

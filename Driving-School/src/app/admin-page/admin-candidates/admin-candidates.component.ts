@@ -15,11 +15,11 @@ export class AdminCandidatesComponent implements OnInit {
   constructor(private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8080/candidates/getAllCandidates').subscribe(
+    this.http.get('http://localhost:8080/candidates/allCandidates').subscribe(
       (data: any) => {
         this.allCandidates = data;
         this.allCandidates.forEach((candidate: any, i: number) => {
-          this.http.get('http://localhost:8080/termins/getCandidateCancelingData?email=' + candidate.email).subscribe(
+          this.http.get('http://localhost:8080/termins/candidateCancelingData?email=' + candidate.email).subscribe(
             (data: any) => {
               this.cancelingData[i] = data;
             });
@@ -34,11 +34,11 @@ export class AdminCandidatesComponent implements OnInit {
       (data: any) => {
         if (data) {
           alert("Succes");
-          this.http.get('http://localhost:8080/candidates/getAllCandidates').subscribe(
+          this.http.get('http://localhost:8080/candidates/allCandidates').subscribe(
             (data: any) => {
               this.allCandidates = data;
               this.allCandidates.forEach((candidate: any, i: number) => {
-                this.http.get('http://localhost:8080/termins/getCandidateCancelingData?email=' + candidate.email).subscribe(
+                this.http.get('http://localhost:8080/termins/candidateCancelingData?email=' + candidate.email).subscribe(
                   (data: any) => {
                     this.cancelingData[i] = data;
                   });
@@ -54,11 +54,11 @@ export class AdminCandidatesComponent implements OnInit {
         if (data) {
           alert("Succes");
 
-          this.http.get('http://localhost:8080/candidates/getAllCandidates').subscribe(
+          this.http.get('http://localhost:8080/candidates/allCandidates').subscribe(
             (data: any) => {
               this.allCandidates = data;
               this.allCandidates.forEach((candidate: any, i: number) => {
-                this.http.get('http://localhost:8080/termins/getCandidateCancelingData?email=' + candidate.email).subscribe(
+                this.http.get('http://localhost:8080/termins/candidateCancelingData?email=' + candidate.email).subscribe(
                   (data: any) => {
                     this.cancelingData[i] = data;
                   });
