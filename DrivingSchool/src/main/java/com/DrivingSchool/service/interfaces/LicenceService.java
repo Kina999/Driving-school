@@ -12,4 +12,5 @@ public interface LicenceService {
 	public Licence findLicenceByCategoryAndType(String categoryAndType);
 	public Set<Instructor> getAllInstructorsWithCategory(String category);
 	public boolean addLicenceToInstructor(String email, Licence licence, String category);
+	public Licence findLicenceByCategoryAndType(String categoryAndType, String instructorEmail);
 }

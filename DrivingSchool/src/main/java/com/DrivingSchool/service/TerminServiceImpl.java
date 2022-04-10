@@ -47,8 +47,8 @@ public class TerminServiceImpl implements TerminService{
 		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
 			for(Termin t : terminRepository.findInstructorTermins(l.getId())) {if(terminOverlapsWithAnother(termin, t)){return false;}}
 		}
-		if(licenceService.findLicenceByCategoryAndType(categoryAndType).getExpirationDate().before(termin.getEndTime())) {return false;}
-		termin.setLicence(licenceService.findLicenceByCategoryAndType(categoryAndType));
+		if(licenceService.findLicenceByCategoryAndType(categoryAndType, instructorEmail).getExpirationDate().before(termin.getEndTime())) {return false;}
+		termin.setLicence(licenceService.findLicenceByCategoryAndType(categoryAndType, instructorEmail));
 		terminRepository.save(termin);
 		return true;
 	}

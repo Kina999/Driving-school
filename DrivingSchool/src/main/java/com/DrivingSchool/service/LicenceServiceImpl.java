@@ -44,8 +44,12 @@ public class LicenceServiceImpl implements LicenceService{
 		return licenceRepository.findInstructorLicences(email);
 	}
 	@Override
+	public Licence findLicenceByCategoryAndType(String categoryAndType, String instructorEmail) { 
+		return licenceRepository.findLicenceByCategoryAndType(categoryService.getCategory((categoryAndType.split("-")[0]).toString().trim()).getId(), (((categoryAndType.split("-")[1]).toString().trim()).equals("THEORETICAL") ? 0 : 1), instructorEmail);
+	}
+	@Override
 	public Licence findLicenceByCategoryAndType(String categoryAndType) { 
-		return licenceRepository.findLicenceByCategoryAndType(categoryService.getCategory((categoryAndType.split("-")[0]).toString().trim()).getId(), (((categoryAndType.split("-")[1]).toString().trim()).equals("THEORETICAL") ? 0 : 1));
+		return licenceRepository.findLicenceByCategoryAndType(categoryService.getCategory((categoryAndType.split("-")[0]).toString().trim()).getId(), (((categoryAndType.split("-")[1]).toString().trim()).equals("THEORETICAL") ? 0 : 1)).get(0);
 	}
 
 	@Override
