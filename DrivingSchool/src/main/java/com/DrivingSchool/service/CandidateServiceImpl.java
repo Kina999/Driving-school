@@ -101,7 +101,12 @@ public class CandidateServiceImpl implements CandidateService{
 	@Override
 	public boolean decreaseClassNumber(String candidateEmail) {
 		if(candidateRepository.findCandidateByEmail(candidateEmail) != null) {
-			candidateRepository.incrementClassNumber(candidateEmail, candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() - 1);
+			if(candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() == 0) {
+				resetClassNumber(candidateEmail);
+				candidateRepository.setOldClassType(candidateEmail);
+			}else{
+				candidateRepository.incrementClassNumber(candidateEmail, candidateRepository.findCandidateByEmail(candidateEmail).getNumberOfClasses() - 1);
+			}
 			return true;
 		}
 		return false;

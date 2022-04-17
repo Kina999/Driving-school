@@ -44,6 +44,11 @@ public interface CandidateRepository extends JpaRepository<Candidate, String>{
 	
 	@Modifying
 	@Transactional
+	@Query(value = "UPDATE CANDIDATE SET CLASS_TYPE = 0 WHERE EMAIL = ?1", nativeQuery = true)
+	public void setOldClassType(String candidateEmail);
+	
+	@Modifying
+	@Transactional
 	@Query(value = "UPDATE CANDIDATE SET NUMBER_OF_CLASSES = ?2 WHERE EMAIL = ?1", nativeQuery = true)
 	public void incrementClassNumber(String candidateEmail, int classNumber);
 	
