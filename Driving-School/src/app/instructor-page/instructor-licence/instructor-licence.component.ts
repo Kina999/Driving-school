@@ -33,6 +33,9 @@ export class InstructorLicenceComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  history(){
+    this.router.navigate(['instructor-history']);
+  }
   account() {
     this.router.navigate(['instructor-account']);
   }

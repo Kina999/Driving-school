@@ -1,0 +1,104 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<html>
+
+<head>
+    <link href="instructor-history.component.css" rel="stylesheet" />
+</head>
+
+<body class="background">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+        integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #0203037a;">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">ALUNNO</a>
+
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="margin-left: 26rem;">
+                    <li class="nav-item"><a class="nav-link" (click)="termins()" style="cursor: pointer">Termini</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" (click)="history()" style="cursor: pointer">Istorija</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" (click)="candidates()"
+                            style="cursor: pointer">Kandidati</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="requests()" style="cursor: pointer">Zahtjevi</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" (click)="licence()" style="cursor: pointer">Licence</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" (click)="account()" style="cursor: pointer">Nalog</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="logout()" style="cursor: pointer">Odjava</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="timetable-img text-center">
+            <img src="img/content/timetable.png" alt="">
+        </div>
+        <div class="table-responsive" style="margin-top: 7rem;">
+            <table class="table table-bordered text-center">
+                <tbody>
+                    <tr class="bg-light-gray" *ngFor="let date of terminDates; let i = index">
+                        <th class="text-uppercase">{{date}}</th>
+                        <td *ngFor="let t of terminTimes[i]; let j = index">
+                            <span
+                                class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">{{t.categoryAndType}}</span>
+                            <div class="margin-10px-top font-size14">{{convertDate(t.startTime)}} -
+                                {{convertDate(t.endTime)}}</div>
+                            <div class="font-size13 text-light-gray">
+                                <button type="button" class="btn btn-info" *ngIf="t.candidates.length != 0"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal1"
+                                    (click)="setSelectedTermin(i, j)">Kandidati</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal"
+                        style="visibility: hidden;" #closeModal11 /></div>
+                <table class="table manage-candidates-top mb-0">
+                    <thead>
+                        <tr>
+                            <th>Kandidati koji su zakazali termin</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="selectedTermin != undefined">
+                        <tr class="candidates-list"
+                            *ngFor="let request of selectedTermin.candidates;let indexOfelement=index;">
+                            <td class="title">
+                                <div class="candidate-list-details">
+                                    <div class="candidate-list-info" style="float: left;">
+                                        <div class="candidate-list-title">
+                                            <h5 class="mb-0"><a href="#">{{request.name}} {{request.lastname}}</a></h5>
+                                        </div>
+                                        <div class="candidate-list-option">
+                                            <ul class="list-unstyled">
+                                                <li><i class="fa fa-user"></i>{{request.email}}</li>
+                                                <li><i class="fa fa-phone"></i>{{request.phoneNumber}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="float: right">
+                                        <button type="button" class="btn btn-danger" (click)="notShown(request.email)">Nije se pojavio</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -34,7 +34,13 @@ public class Termin {
 	  joinColumns = @JoinColumn(name = "class_id"),
 	  inverseJoinColumns = @JoinColumn(name = "candidate_id"))
 	private Set<Candidate> candidates = new HashSet<Candidate>();
-	
+
+	@ManyToMany
+	@JoinTable(name = "non_appereance_candidates",
+			joinColumns = @JoinColumn(name = "class_id"),
+			inverseJoinColumns = @JoinColumn(name = "candidate_id"))
+	private Set<Candidate> nonAppereanceCandidates = new HashSet<Candidate>();
+
 	public Termin() {
 		super();
 	}
@@ -110,4 +116,11 @@ public class Termin {
 		this.candidates = candidates;
 	}
 
+	public Set<Candidate> getNonAppereanceCandidates() {
+		return nonAppereanceCandidates;
+	}
+
+	public void setNonAppereanceCandidates(Set<Candidate> candidates) {
+		this.nonAppereanceCandidates = candidates;
+	}
 }

@@ -18,6 +18,7 @@ import { CandidateTerminsComponent } from './candidat-page/candidate-termins/can
 import { AdminCandidatesComponent } from './admin-page/admin-candidates/admin-candidates.component';
 import {AdminTestsComponent} from './admin-page/admin-tests/admin-tests.component'
 import { CandidateTestsComponent } from './candidat-page/candidate-tests/candidate-tests.component';
+import { InstructorHistoryComponent } from './instructor-page/instructor-history/instructor-history.component';
 
 const routes: Routes = [
   {path: "", component: FrontPageComponent},
@@ -37,7 +38,8 @@ const routes: Routes = [
   {path: "candidate-termins", component: CandidateTerminsComponent},
   {path: "admin-candidates", component: AdminCandidatesComponent},
   {path: "admin-tests", component: AdminTestsComponent},
-  {path: "candidate-tests", component: CandidateTestsComponent}
+  {path: "candidate-tests", component: CandidateTestsComponent},
+  {path: "instructor-history", component: InstructorHistoryComponent}
 ];
 
 @NgModule({

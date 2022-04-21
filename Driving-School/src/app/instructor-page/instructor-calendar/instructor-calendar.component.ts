@@ -158,6 +158,10 @@ export class InstructorCalendarComponent implements OnInit {
       }
     }
   }
+  
+  history(){
+    this.router.navigate(['instructor-history']);
+  }
   setSelectedTermin(i: number, j: number) {
     this.selectedTermin = this.terminTimes[i][j];
   }

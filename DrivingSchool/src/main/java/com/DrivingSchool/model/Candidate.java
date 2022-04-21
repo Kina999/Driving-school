@@ -35,7 +35,10 @@ public class Candidate {
 	
 	@ManyToMany(mappedBy = "candidates")
 	private Set<Termin> classes = new HashSet<Termin>();
-	
+
+	@ManyToMany(mappedBy = "nonAppereanceCandidates")
+	private Set<Termin> nonAppearedClasses = new HashSet<Termin>();
+
 	public Candidate() {
 		super();
 	}

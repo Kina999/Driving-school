@@ -7,12 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.DrivingSchool.dto.CandidateTerminDTO;
 import com.DrivingSchool.dto.TerminClientDTO;
@@ -50,7 +45,20 @@ public class TerminController {
     public ResponseEntity<?> getAllInstructorTerminDates(String instructorEmail){	
 		return new ResponseEntity<>(terminService.getAllInstructorTerminDates(instructorEmail), HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(method = RequestMethod.GET, value = "/passedInstructorTerminDates")
+	public ResponseEntity<?> getAllInstructorPassedTerminDates(String instructorEmail){
+		return new ResponseEntity<>(terminService.getAllInstructorPassedTerminDates(instructorEmail), HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/passedInstructorTerminsForDate")
+	public ResponseEntity<?> getAllInstructorPassedTerminsForDate(String instructorEmail, String date){
+		List<CandidateTerminDTO> termins = new ArrayList<CandidateTerminDTO>();
+		for(Termin termin : terminService.getAllInstructorPassedTerminsForDate(instructorEmail, date))
+			termins.add(TerminMapper.TerminToTerminDTO(termin));
+		return new ResponseEntity<>(termins, HttpStatus.OK);
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/candidateCancelingData")
     public ResponseEntity<?> getCandidateCanceling(String email){	
 		return new ResponseEntity<>(terminService.getCandidateCanceling(email), HttpStatus.OK);
@@ -67,8 +75,8 @@ public class TerminController {
 		for(Termin termin : terminService.getAllInstructorTerminTimes(instructorEmail, date))
 			termins.add(TerminMapper.TerminToTerminDTO(termin));
 		return new ResponseEntity<>(termins, HttpStatus.OK);
-	}	
-	
+	}
+
 	@RequestMapping(method = RequestMethod.GET, value = "/allCandidatePossibleTerminDates")
     public ResponseEntity<?> getAllCandidatePossibleTerminDates(String candidateEmail){	
 		return new ResponseEntity<>(terminService.getAllCandidatePossibleTerminDates(candidateEmail), HttpStatus.OK);
@@ -99,6 +107,11 @@ public class TerminController {
     public ResponseEntity<?> deleteById(@PathVariable("id") int id) {
 		return new ResponseEntity<>(terminService.deleteTermin(id), HttpStatus.OK);
     }
+
+	@PutMapping("/notShowed/{id}/{candidate}")
+	public ResponseEntity<?> deleteById(@PathVariable("id") int id, @PathVariable("candidate") String candidate ) {
+		return new ResponseEntity<>(terminService.candidateNotShown(id, candidate), HttpStatus.OK);
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/cancelTermin")
 	public ResponseEntity<?> cancelTerminById(int id, String candidateEmail) {

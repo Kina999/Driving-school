@@ -46,6 +46,10 @@ export class InstructorCandidatesComponent implements OnInit {
     this.router.navigate(['instructor-account']);
   }
 
+  history(){
+    this.router.navigate(['instructor-history']);
+  }
+
   licence() {
     this.router.navigate(['instructor-licence']);
   }

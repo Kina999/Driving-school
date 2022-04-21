@@ -63,6 +63,21 @@ public class TerminServiceImpl implements TerminService{
 	}
 
 	@Override
+	public List<Termin> getAllInstructorPassedTerminsForDate(String instructorEmail, String date) {
+		List<Termin> termins = new ArrayList<Termin>();
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
+			for(Termin termin : terminRepository.findInstructorTermins(l.getId())) {
+				if(!termin.isDeleted() && termin.getCancelationDate() == null && termin.getEndTime().before(new Date()) && termin.getCandidates().size() != 0) {
+					String strDate = dateFormat.format(termin.getStartTime());
+					if(strDate.split(" ")[0].equals(date)) {termins.add(termin);}
+				}
+			}
+		}
+		return sortTimes(termins);
+	}
+
+	@Override
 	public Set<String> getAllCandidateTerminDates(String candidateEmail) {
 		List<Date> d = new ArrayList<Date>();
 		for(Termin t: terminRepository.findAll()) {
@@ -71,6 +86,17 @@ public class TerminServiceImpl implements TerminService{
 			}
 		}
 		return sortDates(d);
+	}
+
+	@Override
+	public boolean candidateNotShown(int terminId, String candidateEmail) {
+		Candidate candidate = candidateService.findCandidateByEmail(candidateEmail);
+		Termin termin = terminRepository.findTerminById(terminId);
+		candidateService.decreaseClassNumber(candidateEmail);
+		termin.getNonAppereanceCandidates().add(candidate);
+		termin.getCandidate().remove(candidate);
+		terminRepository.save(termin);
+		return false;
 	}
 
 	@Override
@@ -111,6 +137,17 @@ public class TerminServiceImpl implements TerminService{
 									&& getLatestCandidateTheoreticalClass(candidateEmail).getEndTime().before(new Date())) {d.add(t.getStartTime());}
 						}else if(candidate.getClassType().equals(TestType.THEORETICAL)){d.add(t.getStartTime());}
 				}
+			}
+		}
+		return sortDates(d);
+	}
+
+	@Override
+	public Set<String> getAllInstructorPassedTerminDates(String instructorEmail) {
+		List<Date> d = new ArrayList<Date>();
+		for(Licence l : licenceService.findInstructorLicences(instructorEmail)) {
+			for(Termin t: terminRepository.findInstructorTermins(l.getId())) {
+				if(!t.isDeleted() && t.getCancelationDate() == null && t.getEndTime().before(new Date()) && t.getCandidates().size() != 0) {d.add(t.getStartTime());}
 			}
 		}
 		return sortDates(d);
@@ -292,6 +329,7 @@ public class TerminServiceImpl implements TerminService{
 	@Override
 	public CandidateCancelingDTO getCandidateCanceling(String candidateEmail) {
 		CandidateCancelingDTO candidateCancelingData = new CandidateCancelingDTO();
+		candidateCancelingData.notShownTermins = getNotShownTermins(candidateEmail);
 		List<Termin> canceledTermins = terminRepository.getCandidateCanceledTermins(candidateEmail);
 		if(canceledTermins.size() != 0) {
 			candidateCancelingData.numberOfCancelations = canceledTermins.size();
@@ -306,6 +344,16 @@ public class TerminServiceImpl implements TerminService{
 		candidateCancelingData.numberOfDays = 0;
 		candidateCancelingData.numberOfCancelations = 0;
 		return candidateCancelingData;
+	}
+
+	private int getNotShownTermins(String candidateEmail) {
+		int notShownTermins = 0;
+		for(Termin termin : terminRepository.findAll()){
+			for(Candidate candidate : termin.getNonAppereanceCandidates()){
+				if(candidate.getEmail().equals(candidateEmail)){notShownTermins++;}
+			}
+		}
+		return notShownTermins;
 	}
 
 	@Override
