@@ -25,7 +25,7 @@ public class DrivingSchoolApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*Category c = new Category("A1", 45);
+		Category c = new Category("A1", 45);
 		categoryRepository.save(c);
 		c = new Category("A", 45);
 		categoryRepository.save(c); 
@@ -54,6 +54,6 @@ public class DrivingSchoolApplication implements CommandLineRunner{
 		
 		Worker w = new Worker("kina", "k", "Katarina", "Zerajic", null);
 		w.setWorkerType(WorkerType.ADMINISTRATOR);
-		workerRepository.save(w);*/
+		workerRepository.save(w);
 	}
 }
